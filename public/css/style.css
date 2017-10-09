@@ -11,3 +11,122 @@ body {
     color: #333;
     font-style: normal;
 }
+
+/**
+    Index Page
+ */
+.overlay.dark-5 {
+    background-color: rgba(0,0,0,.5);
+}
+
+.overlay {
+    background: rgba(0,0,0, 0.2);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
+}
+
+.slider-video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.slider-video > video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.display-table {
+    top: 200px;
+    display: table;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 99;
+    color: #fff;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #fff;
+    padding: 0 25px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+.video-volume {
+    bottom: 85px;
+    width: 100%;
+    position: fixed;
+}
+
+#video-volume {
+    display: block;
+    margin: auto;
+    z-index: 100;
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+}

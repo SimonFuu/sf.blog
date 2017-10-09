@@ -1,2 +1,5 @@
-*
+
 !.gitignore
+!files/videos/Jack-Broadbent.mp4
+!files/images/default.png
+*

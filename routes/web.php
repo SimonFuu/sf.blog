@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
+    Route::get('/', 'IndexController@showIndex');
+});
