@@ -15,8 +15,8 @@ body {
 /**
     Index Page
  */
-.overlay.dark-5 {
-    background-color: rgba(0,0,0,.5);
+.overlay.dark-2 {
+    background-color: rgba(0,0,0,.2);
 }
 
 .overlay {
@@ -106,6 +106,9 @@ body {
     text-transform: uppercase;
 }
 
+.contact-me {
+    margin-top: 15px;
+}
 .m-b-md {
     margin-bottom: 30px;
 }

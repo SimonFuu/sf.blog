@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ env('APP_STATIC_FILE_SERVER') }}/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ env('APP_STATIC_FILE_SERVER') }}/css/style.css?v={{ env('APP_DEBUG') ? time() : env('APP_STATIC_FILE_VERSION') }}">
     <script src="{{ env('APP_STATIC_FILE_SERVER') }}/js/app.js"></script>
+    <script src="/plugins/jquery.youtube.background.js"></script>
 </head>
 <body>
     @yield('body')
