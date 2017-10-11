@@ -33,7 +33,7 @@ body {
     transition: all 1s;
 }
 
-.slider-video {
+.player {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -43,7 +43,7 @@ body {
     overflow: hidden;
 }
 
-.slider-video > video {
+.player > video {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -59,13 +59,34 @@ body {
 }
 
 .display-table {
-    top: 200px;
     display: table;
     width: 100%;
     height: 100%;
     position: relative;
     z-index: 99;
     color: #fff;
+}
+
+.user-info {
+    margin-top: 20px;
+}
+.user-info > span {
+    padding: 0 5px 0;
+}
+.user-info > span > a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.user-info > span > a:hover {
+    color: #cccccc;
+    text-decoration: none;
+
+}
+
+.main-welcome {
+    top: 200px;
+    position: relative;
 }
 
 .full-height {
