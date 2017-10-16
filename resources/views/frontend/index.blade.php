@@ -3,7 +3,7 @@
     <div class="overlay dark-2"></div>
     <div class="player" id="player">
         <video id="video-container" preload="auto" loop>
-            <source src="/storage/videos/Jack-Broadbent.mp4" type="video/mp4">
+            <source src="{{ env('APP_STORAGE_HOST') }}/storage/videos/Jack-Broadbent.mp4" type="video/mp4">
             Your browser does not support the <code>video</code> element.
         </video>
     </div>
@@ -24,14 +24,16 @@
 
                     <div class="links">
                         <a href="/blog">Blog</a>
-                        <a href="/tail">Lovely Tail</a>
+                        <a href="/biography">Biography</a>
+                        {{--<a href="/tail">Lovely Tail</a>--}}
                         @if(!Auth::check())
                             <a href="/login">Login</a>
                         @endif
                     </div>
                     <div class="links contact-me">
+                        <a href="https://github.com/simonfuu" target="_blank"><i class="fa fa-github" aria-hidden="true"></i> GITHUB</a>
                         <a href="http://weibo.com/apenggg" target="_blank"><i class="fa fa-weibo" aria-hidden="true"></i> 微博</a>
-                        <a href="javascript:;"><i class="fa fa-wechat" aria-hidden="true"></i> 微信</a>
+                        {{--<a href="javascript:;"><i class="fa fa-wechat" aria-hidden="true"></i> 微信</a>--}}
                         <a href="mailto:contact@fushupeng.com"><i class="fa fa-envelope-o" aria-hidden="true"></i> E-mail</a>
                     </div>
                 </div>
@@ -42,6 +44,9 @@
             <a href="javascript:;" id="video-volume" data-volume="0" data-video-id="i-lA5nAZvII">
                 <i class="fa fa-volume-off" aria-hidden="true"></i>
             </a>
+        </div>
+        <div class="footer text-center">
+            @include('layouts.footer')
         </div>
     </div>
     <div class="gfwBlockCheck hidden"></div>

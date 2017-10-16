@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
+    Route::get('/', 'IndexController@showIndex');
 });
 
-Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
+Route::group(['prefix' => 'blog', 'namespace' => 'Frontend\\Blog'], function () {
     Route::get('/', 'IndexController@showIndex');
 });
