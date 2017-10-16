@@ -1,4 +1,7 @@
+/public/videos/*
+/public/images/*
+/public/others/*
 !.gitignore
 !/public/videos/Jack-Broadbent.mp4
 !/public/images/avatar.jpeg
-
+!/public/images/upyun.png

@@ -141,19 +141,22 @@ a {
 }
 
 .video-volume {
-    bottom: 85px;
+    bottom: 100px;
     width: 100%;
     position: fixed;
 }
 
+footer {
+    padding-bottom: 20px;
+}
+
 .footer {
-    bottom: 20px;
+    bottom: 0;
     width: 100%;
     position: fixed;
 }
 
 .footer > footer > a {
-
     color: #fff;
     text-decoration: none;
     text-transform: uppercase;
@@ -194,7 +197,6 @@ a {
     font-weight: normal;
     font-size: 12px;
     margin-bottom: 5px;
-
 }
 
 @media only screen and (max-width: 768px) {
