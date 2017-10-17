@@ -17,4 +17,32 @@
     </div>
 </div>
 
+<!-- reword Modal -->
+<div class="modal fade" id="rewordModal" tabindex="-1" role="dialog" aria-labelledby="rewordModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="reword-header text-center">
+                    <i class="fa fa-quote-left fa-2x" aria-hidden="true"></i>
+                    <span>&nbsp;&nbsp;Thank you!&nbsp;&nbsp;</span>
+                    <i class="fa fa-quote-right fa-2x" aria-hidden="true"></i>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <div><img src="{{ env('APP_CDN_HOST') }}/storage/images/qr-alipay.png" width="200" alt=""></div>
+                        <div class="reword-options"><img src="{{ env('APP_CDN_HOST') }}/storage/images/alipay.png" height="50" alt=""></div>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <div><img src="{{ env('APP_CDN_HOST') }}/storage/images/qr-wechat.png" width="200" alt=""></div>
+                        <div class="reword-options"><img src="{{ env('APP_CDN_HOST') }}/storage/images/wechat-pay.png" height="50" alt=""></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection

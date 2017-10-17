@@ -8,7 +8,7 @@
                 </code>
             </h3>
             <p>
-                {{ $amount }} item(s) found.
+                <code>Notice: {{ $amount }} item(s) found.</code>
             </p>
         </div>
     </div>

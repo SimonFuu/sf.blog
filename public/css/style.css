@@ -16,6 +16,17 @@ a {
     color: rgb(72, 161, 86);
 }
 
+.reword-header {
+    margin: 20px;
+}
+
+.reword-header > span {
+    font-size: 32px;
+}
+.reword-options {
+    margin: 20px;
+    line-height: 80px;
+}
 .numbers {
     font-family: Georgia, "Times New Roman", Times, serif;
 }

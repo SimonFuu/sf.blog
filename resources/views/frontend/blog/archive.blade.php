@@ -41,5 +41,6 @@
                 <strong>赏</strong>
             </span>
         </div>
+        @include('frontend.blog.common.comment')
     </section>
 @endsection

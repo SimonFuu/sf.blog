@@ -23,7 +23,7 @@ class ArchivesController extends BlogController
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
             -> where('archives.id', $id)
             -> where('archives.deleteAt', '>', $now)
-            -> where('archives.publishAt', '>=', $now)
+            -> where('archives.publishAt', '<=', $now)
             -> first();
         if (is_null($archive)) {
             return abort(404);
