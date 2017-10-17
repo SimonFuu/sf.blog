@@ -13,8 +13,5 @@ namespace App\Http\Controllers\Frontend\Blog;
 
 class IndexController extends BlogController
 {
-    public function showIndex()
-    {
-        return view('frontend.blog.index');
-    }
+
 }

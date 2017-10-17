@@ -17,4 +17,9 @@ class IndexController extends FrontendController
     {
         return view('frontend.index');
     }
+
+    public function showAbout()
+    {
+        return view('frontend.about');
+    }
 }

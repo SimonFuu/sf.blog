@@ -1,3 +1,7 @@
+/**
+ * 绑定音量按钮点击事件
+ * @param gfwBlock
+ */
 var videoVolume = function (gfwBlock) {
     var videoMuted = true;
     var volumeBtn = $('#video-volume');
@@ -40,6 +44,9 @@ var videoVolume = function (gfwBlock) {
     }
 };
 
+/**
+ * 引用youtube视频
+ */
 var youtubeInclude = function () {
     var player = $('#player');
     player.html('');
@@ -66,6 +73,10 @@ var youtubeInclude = function () {
     });
 };
 
+/**
+ * GFW检测
+ * @param cb
+ */
 var gfwBlockCheck = function (cb) {
     var url = '//graph.facebook.com/feed?callback=h';
     var xhr = new XMLHttpRequest();
@@ -86,6 +97,9 @@ var gfwBlockCheck = function (cb) {
     }, 1000);
 };
 
+/**
+ * 加载首页的Video
+ */
 var indexVideoLoader = function () {
     if ($('.gfwBlockCheck').length > 0) {
         gfwBlockCheck(function(blocked) {
@@ -98,6 +112,23 @@ var indexVideoLoader = function () {
     }
 };
 
+/**
+ * 调整blog-right的最低高度
+ */
+var adjustRightSectionHeight = function () {
+    var calculator = function (blogMain) {
+        if (blogMain.length > 0) {
+            var footer = $('footer');
+            footerHeight = footer.length > 0 ? footer.height() + parseInt(footer.css('padding-bottom')) + 10 : 0;
+            $('.blog-right-section').css('min-height', $(window).height() - parseInt(blogMain.css('margin-top')) - footerHeight);
+        }
+    };
+    var blogMain = $('.blog-main');
+    calculator(blogMain);
+    $(window).on('resize', calculator(blogMain));
+};
+
 $(document).ready(function () {
     indexVideoLoader();
+    adjustRightSectionHeight();
 });

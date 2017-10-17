@@ -16,5 +16,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
 });
 
 Route::group(['prefix' => 'blog', 'namespace' => 'Frontend\\Blog'], function () {
-    Route::get('/', 'IndexController@showIndex');
+    Route::get('/', 'CategoryController@showCategoryArchives');
+    Route::get('/category/{id}', 'CategoryController@showCategoryArchives');
+    Route::get('/archive/{id}', 'ArchivesController@showArchive');
+});
+Route::group(['namespace' => 'Frontend'], function () {
+    Route::get('/about', 'IndexController@showAbout');
 });
