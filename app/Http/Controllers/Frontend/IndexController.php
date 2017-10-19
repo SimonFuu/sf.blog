@@ -11,6 +11,8 @@
 namespace App\Http\Controllers\Frontend;
 
 
+use Illuminate\Support\Facades\DB;
+
 class IndexController extends FrontendController
 {
     public function showIndex()
@@ -21,5 +23,10 @@ class IndexController extends FrontendController
     public function showAbout()
     {
         return view('frontend.about');
+    }
+
+    public function showAllDaily()
+    {
+
     }
 }

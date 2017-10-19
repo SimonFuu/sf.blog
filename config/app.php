@@ -125,6 +125,8 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'cdn' => env('APP_ENV') === 'local' ? '' : env('APP_CDN_HOST'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

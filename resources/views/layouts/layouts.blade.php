@@ -15,7 +15,7 @@
     @else
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ env('APP_CDN_HOST') }}/css/style.css?v={{ env('APP_STATIC_FILE_VERSION') }}">
+    <link rel="stylesheet" href="{{ config('app.cdn') }}/css/style.css?v={{ env('APP_STATIC_FILE_VERSION') }}">
     @endif
 
 </head>
@@ -29,8 +29,8 @@
 <script src="/js/functions.js?v={{ time() }}"></script>
 @else
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="{{ env('APP_CDN_HOST') }}/plugins/jquery.youtube.background.js"></script>
-<script src="{{ env('APP_CDN_HOST') }}/js/functions.js?v={{ env('APP_STATIC_FILE_VERSION') }}"></script>
+<script src="{{ config('app.cdn') }}/plugins/jquery.youtube.background.js"></script>
+<script src="{{ config('app.cdn') }}/js/functions.js?v={{ env('APP_STATIC_FILE_VERSION') }}"></script>
 @endif
 </body>
 </html>

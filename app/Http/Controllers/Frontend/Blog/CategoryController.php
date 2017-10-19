@@ -44,7 +44,6 @@ class CategoryController extends BlogController
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')
             -> paginate(5);
-        $amount = count($archives) > 0 ? json_decode(json_encode($archives)) -> total : 0;
-        return view('frontend.blog.index', ['archives' => $archives, 'header' => $header, 'amount' => $amount]);
+        return view('frontend.blog.list', ['archives' => $archives, 'header' => $header]);
     }
 }

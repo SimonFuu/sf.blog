@@ -31,12 +31,12 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 text-center">
-                        <div><img src="{{ env('APP_CDN_HOST') }}/storage/images/qr-alipay.png" width="200" alt=""></div>
-                        <div class="reword-options"><img src="{{ env('APP_CDN_HOST') }}/storage/images/alipay.png" height="50" alt=""></div>
+                        <div><img src="{{ config('app.cdn') }}/storage/images/qr-alipay.png" width="200" alt=""></div>
+                        <div class="reword-options"><img src="{{ config('app.cdn') }}/storage/images/alipay.png" height="50" alt=""></div>
                     </div>
                     <div class="col-sm-6 text-center">
-                        <div><img src="{{ env('APP_CDN_HOST') }}/storage/images/qr-wechat.png" width="200" alt=""></div>
-                        <div class="reword-options"><img src="{{ env('APP_CDN_HOST') }}/storage/images/wechat-pay.png" height="50" alt=""></div>
+                        <div><img src="{{ config('app.cdn') }}/storage/images/qr-wechat.png" width="200" alt=""></div>
+                        <div class="reword-options"><img src="{{ config('app.cdn') }}/storage/images/wechat-pay.png" height="50" alt=""></div>
                     </div>
                 </div>
 

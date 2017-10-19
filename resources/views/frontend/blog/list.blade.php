@@ -8,7 +8,7 @@
                 </code>
             </h3>
             <p>
-                <code>Notice: {{ $amount }} item(s) found.</code>
+                <code>Notice: {{ count($archives) }} item(s) found.</code>
             </p>
         </div>
     </div>
