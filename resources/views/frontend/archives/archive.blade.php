@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-lg-6 text-left">
                     @if(!is_null($archive -> prepArchive))
-                        <a href="/blog/archive/{{ $archive -> prepArchive -> id }}">
+                        <a href="{{ url('archive', $archive -> prepArchive -> id) }}">
                             <i class="fa fa-angle-double-left" aria-hidden="true"></i>
 
                             {{ $archive -> prepArchive -> title }}
@@ -25,7 +25,7 @@
                 </div>
                 <div class="col-md-6 col-sm-6 col-lg-6 text-right">
                     @if(!is_null($archive -> nextArchive))
-                        <a href="/blog/archive/{{ $archive -> nextArchive -> id }}">
+                        <a href="{{ url('archive',$archive -> nextArchive -> id) }}">
                             {{ $archive -> nextArchive -> title }}
                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                         </a>
@@ -41,6 +41,6 @@
                 <strong>赏</strong>
             </span>
         </div>
-        @include('frontend.blog.common.comment')
+        @include('frontend.archives.common.comment')
     </section>
 @endsection

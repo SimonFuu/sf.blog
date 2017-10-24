@@ -27,6 +27,12 @@ class IndexController extends FrontendController
 
     public function showAllDaily()
     {
+        return view('frontend.daily');
 
+    }
+
+    public function showResume()
+    {
+        return view('frontend.resume');
     }
 }

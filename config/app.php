@@ -127,6 +127,7 @@ return [
 
     'cdn' => env('APP_ENV') === 'local' ? '' : env('APP_CDN_HOST'),
 
+    'storage_host' => env('APP_ENV') === 'local' ? '' : env('APP_STORAGE_HOST'),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -237,6 +237,7 @@ footer {
 .blog-right-section {
     padding-right: 15px;
     padding-left: 15px;
+    margin-top: -50px;
     margin-right: auto;
     margin-left: auto;
 }

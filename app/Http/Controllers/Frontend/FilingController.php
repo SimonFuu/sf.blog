@@ -8,7 +8,7 @@
  * contact@fushupeng.com
  */
 
-namespace App\Http\Controllers\Frontend\Blog;
+namespace App\Http\Controllers\Frontend;
 
 
 use Illuminate\Support\Facades\DB;
@@ -31,7 +31,7 @@ class FilingController extends BlogController
         $count = count($archives);
         if ($count > 0) {
             $header = sprintf('$filing = \'%s\';', $month);
-            return view('frontend.blog.list', ['archives' => $archives, 'header' => $header]);
+            return view('frontend.archives.list', ['archives' => $archives, 'header' => $header]);
         } else {
             return abort(404);
         }

@@ -16,13 +16,13 @@
         @foreach($archives as $archive)
             <div class="blog-archive-block">
                 <div class="blog-archive-title">
-                    <h2><a href="/blog/archive/{{ $archive -> id }}">{{ $archive -> title }}</a></h2>
+                    <h2><a href="{{ url('archive', $archive -> id) }}">{{ $archive -> title }}</a></h2>
                 </div>
                 <div class="blog-archive-content">
                     <span>{{ $archive -> body }}</span>
                 </div>
                 <div class="blog-archive-read-more">
-                    <a href="/blog/archive/{{ $archive -> id }}">Read more</a>
+                    <a href="{{ url('archive', $archive -> id) }}">Read more</a>
                 </div>
                 <div class="blog-archive-category-and-publish text-right">
                     <i>in {{ $archive -> name }} | <span class="numbers">{{ $archive -> publishAt }}</span></i>

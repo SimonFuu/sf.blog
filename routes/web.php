@@ -11,18 +11,30 @@
 |
 */
 
+Route::get('/', function () {
+    return 111;
+});
+Route::group(['prefix' => '/manage', 'namespace' => 'Backend'], function () {
+    Route::get('/', function () {
+        return view('backend.index');
+    });
+});
+
+
 Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
     Route::get('/', 'IndexController@showIndex');
+
+    Route::get('/about', 'IndexController@showAbout');
+    Route::get('/archive/{id}', 'ArchivesController@showArchive');
+
+    Route::get('/blog', 'CategoryController@showCategoryArchives');
+
+    Route::get('/category/{id}', 'CategoryController@showCategoryArchives');
+
     Route::get('/daily', 'IndexController@showAllDaily');
 
+    Route::get('/filing/{month}', 'FilingController@showFilingArchives');
+
+    Route::get('/resume', 'IndexController@showResume');
 });
 
-Route::group(['prefix' => 'blog', 'namespace' => 'Frontend\\Blog'], function () {
-    Route::get('/', 'CategoryController@showCategoryArchives');
-    Route::get('/category/{id}', 'CategoryController@showCategoryArchives');
-    Route::get('/archive/{id}', 'ArchivesController@showArchive');
-    Route::get('/filing/{month}', 'FilingController@showFilingArchives');
-});
-Route::group(['namespace' => 'Frontend'], function () {
-    Route::get('/about', 'IndexController@showAbout');
-});

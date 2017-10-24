@@ -8,7 +8,7 @@
  * contact@fushupeng.com
  */
 
-namespace App\Http\Controllers\Frontend\Blog;
+namespace App\Http\Controllers\Frontend;
 
 
 use Illuminate\Support\Facades\DB;
@@ -30,7 +30,7 @@ class ArchivesController extends BlogController
         } else {
             $archive -> nextArchive = $this -> getNextArchive($archive -> publishAt);
             $archive -> prepArchive = $this -> getPreArchive($archive -> publishAt);
-            return view('frontend.blog.archive', ['archive' => $archive]);
+            return view('frontend.archives.archive', ['archive' => $archive]);
         }
     }
 

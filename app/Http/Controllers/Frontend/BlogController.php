@@ -8,10 +8,8 @@
  * contact@fushupeng.com
  */
 
-namespace App\Http\Controllers\Frontend\Blog;
+namespace App\Http\Controllers\Frontend;
 
-
-use App\Http\Controllers\Frontend\FrontendController;
 
 class BlogController extends FrontendController
 {

@@ -8,7 +8,7 @@
  * contact@fushupeng.com
  */
 
-namespace App\Http\Controllers\Frontend\Blog;
+namespace App\Http\Controllers\Frontend;
 
 
 use Illuminate\Support\Facades\DB;
@@ -43,7 +43,7 @@ class CategoryController extends BlogController
             })
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')
-            -> paginate(5);
-        return view('frontend.blog.list', ['archives' => $archives, 'header' => $header]);
+            -> paginate(1);
+        return view('frontend.archives.list', ['archives' => $archives, 'header' => $header]);
     }
 }
