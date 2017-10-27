@@ -17,12 +17,11 @@ class FilingController extends BlogController
 {
     public function showFilingArchives($month = '1990-01')
     {
-        $now = date('Y-m-d H:i:s', time());
         $archives = DB::table('archives')
             -> select('archives.id', 'archives.title', 'archives.body', 'archives.publishAt', 'categories.name', 'archives.isTop')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
-            -> where('archives.deleteAt', '>', $now)
-            -> where('archives.publishAt', '<=', $now)
+            -> where('archives.deleteAt', '>', $this -> now())
+            -> where('archives.publishAt', '<=', $this -> now())
             -> where('archives.filing', $month)
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')

@@ -10,4 +10,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    private $now = null;
+    protected function now()
+    {
+        if (is_null($this -> now)) {
+            $this -> now = date('Y-m-d H:i:s');
+        }
+        return $this -> now;
+    }
 }

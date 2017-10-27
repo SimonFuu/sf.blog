@@ -32,3 +32,30 @@ td > a:hover {
     margin-left: 15px;
     margin-right: 15px;
 }
+
+/**
+    Set Actions
+ */
+.set-actions-icons-list {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.set-actions-icons-list > thead > tr > td {
+    padding-bottom: 10px;
+    min-width: 38px;
+}
+.set-actions-icons-list > tbody > tr > td {
+    min-width: 38px;
+}
+
+.set-actions-icon-label {
+    width: 100%;
+    font-weight: normal;
+}
+
+.set-action-icon, .set-actions-icon-button {
+    width: 38px;
+    text-align: center;
+    max-width: 38px;
+}

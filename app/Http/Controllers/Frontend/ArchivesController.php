@@ -17,13 +17,12 @@ class ArchivesController extends BlogController
 {
     public function showArchive($id = 0)
     {
-        $now = date('Y-m-d H:i:s', time());
         $archive = DB::table('archives')
             -> select('archives.id', 'archives.title', 'archives.body', 'categories.name', 'archives.publishAt')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
             -> where('archives.id', $id)
-            -> where('archives.deleteAt', '>', $now)
-            -> where('archives.publishAt', '<=', $now)
+            -> where('archives.deleteAt', '>', $this -> now())
+            -> where('archives.publishAt', '<=', $this -> now())
             -> first();
         if (is_null($archive)) {
             return abort(404);

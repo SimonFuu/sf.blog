@@ -17,7 +17,6 @@ class CategoryController extends BlogController
 {
     public function showCategoryArchives($id = 0)
     {
-        $now = date('Y-m-d H:i:s', time());
         if($id != 0) {
             $category = DB::table('categories')
                 -> select('name')
@@ -34,9 +33,9 @@ class CategoryController extends BlogController
         $archives = DB::table('archives')
             -> select('archives.id', 'archives.title', 'archives.body', 'archives.publishAt', 'categories.name', 'archives.isTop')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
-            -> where(function ($query) use ($id, $now) {
-                $query -> where('archives.deleteAt', '>', $now);
-                $query -> where('archives.publishAt', '<=', $now);
+            -> where(function ($query) use ($id) {
+                $query -> where('archives.deleteAt', '>', $this -> now());
+                $query -> where('archives.publishAt', '<=', $this -> now());
                 if ($id != 0) {
                     $query -> where('archives.categoryId', $id);
                 }
