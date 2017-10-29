@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if(env('APP_ENV') === 'local')
     <link rel="stylesheet" href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css">

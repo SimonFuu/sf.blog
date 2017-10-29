@@ -8,6 +8,7 @@
                         <h3 class="box-title">{{ is_null($action) ? 'Add Action' : 'Edit Action' }}</h3>
                     </div>
                     <!-- /.box-header -->
+
                     {!! Form::open(['url' => route('adminStoreActions'), 'method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form']) !!}
                     <!-- class include {'form-horizontal'|'form-inline'} -->
                         <div class="box-body table-responsive no-padding">

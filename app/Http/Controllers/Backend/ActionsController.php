@@ -18,7 +18,7 @@ class ActionsController extends BackendController
 {
     public function showIndex(Request $request)
     {
-        return view('backend.acl.roles.list');
+        return view('backend.acl.actions.list');
     }
 
     public function showForm($id = 0)
@@ -47,13 +47,14 @@ class ActionsController extends BackendController
                 $icons[] = $iconItem -> icon;
             }
         }
-        return view('backend.acl.roles.form', ['action' => $action, 'menus' => $menus, 'icons' => json_encode($icons)]);
+        return view('backend.acl.actions.form', ['action' => $action, 'menus' => $menus, 'icons' => json_encode($icons)]);
     }
 
     public function delete()
     {
         
     }
+
     public function adminStoreRoles(Request $request)
     {
         
