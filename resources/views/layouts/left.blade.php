@@ -1,6 +1,6 @@
 <section class="blog-left-section text-right">
     <div class="avatar">
-        <a href="/"><img src="{{ config('app.cdn') }}/storage/images/avatar.jpeg" width="80" alt="avatar"></a>
+        <a href="/"><img src="{{ config('app.storage_host') }}/storage/images/avatar.jpeg" width="80" alt="avatar"></a>
     </div>
     <div class="blog-introduce blog-nav">
         <h4>Simon Fu's Blog</h4>

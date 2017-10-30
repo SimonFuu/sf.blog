@@ -11,7 +11,28 @@
 namespace App\Http\Controllers\Backend;
 
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 class RolesController extends BackendController
 {
+    public function showIndex()
+    {
 
+    }
+
+    public function showForm(Request $request)
+    {
+
+    }
+
+    public function store(Request $request)
+    {
+
+    }
+
+    public function delete(Request $request)
+    {
+
+    }
 }

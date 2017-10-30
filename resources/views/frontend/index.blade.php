@@ -3,7 +3,7 @@
     <div class="overlay dark-2"></div>
     <div class="player" id="player">
         <video id="video-container" preload="auto" loop>
-            <source src="{{ config('app.cdn') }}/storage/videos/Jack-Broadbent.mp4" type="video/mp4">
+            <source src="{{ config('app.storage_host') }}/storage/videos/Jack-Broadbent.mp4" type="video/mp4">
             Your browser does not support the <code>video</code> element.
         </video>
     </div>
@@ -11,8 +11,8 @@
         <div class="container">
             <div class="user-info text-right">
                 @if(Auth::check())
-                    <span><a href="/manage">控制台</a></span>
-                    <span>付淑鹏</span> {{--{{ Auth::user() -> name  }}--}}
+                    <span><a href="{{ route('adminIndex') }}" target="_blank">控制台</a></span>
+                    <span>{{ Auth::user() -> name }}</span>
                     <span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
                 @endif
             </div>
@@ -27,7 +27,7 @@
                         <a href="/resume">Resume</a>
                         {{--<a href="/tail">Lovely Tail</a>--}}
                         @if(!Auth::check())
-                            <a href="/login">Login</a>
+                            <a href="#" data-toggle="modal" data-target="#loginModal">Login</a>
                         @endif
                     </div>
                     <div class="links contact-me">

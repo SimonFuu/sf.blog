@@ -88,9 +88,11 @@ a {
 .user-info {
     margin-top: 20px;
 }
+
 .user-info > span {
     padding: 0 5px 0;
 }
+
 .user-info > span > a {
     color: #fff;
     text-decoration: none;
@@ -99,7 +101,6 @@ a {
 .user-info > span > a:hover {
     color: #cccccc;
     text-decoration: none;
-
 }
 
 .main-welcome {
@@ -187,6 +188,18 @@ footer {
     border: 1px solid #fff;
     color: #fff;
     cursor: pointer;
+}
+
+/*#loginModal {*/
+    /*filter:alpha(Opacity=80);*/
+    /*-moz-opacity:0.8;*/
+    /*opacity: 0.8;*/
+    /*z-index:100;*/
+/*}*/
+
+.login-form {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /**

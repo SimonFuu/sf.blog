@@ -5,13 +5,13 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Actions</h3>
-                        <div class="box-tools"><a href="{{ route('adminAddActions') }}" class="btn btn-sm btn-info"><strong>Add</strong></a></div>
+                        <h3 class="box-title">Roles</h3>
+                        <div class="box-tools"><a href="{{ route('adminAddRoles') }}" class="btn btn-sm btn-info"><strong>Add</strong></a></div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         {{--<div class="search-header">--}}
-                            {{--{!! Form::open(['url' => route('adminActions'), 'method' => '', 'class' => 'form-inline', 'role' => 'form']) !!}--}}
+                            {{--{!! Form::open(['url' => route('adminRoles'), 'method' => '', 'class' => 'form-inline', 'role' => 'form']) !!}--}}
                             {{--<!-- class include {'form-horizontal'|'form-inline'} -->--}}
                                 {{--<!--- Email Field --->--}}
                                 {{--<div class="form-group form-group-sm">--}}
@@ -34,23 +34,23 @@
                                     <th>Menu Level</th>
                                     <th>Weight</th>
                                     <th>Description</th>
-                                    <th>Action</th>
+                                    <th>Role</th>
                                 </tr>
-                                @foreach($actions as $action)
+                                @foreach($roles as $role)
                                     @php
-                                        $urls = json_decode($action -> actions, true);
+                                        $urls = json_decode($role -> roles, true);
                                         $urls = (implode('<br/>', ($urls ? $urls : [])))
                                     @endphp
                                 <tr>
-                                    <td>{{ $action -> id }}</td>
-                                    <td><i class="fa {{ $action -> icon }}" aria-hidden="true"></i>&nbsp;&nbsp;{{ $action -> actionName }}</td>
+                                    <td>{{ $role -> id }}</td>
+                                    <td><i class="fa {{ $role -> icon }}" aria-hidden="true"></i>&nbsp;&nbsp;{{ $role -> roleName }}</td>
                                     <td>{!! $urls !!}</td>
-                                    <td>{{ $action -> parentId == 0 ? 'Level 1' : 'Level 2' }}</td>
-                                    <td>{{ $action -> weight }}</td>
-                                    <td>{{ $action -> description }}</td>
+                                    <td>{{ $role -> parentId == 0 ? 'Level 1' : 'Level 2' }}</td>
+                                    <td>{{ $role -> weight }}</td>
+                                    <td>{{ $role -> description }}</td>
                                     <td>
-                                        <a href="{{ route('adminEditActions', ['id' => $action -> id]) }}"><i class="fa fa-edit"></i></a>
-                                        <a href="{{ route('adminDeleteActions', ['id' => $action -> id]) }}"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('adminEditRoles', ['id' => $role -> id]) }}"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('adminDeleteRoles', ['id' => $role -> id]) }}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -59,7 +59,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        {{ $actions -> links() }}
+                        {{ $roles -> links() }}
                     </div>
                 </div>
                 <!-- /.box -->

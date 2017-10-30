@@ -5,13 +5,13 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Actions</h3>
-                        <div class="box-tools"><a href="{{ route('adminAddActions') }}" class="btn btn-sm btn-info"><strong>Add</strong></a></div>
+                        <h3 class="box-title">Users</h3>
+                        <div class="box-tools"><a href="{{ route('adminAddUsers') }}" class="btn btn-sm btn-info"><strong>Add</strong></a></div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         {{--<div class="search-header">--}}
-                            {{--{!! Form::open(['url' => route('adminActions'), 'method' => '', 'class' => 'form-inline', 'role' => 'form']) !!}--}}
+                            {{--{!! Form::open(['url' => route('adminUsers'), 'method' => '', 'class' => 'form-inline', 'role' => 'form']) !!}--}}
                             {{--<!-- class include {'form-horizontal'|'form-inline'} -->--}}
                                 {{--<!--- Email Field --->--}}
                                 {{--<div class="form-group form-group-sm">--}}
@@ -36,21 +36,21 @@
                                     <th>Description</th>
                                     <th>Action</th>
                                 </tr>
-                                @foreach($actions as $action)
+                                @foreach($users as $user)
                                     @php
-                                        $urls = json_decode($action -> actions, true);
+                                        $urls = json_decode($user -> users, true);
                                         $urls = (implode('<br/>', ($urls ? $urls : [])))
                                     @endphp
                                 <tr>
-                                    <td>{{ $action -> id }}</td>
-                                    <td><i class="fa {{ $action -> icon }}" aria-hidden="true"></i>&nbsp;&nbsp;{{ $action -> actionName }}</td>
+                                    <td>{{ $user -> id }}</td>
+                                    <td><i class="fa {{ $user -> icon }}" aria-hidden="true"></i>&nbsp;&nbsp;{{ $user -> userName }}</td>
                                     <td>{!! $urls !!}</td>
-                                    <td>{{ $action -> parentId == 0 ? 'Level 1' : 'Level 2' }}</td>
-                                    <td>{{ $action -> weight }}</td>
-                                    <td>{{ $action -> description }}</td>
+                                    <td>{{ $user -> parentId == 0 ? 'Level 1' : 'Level 2' }}</td>
+                                    <td>{{ $user -> weight }}</td>
+                                    <td>{{ $user -> description }}</td>
                                     <td>
-                                        <a href="{{ route('adminEditActions', ['id' => $action -> id]) }}"><i class="fa fa-edit"></i></a>
-                                        <a href="{{ route('adminDeleteActions', ['id' => $action -> id]) }}"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('adminEditUsers', ['id' => $user -> id]) }}"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ route('adminDeleteUsers', ['id' => $user -> id]) }}"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -59,7 +59,7 @@
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        {{ $actions -> links() }}
+                        {{ $users -> links() }}
                     </div>
                 </div>
                 <!-- /.box -->

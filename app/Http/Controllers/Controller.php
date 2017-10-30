@@ -10,7 +10,14 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * 分页，单页显示数量
+     */
+    const PER_PAGE_RECORD_COUNT = 5;
+
     private $now = null;
+
     protected function now()
     {
         if (is_null($this -> now)) {
@@ -18,4 +25,6 @@ class Controller extends BaseController
         }
         return $this -> now;
     }
+
+
 }

@@ -20,19 +20,18 @@ class FilingController extends BlogController
         $archives = DB::table('archives')
             -> select('archives.id', 'archives.title', 'archives.body', 'archives.publishAt', 'categories.name', 'archives.isTop')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
-            -> where('archives.deleteAt', '>', $this -> now())
+            -> where('archives.isDelete', 0)
             -> where('archives.publishAt', '<=', $this -> now())
             -> where('archives.filing', $month)
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')
-            -> paginate(5);
-
+            -> paginate(self::PER_PAGE_RECORD_COUNT);
         $count = count($archives);
         if ($count > 0) {
             $header = sprintf('$filing = \'%s\';', $month);
-            return view('frontend.archives.list', ['archives' => $archives, 'header' => $header]);
         } else {
-            return abort(404);
+            $header = sprintf('$filing = %s;', $month);
         }
+        return view('frontend.archives.list', ['archives' => $archives, 'header' => $header]);
     }
 }

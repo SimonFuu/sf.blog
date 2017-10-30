@@ -47,18 +47,18 @@ class AppServiceProvider extends ServiceProvider
         view() -> composer('layouts.left', function ($view) use ($now) {
             $catalogs = DB::table('catalogs')
                 -> select('name', 'action')
-                -> where('deleteAt', '>', $now)
+                -> where('isDelete', 0)
                 -> where('isLeftSideMenu', 1)
                 -> orderBy('weight', 'ASC')
                 -> get();
             $categories = DB::table('categories')
                 -> select('id', 'name')
-                -> where('deleteAt', '>', $now)
+                -> where('isDelete', 0)
                 -> orderBy('weight', 'ASC')
                 -> get();
             $filing = DB::table('archives')
                 -> select(DB::raw('distinct filing'))
-                -> where('deleteAt', '>', $now)
+                -> where('isDelete', 0)
                 -> orderBy('filing', 'DESC')
                 -> get();
             $view -> with('catalogs', count($catalogs) > 0 ? $catalogs : null);

@@ -15,11 +15,30 @@ Route::group(['prefix' => '/manage', 'namespace' => 'Backend'], function () {
     Route::get('/', function () {
         return view('backend.index');
     }) -> name('adminIndex');
-    Route::get('/acl/actions', 'ActionsController@showIndex') -> name('adminActions');
-    Route::get('/acl/actions/add', 'ActionsController@showForm') -> name('adminAddActions');
-    Route::get('/acl/actions/edit/{id}', 'ActionsController@showForm') -> name('adminEditActions');
-    Route::get('/acl/actions/delete/{id}', 'ActionsController@delete') -> name('adminDeleteActions');
-    Route::post('/acl/actions/store', 'ActionsController@store') -> name('adminStoreActions');
+
+    Route::group(['prefix' => '/acl/actions'], function () {
+        Route::get('/', 'ActionsController@showIndex') -> name('adminActions');
+        Route::get('/add', 'ActionsController@showForm') -> name('adminAddActions');
+        Route::get('/delete', 'ActionsController@delete') -> name('adminDeleteActions');
+        Route::get('/edit', 'ActionsController@showForm') -> name('adminEditActions');
+        Route::post('/store', 'ActionsController@store') -> name('adminStoreActions');
+    });
+
+    Route::group(['prefix' => '/acl/roles'], function () {
+        Route::get('/', 'RolesController@showIndex') -> name('adminRoles');
+        Route::get('/add', 'RolesController@showForm') -> name('adminAddRoles');
+        Route::get('/delete', 'RolesController@delete') -> name('adminDeleteRoles');
+        Route::get('/edit', 'RolesController@showForm') -> name('adminEditRoles');
+        Route::post('/store', 'RolesController@store') -> name('adminStoreRoles');
+    });
+
+    Route::group(['prefix' => '/acl/users'], function () {
+        Route::get('/', 'UsersController@showIndex') -> name('adminUsers');
+        Route::get('/add', 'UsersController@showForm') -> name('adminAddUsers');
+        Route::get('/delete', 'UsersController@delete') -> name('adminDeleteUsers');
+        Route::get('/edit', 'UsersController@showForm') -> name('adminEditUsers');
+        Route::post('/store', 'UsersController@store') -> name('adminStoreUsers');
+    });
 });
 
 

@@ -20,8 +20,39 @@
 
 </head>
 <body>
-    @yield('body')
+@yield('body')
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['url' => '/login', 'method' => 'POST', 'class' => 'form-horizontal login-form', 'role' => 'form']) !!}
+                    <!-- class include {'form-horizontal'|'form-inline'} -->
+                    <!--- Email Field --->
+                    <div class="form-group">
+                        {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
+                        {!! Form::text('email', null, ['class' => 'form-control']) !!}
+                    </div>
+                    <!--- Password Field --->
+                    <div class="form-group">
+                        {!! Form::label('password', 'Password', ['class' => 'control-label']) !!}
+                        {!! Form::password('password', ['class' => 'form-control']) !!}
+                    </div>
 
+                    <div class="form-group text-right">
+                        <button class="btn btn-sm btn-info">Log in</button>
+                    </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 @if(env('APP_ENV') === 'local')
 <script src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
