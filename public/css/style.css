@@ -190,13 +190,6 @@ footer {
     cursor: pointer;
 }
 
-/*#loginModal {*/
-    /*filter:alpha(Opacity=80);*/
-    /*-moz-opacity:0.8;*/
-    /*opacity: 0.8;*/
-    /*z-index:100;*/
-/*}*/
-
 .login-form {
     padding-left: 15px;
     padding-right: 15px;
@@ -250,7 +243,6 @@ footer {
 .blog-right-section {
     padding-right: 15px;
     padding-left: 15px;
-    margin-top: -50px;
     margin-right: auto;
     margin-left: auto;
 }

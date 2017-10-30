@@ -15,7 +15,7 @@
                             <div class="col-xs-8">
                                 <!--- Name Field --->
                                 <div class="form-group {{ $errors -> has('actionName') ? 'has-error' : ''}}">
-                                    {!! Form::label('actionName', '名称', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('actionName', 'Name', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         {!! Form::text('actionName', is_null($action) ? null : $action -> actionName, ['class' => 'form-control']) !!}
                                         @if($errors -> has('actionName'))
@@ -37,7 +37,7 @@
 
                                 <!--- Icon Field --->
                                 <div class="form-group {{ $errors -> has('icon') ? 'has-error' : ''}}">
-                                    {!! Form::label('icon', '图标', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('icon', 'Icon', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         <button class="btn btn-default btn-sm set-action-icon" type="button" data-toggle="modal" data-target="#setActionIconModal">
                                             <i class="fa {{ is_null($action) ? 'fa-circle-o' : $action -> icon }}" aria-hidden="true"></i>
@@ -52,7 +52,7 @@
 
                                 <!--- ParentId Field --->
                                 <div class="form-group {{ $errors -> has('parentId') ? 'has-error' : ''}}">
-                                    {!! Form::label('parentId', '父级菜单', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('parentId', 'Parent Menu', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         {!! Form::select('parentId', $menus, is_null($action) ? null : $action -> parentId, ['class' => 'form-control']) !!}
                                         @if($errors -> has('parentId'))
@@ -63,7 +63,7 @@
 
                                 <!--- Actions Field --->
                                 <div class="form-group {{ $errors -> has('actions') ? 'has-error' : ''}}">
-                                    {!! Form::label('Actions', '权限', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('Actions', 'Permissions', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         @if(!is_null($action))
                                             @php
@@ -80,7 +80,7 @@
                                 
                                 <!--- Description Field --->
                                 <div class="form-group {{ $errors -> has('description') ? 'has-error' : ''}}">
-                                    {!! Form::label('description', '描述', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('description', 'Description', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         {!! Form::textarea('description', is_null($action) ? null : $action -> description, ['class' => 'form-control', 'rows' => 5]) !!}
                                         @if($errors -> has('description'))
@@ -91,7 +91,7 @@
 
                                 <!--- Weight Field --->
                                 <div class="form-group {{ $errors -> has('weight') ? 'has-error' : ''}}">
-                                    {!! Form::label('weight', '权重', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('weight', 'weight', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         {!! Form::number('weight', is_null($action) ? 100 : $action -> weight, ['class' => 'form-control']) !!}
                                         @if($errors -> has('weight'))

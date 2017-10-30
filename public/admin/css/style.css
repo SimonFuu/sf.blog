@@ -59,3 +59,26 @@ td > a:hover {
     text-align: center;
     max-width: 38px;
 }
+
+/**
+    Set roles
+ */
+.child-role-action-label {
+    font-weight: normal;
+    margin-left: 15px;
+}
+.role-actions-list > div {
+    padding-left: 0;
+}
+
+/**
+    Set users
+ */
+.user-roles-list > div {
+    padding-left: 0;
+}
+.role-actions-list, .user-roles-list {
+    max-height: 375px;
+    overflow: auto;
+    margin-right: 0;
+}

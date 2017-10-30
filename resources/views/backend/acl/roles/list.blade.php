@@ -29,24 +29,14 @@
                             <tbody>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Url(s)</th>
-                                    <th>Menu Level</th>
-                                    <th>Weight</th>
-                                    <th>Description</th>
                                     <th>Role</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
                                 </tr>
                                 @foreach($roles as $role)
-                                    @php
-                                        $urls = json_decode($role -> roles, true);
-                                        $urls = (implode('<br/>', ($urls ? $urls : [])))
-                                    @endphp
                                 <tr>
                                     <td>{{ $role -> id }}</td>
-                                    <td><i class="fa {{ $role -> icon }}" aria-hidden="true"></i>&nbsp;&nbsp;{{ $role -> roleName }}</td>
-                                    <td>{!! $urls !!}</td>
-                                    <td>{{ $role -> parentId == 0 ? 'Level 1' : 'Level 2' }}</td>
-                                    <td>{{ $role -> weight }}</td>
+                                    <td>{{ $role -> roleName }}</td>
                                     <td>{{ $role -> description }}</td>
                                     <td>
                                         <a href="{{ route('adminEditRoles', ['id' => $role -> id]) }}"><i class="fa fa-edit"></i></a>

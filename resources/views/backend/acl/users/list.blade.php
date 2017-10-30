@@ -29,30 +29,22 @@
                             <tbody>
                                 <tr>
                                     <th>#</th>
+                                    <th>Username</th>
                                     <th>Name</th>
-                                    <th>Url(s)</th>
-                                    <th>Menu Level</th>
-                                    <th>Weight</th>
-                                    <th>Description</th>
+                                    <th>E-mail</th>
                                     <th>Action</th>
                                 </tr>
                                 @foreach($users as $user)
-                                    @php
-                                        $urls = json_decode($user -> users, true);
-                                        $urls = (implode('<br/>', ($urls ? $urls : [])))
-                                    @endphp
-                                <tr>
-                                    <td>{{ $user -> id }}</td>
-                                    <td><i class="fa {{ $user -> icon }}" aria-hidden="true"></i>&nbsp;&nbsp;{{ $user -> userName }}</td>
-                                    <td>{!! $urls !!}</td>
-                                    <td>{{ $user -> parentId == 0 ? 'Level 1' : 'Level 2' }}</td>
-                                    <td>{{ $user -> weight }}</td>
-                                    <td>{{ $user -> description }}</td>
-                                    <td>
-                                        <a href="{{ route('adminEditUsers', ['id' => $user -> id]) }}"><i class="fa fa-edit"></i></a>
-                                        <a href="{{ route('adminDeleteUsers', ['id' => $user -> id]) }}"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $user -> id }}</td>
+                                        <td>{{ $user -> username }}</td>
+                                        <td>{{ $user -> name }}</td>
+                                        <td>{{ $user -> email }}</td>
+                                        <td>
+                                            <a href="{{ route('adminEditUsers', ['id' => $user -> id]) }}"><i class="fa fa-edit"></i></a>
+                                            <a href="{{ route('adminDeleteUsers', ['id' => $user -> id]) }}"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

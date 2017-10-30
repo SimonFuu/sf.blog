@@ -30,6 +30,9 @@ class ActionsController extends BackendController
         $action = null;
         $menus = [];
         if ($request -> has('id')) {
+            if ($request -> id <= 5) {
+                return redirect(route('adminActions')) -> with('error', 'Unable to edit the system reserved action');
+            }
             $action = DB::table('system_actions')
                 -> select('id', 'actionName', 'url', 'icon', 'description', 'actions', 'weight', 'parentId')
                 -> where('isDelete', 0)
@@ -39,7 +42,7 @@ class ActionsController extends BackendController
                 return redirect() -> back() -> with('error', 'Item not found');
             }
         }
-        $menus['一级菜单'] = ['根目录'];
+        $menus['Level 1'] = ['Root'];
         $pActs = DB::table('system_actions')
             -> select('id', 'actionName')
             -> where('isDelete', 0)
@@ -50,7 +53,7 @@ class ActionsController extends BackendController
                 if ($request -> id == $pAct -> id) {
                     continue;
                 } else {
-                    $menus['二级菜单'][$pAct -> id] = $pAct -> actionName;
+                    $menus['Level 2'][$pAct -> id] = $pAct -> actionName;
                 }
             }
         }
@@ -79,23 +82,23 @@ class ActionsController extends BackendController
             'icon' => 'required|exists:system_icons,icon'
         ];
         $message = [
-            'actionName.required' => '请输入权限名称！',
-            'actionName.unique' => '已存在同名的权限，请确认！',
-            'actionName.max' => '权限名称不要超过:max个字符！',
-            'url.required' => '请输入左侧菜单URL地址！',
-            'url.max' => '长度请不要超过:max！',
-            'description.required' => '请输入权限描述',
-            'description.max' => '长度不要超过:max！',
-            'actions.required' => '请输入权限对应的URL地址，一行一个！',
-            'actions.max' => 'URL地址总体长度不要该超过:max！',
-            'parentId.required' => '请选择父级菜单',
-            'parentId.exists' => '选择的父级菜单不存在',
-            'weight.required' => '请输入菜单展示权重！',
-            'weight.numeric' => '菜单展示权重格式不正确，请输入:min-:max的数字！',
-            'weight.min' => '菜单展示权重格式不正确，请输入:min-:max的数字！',
-            'weight.max' => '菜单展示权重格式不正确，请输入:min-:max的数字！',
-            'icon.required' => '请选择菜单图标！',
-            'icon.exists' => '请选择系统提供的图标！'
+            'actionName.required' => 'Please enter the action name.',
+            'actionName.unique' => 'The action name is exist.',
+            'actionName.max' => 'The action name must be less than :max characters.',
+            'url.required' => 'Please enter the base url.',
+            'url.max' => 'The url must be less than :max characters.',
+            'description.required' => 'Please enter the action description.',
+            'description.max' => 'The description must less than :max characters',
+            'actions.required' => 'Please enter the actions, each line has ONE action, start with "/".',
+            'actions.max' => 'The total action must be less than :max characters.',
+            'parentId.required' => 'Please select the parent menu.',
+            'parentId.exists' => 'The parent menu is not exist, please try again.',
+            'weight.required' => 'Please enter the display weight！',
+            'weight.numeric' => 'The display weight must between :min and :max.',
+            'weight.min' => 'The display weight must between :min and :max.',
+            'weight.max' => 'The display weight must between :min and :max.',
+            'icon.required' => 'Please select the menu icon.',
+            'icon.exists' => 'The icon you select is not exist, please try again.'
         ];
         $this -> validate($request, $rules, $message);
         $req = $request -> except('_token');
@@ -104,6 +107,9 @@ class ActionsController extends BackendController
         }
         try {
             if ($request -> has('id')) {
+                if ($request -> id <= 5) {
+                    return redirect(route('adminActions')) -> with('error', 'Unable to edit the system reserved action');
+                }
                 DB::table('system_actions')
                     -> where('id', $request -> id)
                     -> where('isDelete', 0)
@@ -112,18 +118,23 @@ class ActionsController extends BackendController
                 DB::table('system_actions')
                     ->insert($req);
             }
-            return redirect(route('adminActions')) -> with('success', '保存权限成功！');
+            return redirect(route('adminActions')) -> with('success', 'Action store successfully.');
         } catch (\Exception $e) {
-            return redirect(route('adminActions')) -> with('error', '保存权限失败：' . $e -> getMessage());
+            return redirect(route('adminActions')) -> with('error', 'Failed to store the action: ' . $e -> getMessage());
         }
     }
 
     public function delete(Request $request)
     {
         try {
-            return redirect(route('adminActions')) -> with('success', '删除权限成功！');
+            if ($request -> has('id')) {
+                if ($request -> id <= 5) {
+                    return redirect(route('adminActions')) -> with('error', 'Unable to delete the system reserved action');
+                }
+            }
+            return redirect(route('adminActions')) -> with('success', 'Action delete successfully.');
         } catch (\Exception $e) {
-            return redirect(route('adminActions')) -> with('error', '删除权限失败：' . $e -> getMessage());
+            return redirect(route('adminActions')) -> with('error', 'Failed to delete the action: ' . $e -> getMessage());
         }
     }
 }
