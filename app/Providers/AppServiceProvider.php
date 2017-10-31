@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($request -> method() === 'GET') {
             $now = date('Y-m-d H:i:s');
-            $uri = $request -> getRequestUri();
+            $uri = $request -> getPathInfo();
             $uriArray = explode('/', $uri);
             if ($uriArray[1] === 'manage') {
                 $this -> adminLeftSidebar($uri);
