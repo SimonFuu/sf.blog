@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -17,7 +20,9 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    
+
+    use AuthenticatesUsers;
+
     /**
      * Where to redirect users after login.
      *
@@ -38,5 +43,96 @@ class LoginController extends Controller
     public function showLogin()
     {
 
+    }
+
+    public function doUserLogin(Request $request)
+    {
+        if (Auth::attempt([
+            $this -> username() => $request -> username,
+            'password' => $request -> password,
+            'isDelete' => 0
+        ])) {
+            $rolesId = DB::table('system_users_roles')
+                -> select('rid') -> where('isDelete', 0) -> where('uid', Auth::user() -> id) -> get();
+            if (count($rolesId) > 0) {
+                $isRootAdmin = false;
+                $rid = [];
+                foreach ($rolesId as $roleId) {
+                    if ($roleId -> rid == 2) {
+                        $isRootAdmin = true;
+                        break;
+                    } else {
+                        $rid[] = $roleId -> rid;
+                    }
+                }
+                if ($isRootAdmin) {
+                    $actions = DB::table('system_actions')
+                        -> select('id', 'actionName', 'actions', 'url', 'icon', 'parentId')
+                        -> where('isDelete', 0) -> orderBy('weight', 'ASC') -> get();
+                } else {
+                    $actions = DB::table('system_roles_actions')
+                        -> select(
+                            'system_actions.id',
+                            'system_actions.actionName',
+                            'system_actions.actions',
+                            'system_actions.url',
+                            'system_actions.icon',
+                            'system_actions.parentId'
+                        )
+                        -> leftJoin('system_actions', 'system_actions.id', '=', 'system_roles_actions.aid')
+                        -> where('system_actions.isDelete', 0)
+                        -> where('system_roles_actions.isDelete', 0)
+                        -> whereIn('system_roles_actions', $rid)
+                        -> orderBy('system_actions.weight', 'ASC')
+                        -> get();
+                }
+                $permissions = [];
+                foreach ($actions as $action) {
+                    $permission = json_decode($action -> actions, true);
+                    foreach ($permission as $value) {
+                        $permissions[env('APP_BACKEND_PREFIX') . $value] = 1;
+                    }
+                }
+                $actions = json_decode(json_encode($actions), true);
+                $menus = $this -> treeView($actions, 'parentId');
+                session(['adminMenus' => $menus]);
+                session(['permissions' => $permissions]);
+                return redirect(route('index'));
+            } else {
+                Auth::logout();
+                return redirect(route('login')) -> with('error', 'There is something wrong, please contact with the administrator.');
+            }
+        } else {
+            return $this -> sendFailedLoginResponse($request);
+        }
+    }
+
+    private function username()
+    {
+        return 'username';
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $errors = [$this->username() => 'Wrong username or password.'];
+
+        if ($request->expectsJson()) {
+            return response()->json($errors, 422);
+        }
+
+        return redirect(route('login'))
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors($errors);
+    }
+
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->flush();
+
+        $request->session()->regenerate();
+
+        return redirect(route('index')) -> with('success', 'You\'ve signed out.');
     }
 }

@@ -1,3 +1,15 @@
+
+var leftSideBarActive = function () {
+    var treeViewMenu = $('.treeview-menu');
+    if (treeViewMenu.length > 0) {
+        treeViewMenu.each(function (index, element) {
+            if ($(element).find('.active').length > 0) {
+                $(element).parents('.treeview').addClass('menu-open active');
+            }
+        });
+    }
+};
+
 var chunk = function (array, size) {
     var temp = [];
     for (var i = 0; i< array.length; i = i + size) {
@@ -173,6 +185,7 @@ var roleActionsCheckboxRelate = function () {
 };
 
 $(document).ready(function () {
+    leftSideBarActive();
     setActionIcons();
     roleActionsCheckboxRelate();
 });

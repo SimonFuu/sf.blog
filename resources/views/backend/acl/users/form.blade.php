@@ -59,9 +59,9 @@
 
                             <!--- Password Field --->
                             <div class="form-group {{ $errors -> has('password') ? 'has-error' : ''}}">
-                                {!! Form::label('password_conformation', 'Reenter password', ['class' => 'col-sm-3 control-label']) !!}
+                                {!! Form::label('password_confirmation', 'Reenter password', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-8">
-                                    {!! Form::password('password', ['class' => 'form-control']) !!}
+                                    {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
                                 </div>
                             </div>
 

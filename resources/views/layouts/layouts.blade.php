@@ -30,12 +30,12 @@
                 <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => '/login', 'method' => 'POST', 'class' => 'form-horizontal login-form', 'role' => 'form']) !!}
+                {!! Form::open(['url' => route('doSignIn'), 'method' => 'POST', 'class' => 'form-horizontal login-form', 'role' => 'form']) !!}
                     <!-- class include {'form-horizontal'|'form-inline'} -->
-                    <!--- Email Field --->
+                    <!--- Username Field --->
                     <div class="form-group">
-                        {!! Form::label('email', 'Email', ['class' => 'control-label']) !!}
-                        {!! Form::text('email', null, ['class' => 'form-control']) !!}
+                        {!! Form::label('username', 'Username', ['class' => 'control-label']) !!}
+                        {!! Form::text('username', null, ['class' => 'form-control']) !!}
                     </div>
                     <!--- Password Field --->
                     <div class="form-group">

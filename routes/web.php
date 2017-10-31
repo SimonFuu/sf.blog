@@ -11,8 +11,18 @@
 |
 */
 
-Route::group(['prefix' => '/manage', 'namespace' => 'Backend'], function () {
-    Route::get('/', function () {
+Route::group(['prefix' => 'sign', 'namespace' => 'Auth'], function () {
+    Route::get('/in', 'LoginController@showLogin') -> name('login');
+    Route::post('/in', 'LoginController@doUserLogin') -> name('doSignIn');
+    Route::get('/out', 'LoginController@logout') -> name('doSignOut');
+});
+
+Route::get('notify', function () {
+    return view();
+}) -> name('notify');
+
+Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
+    Route::get('/index', function () {
         return view('backend.index');
     }) -> name('adminIndex');
 

@@ -8,51 +8,43 @@
                 <img src="{{ config('app.cdn') }}/admin/plugins/AdminLTE/img/avatar5.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>admin.name</p>
+                <p>{{ Auth::user() -> name }}</p>
                 <!-- Status -->
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu" data-widget="tree">
+        @if(session('adminMenus'))
+            <ul class="sidebar-menu" data-widget="tree">
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-                <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
-                    </ul>
-                </li>
-            <!-- Optionally, you can add icons to the links -->
-            {{--@foreach($menus as $menu)--}}
-                {{--@if($menu -> children)--}}
-                    {{--<li class="treeview {{ $menu -> active ? 'active' : '' }}">--}}
-                        {{--<a href="{{ $menu -> url }}"><i class="fa {{ $menu -> icon }}"></i> <span>{{ $menu -> name }}</span>--}}
-                            {{--<span class="pull-right-container">--}}
-                                {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                            {{--</span>--}}
-                        {{--</a>--}}
-                        {{--<ul class="treeview-menu">--}}
-                            {{--@foreach($menu -> children as $child)--}}
-                                {{--<li class="{{ $child -> active ? 'active' : '' }}"><a href="{{ $child -> url }}">{{ $child -> name }}</a></li>--}}
-                            {{--@endforeach--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
-                {{--@else--}}
-                    {{--<li class="{{ $menu -> active ? 'active' : '' }}">--}}
-                        {{--<a href="{{ $menu -> url }}">--}}
-                            {{--<i class="fa {{ $menu -> icon }}"></i> <span>{{ $menu -> name }}</span>--}}
-                        {{--</a>--}}
-                    {{--</li>--}}
-                {{--@endif--}}
-            {{--@endforeach--}}
-        </ul>
+                @foreach(session('adminMenus') as $menu)
+                    @if($menu['children'])
+                        <li class="treeview">
+                            <a href="#"><i class="fa {{ $menu['icon'] }}"></i> <span>{{ $menu['actionName'] }}</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                @foreach($menu['children'] as $child)
+                                    <li class="{{ $uri == env('APP_BACKEND_PREFIX') . $child['url'] ? 'active' : '' }}">
+                                        <a href="{{ env('APP_BACKEND_PREFIX') . $child['url']}}"><i class="fa {{ $child['icon'] }}"></i>
+                                            <span>{{ $child['actionName'] }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @else
+                        <li class="{{ $uri == env('APP_BACKEND_PREFIX') . $menu['url'] ? 'active' : '' }}">
+                            <a href="{{ env('APP_BACKEND_PREFIX') . $menu['url']}}"><i class="fa {{ $menu['icon'] }}"></i>
+                                <span>{{ $menu['actionName'] }}</span>
+                            </a>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        @endif
         <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

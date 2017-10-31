@@ -11,7 +11,7 @@
         <div class="container">
             <div class="user-info text-right">
                 @if(Auth::check())
-                    <span><a href="{{ route('adminIndex') }}" target="_blank">控制台</a></span>
+                    <span><a href="{{ route('adminIndex') }}" target="_blank">Dashboard</a></span>
                     <span>{{ Auth::user() -> name }}</span>
                     <span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
                 @endif

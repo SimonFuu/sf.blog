@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
             $uri = $request -> getRequestUri();
             $uriArray = explode('/', $uri);
             if ($uriArray[1] === 'manage') {
-                $this -> adminLeftSidebar();
+                $this -> adminLeftSidebar($uri);
             } else {
                 $this -> frontendLeftSideBar($now);
                 $this -> cyComment($uri);
@@ -74,16 +74,20 @@ class AppServiceProvider extends ServiceProvider
     private function cyComment($uri = '')
     {
         view() -> composer('frontend.archives.common.comment', function ($view) use ($uri) {
-            $view -> with('uri', $uri . '_' . uniqid());
+            $view -> with('uri', $uri);
         });
     }
 
     /**
      * 管理后台 左侧边栏加载
-     * @param string $now
+     * @param $uri
      */
-    private function adminLeftSidebar($now = '1990-01-01 00:00:00')
+    private function adminLeftSidebar($uri = '')
     {
-
+        $uriArr = explode('/', $uri);
+        $uri = count($uriArr) > 4 ? '/' . $uriArr[1] . '/' . $uriArr[2] . '/' . $uriArr[3] : $uri;
+        view() -> composer('layouts.admin.left', function ($view) use ($uri) {
+            $view -> with('uri', $uri);
+        });
     }
 }
