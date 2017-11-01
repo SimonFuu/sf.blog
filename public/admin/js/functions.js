@@ -184,8 +184,53 @@ var roleActionsCheckboxRelate = function () {
     });
 };
 
+var clearInput = function ($element) {
+    alert(11);
+    $($element).val('');
+};
+
+var addActionsPrefix = function () {
+    var url = '';
+    var menuUrl = $('.menu-url');
+    if (menuUrl.length > 0 && menuUrl.val().length > 0) {
+        url = menuUrl.val();
+        if (url.substr(0,1) === '/') {
+            url = url.substr(1, url.length-1)
+        }
+        if (url.substr(url.length-1, 1) !== '/') {
+            url += '/';
+        }
+        $('.actionsPrefix').html(url)
+    }
+
+    menuUrl.on('change', function () {
+        url = $(this).val();
+        if (url.substr(0,1) === '/') {
+            url = url.substr(1, url.length-1)
+        }
+        if (url.substr(url.length-1, 1) !== '/') {
+            url += '/';
+        }
+        $('.actionsPrefix').html(url)
+    });
+
+    $('.add-action').on('click', function () {
+        var html = '<div class="input-group actions-list">';
+        html += $('.actions-list-template').html();
+        html += '</div>';
+        $('.add-drop-action-buttons').before(html);
+    });
+
+    $('.drop-action').on('click', function () {
+        var actionsList = $('.actions-list');
+        if (actionsList.length > 1) {
+            $(this).parent('.add-drop-action-buttons').prev('.actions-list').remove();
+        }
+    });
+};
 $(document).ready(function () {
     leftSideBarActive();
     setActionIcons();
     roleActionsCheckboxRelate();
+    addActionsPrefix();
 });

@@ -60,6 +60,9 @@ td > a:hover {
     max-width: 38px;
 }
 
+.actions-list {
+    margin-bottom: 10px;
+}
 /**
     Set roles
  */
@@ -77,6 +80,7 @@ td > a:hover {
 .user-roles-list > div {
     padding-left: 0;
 }
+
 .role-actions-list, .user-roles-list {
     max-height: 375px;
     overflow: auto;

@@ -21,6 +21,7 @@ class ActionsController extends BackendController
         $actions = DB::table('system_actions')
             -> select('id', 'actionName', 'icon', 'description', 'actions', 'weight', 'parentId')
             -> where('isDelete', 0)
+            -> orderBy('weight', 'ASC')
             -> paginate(self::PER_PAGE_RECORD_COUNT);
         return view('backend.acl.actions.list', ['actions' => $actions]);
     }
@@ -41,6 +42,18 @@ class ActionsController extends BackendController
             if (!$action) {
                 return redirect() -> back() -> with('error', 'Item not found');
             }
+
+            $actions = json_decode($action -> actions, true);
+            $prefix = $action -> url . '/';
+            $t = [];
+            foreach ($actions as $key => $item) {
+                if ($action -> url === $item) {
+                    continue;
+                }
+                $t[] = str_replace($prefix, '', $item);
+            }
+            $action -> actions = $t;
+            $action -> url = substr($action -> url, 1);
         }
         $menus['Level 1'] = ['Root'];
         $pActs = DB::table('system_actions')
@@ -75,7 +88,7 @@ class ActionsController extends BackendController
                 . ($request -> has('id')  ? $request -> id : 'NULL') . ',id,isDelete,0',
             'url' => 'required|max:255',
             'description' => 'required|max:255',
-            'actions' => 'required|max:1000',
+            'actions' => 'required|array',
             'parentId' => 'required|' .
                 (($request -> has('parentId') && $request -> parentId > 0) ? 'exists:system_actions,id,isDelete,0'  : ''),
             'weight' => 'required|numeric|min:1|max:10000',
@@ -89,8 +102,8 @@ class ActionsController extends BackendController
             'url.max' => 'The url must be less than :max characters.',
             'description.required' => 'Please enter the action description.',
             'description.max' => 'The description must less than :max characters',
-            'actions.required' => 'Please enter the actions, each line has ONE action, start with "/".',
-            'actions.max' => 'The total action must be less than :max characters.',
+            'actions.required' => 'Please enter the actions.',
+            'actions.array' => 'The actions is invalid please contact with the administrator.',
             'parentId.required' => 'Please select the parent menu.',
             'parentId.exists' => 'The parent menu is not exist, please try again.',
             'weight.required' => 'Please enter the display weight！',
@@ -102,8 +115,24 @@ class ActionsController extends BackendController
         ];
         $this -> validate($request, $rules, $message);
         $req = $request -> except('_token');
+        if (substr($req['url'], 0, 1) !== '/') {
+            $req['url'] = '/' . $req['url'];
+        }
+        if (substr($req['url'], -1, 1) === '/') {
+            $req['url'] = substr($req['url'], 0, -1);
+        }
         if ($request -> has('actions')) {
-            $req['actions'] = json_encode(explode("\r\n", $request -> actions));
+            $t = [$req['url']];
+            foreach ($request -> actions as  $action) {
+                if (substr($action, 0, 1) !== '/') {
+                    $action = '/' . $action;
+                }
+                if (substr($action, -1, 1) === '/') {
+                    $action = substr($action, 0, -1);
+                }
+                $t[] = $req['url'] . $action;
+            }
+            $req['actions'] = json_encode(array_unique($t));
         }
         try {
             if ($request -> has('id')) {

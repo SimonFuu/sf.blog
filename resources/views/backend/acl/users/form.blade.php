@@ -17,7 +17,7 @@
                             <div class="form-group {{ $errors -> has('username') ? 'has-error' : ''}}">
                                 {!! Form::label('username', 'Username', ['class' => 'col-sm-3 control-label']) !!}
                                 <div class="col-sm-8">
-                                    {!! Form::text('username', is_null($user) ? null : $user -> username, ['class' => 'form-control']) !!}
+                                    {!! Form::text('username', is_null($user) ? null : $user -> username, ['class' => 'form-control', is_null($user) ? '' : 'readonly']) !!}
                                     @if($errors -> has('username'))
                                         <span class="help-block"><strong>{{ $errors -> first('username') }}</strong></span>
                                     @endif
@@ -80,7 +80,7 @@
                                                                 @if(is_null($user))
                                                                     <input type="checkbox" name="roles[]" value="{{ $role -> id }}">&nbsp;&nbsp;{{ $role -> roleName }}
                                                                 @else
-                                                                    <input type="checkbox" name="roles[]" value="{{ $role -> id }}" {{ isset($user -> rid[$role -> id]) ? 'checked' : ''}}>&nbsp;&nbsp;{{ $role -> roleName }}
+                                                                    <input type="checkbox" name="roles[]" value="{{ $role -> id }}" {{ in_array($role -> id, $user -> rid) ? 'checked' : ''}}>&nbsp;&nbsp;{{ $role -> roleName }}
                                                                 @endif
                                                             </label>
                                                         </td>
@@ -103,8 +103,8 @@
                     <!-- /.box-body -->
                     <div class="box-footer">
                         <div class="col-sm-8">
-                            <a href="{{ route('adminRoles') }}" class="btn btn-sm btn-default">Back</a>
-                            <button class="pull-right btn {{ is_null($user) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
+                            <a href="{{ route('adminUsers') }}" class="btn btn-sm btn-default">Back</a>
+                            <button class="pull-right btn btn-sm {{ is_null($user) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
                         </div>
                     </div>
                     {!! Form::close() !!}

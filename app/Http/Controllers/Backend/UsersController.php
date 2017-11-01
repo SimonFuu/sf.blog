@@ -46,7 +46,7 @@ class UsersController extends BackendController
                 $user = $u;
                 if (count($rolesId) > 0) {
                     foreach ($rolesId as $roleId) {
-                        $user -> aid[] = $roleId -> rid;
+                        $user -> rid[] = $roleId -> rid;
                     }
                 }
             }
@@ -65,7 +65,8 @@ class UsersController extends BackendController
                 . ($request -> has('id') ? $request -> id : 'NULL') . ',id,isDelete,0',
             'password' => 'required_without:id|confirmed|max:64' . ($request -> password == '' ? '' : '|min:6'),
             'name' => 'required|max:30',
-            'email' => 'required|email|max:64',
+            'email' => 'required|email|max:64|unique:system_users,email,'
+                . ($request -> has('id') ? $request -> id : 'NULL') . ',id,isDelete,0',
             'roles' => 'required|array'
         ];
         $messages = [
@@ -81,6 +82,7 @@ class UsersController extends BackendController
             'email.required' => 'Please enter the e-mail address.',
             'email.email' => 'The e-mail address is invalid.',
             'email.max' => 'The e-mail address must less than characters.',
+            'email.unique' => 'The e-mail address is exist, please change another e-mail.',
             'roles.required' => 'Please select the roles.',
             'roles.array' => 'The roles is invalid, please contact with the administrator.',
         ];
@@ -90,10 +92,6 @@ class UsersController extends BackendController
         DB::beginTransaction();
         try {
             if ($request -> has('id')) {
-                if ($request -> id <= 1) {
-                    DB::commit();
-                    return redirect(route('adminUsers')) -> with('error', 'Unable to edit the system reserved user.');
-                }
                 $data = [
                     'username' => $request -> username,
                     'name' => $request -> name,
@@ -108,12 +106,15 @@ class UsersController extends BackendController
                 DB::table('system_users_roles')
                     -> where('uid', $request -> id)
                     -> update(['isDelete' => 1]);
-                foreach ($request -> roles as $role) {
-                    $userRoles[] = [
-                        'uid' => $request -> id,
-                        'rid' => $role
-                    ];
+                if ($request -> id > 1) {
+                    foreach ($request -> roles as $role) {
+                        $userRoles[] = [
+                            'uid' => $request -> id,
+                            'rid' => $role
+                        ];
+                    }
                 }
+
             } else {
                 $data = [
                     'username' => $request -> username,

@@ -90,7 +90,7 @@
                         <div class="box-footer">
                             <div class="col-sm-8">
                                 <a href="{{ route('adminRoles') }}" class="btn btn-sm btn-default">Back</a>
-                                <button class="pull-right btn {{ is_null($role) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
+                                <button class="pull-right btn btn-sm {{ is_null($role) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
                             </div>
                         </div>
                     {!! Form::close() !!}

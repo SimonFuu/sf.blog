@@ -28,7 +28,10 @@
                                 <div class="form-group {{ $errors -> has('url') ? 'has-error' : ''}}">
                                     {!! Form::label('url', 'Url', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
-                                        {!! Form::text('url', is_null($action) ? null : $action -> url, ['class' => 'form-control']) !!}
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/</span>
+                                            {!! Form::text('url', is_null($action) ? null : $action -> url, ['class' => 'form-control menu-url']) !!}
+                                        </div>
                                         @if($errors -> has('url'))
                                             <span class="help-block"><strong>{{ $errors -> first('url') }}</strong></span>
                                         @endif
@@ -42,7 +45,7 @@
                                         <button class="btn btn-default btn-sm set-action-icon" type="button" data-toggle="modal" data-target="#setActionIconModal">
                                             <i class="fa {{ is_null($action) ? 'fa-circle-o' : $action -> icon }}" aria-hidden="true"></i>
                                         </button>
-                                        <i class="fa fa-hand-o-left" aria-hidden="true"></i> 请点击选择图标
+                                        <i class="fa fa-hand-o-left" aria-hidden="true"></i> Please select an icon.
                                         <input class="set-action-icon-value" type="hidden" name="icon" value="{{ is_null($action) ? 'fa-circle-o' : $action -> icon }}">
                                         @if($errors -> has('icon'))
                                             <span class="help-block"><strong>{{ $errors -> first('icon') }}</strong></span>
@@ -61,23 +64,63 @@
                                     </div>
                                 </div>
 
+                                {{--<!--- Actions Field --->--}}
+                                {{--<div class="form-group {{ $errors -> has('actions') ? 'has-error' : ''}}">--}}
+                                    {{--{!! Form::label('Actions', 'Permissions', ['class' => 'col-sm-2 control-label']) !!}--}}
+                                    {{--<div class="col-sm-8">--}}
+                                        {{--@if(!is_null($action))--}}
+                                            {{--@php--}}
+                                                {{--$urls = json_decode($action -> actions, true);--}}
+                                                {{--$urls = (implode("\r\n", ($urls ? $urls : [])));--}}
+                                            {{--@endphp--}}
+                                        {{--@endif--}}
+                                        {{--{!! Form::textarea('actions', is_null($action) ? null : $urls, ['class' => 'form-control', 'rows' => 5, 'placeholder' => '菜单权限，一行一个，以"/"开始']) !!}--}}
+                                        {{--@if($errors -> has('actions'))--}}
+                                            {{--<span class="help-block"><strong>{{ $errors -> first('actions') }}</strong></span>--}}
+                                        {{--@endif--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+
                                 <!--- Actions Field --->
                                 <div class="form-group {{ $errors -> has('actions') ? 'has-error' : ''}}">
-                                    {!! Form::label('Actions', 'Permissions', ['class' => 'col-sm-2 control-label']) !!}
+                                    {!! Form::label('actions', 'Permissions', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
-                                        @if(!is_null($action))
-                                            @php
-                                                $urls = json_decode($action -> actions, true);
-                                                $urls = (implode("\r\n", ($urls ? $urls : [])));
-                                            @endphp
+                                        @if(is_null($action))
+                                            @if(old('actions'))
+                                                @foreach(old('actions') as $permission)
+                                                    <div class="input-group actions-list">
+                                                        <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                        {!! Form::text('actions[]', $permission, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="input-group actions-list">
+                                                    <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                    {!! Form::text('actions[]', null, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
+                                                </div>
+                                            @endif
+                                        @else
+                                            @if($action -> actions)
+                                                @foreach($action -> actions as $item)
+                                                    <div class="input-group actions-list">
+                                                        <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                        {!! Form::text('actions[]', $item, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <div class="input-group actions-list">
+                                                    <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                    {!! Form::text('actions[]', null, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
+                                                </div>
+                                            @endif
                                         @endif
-                                        {!! Form::textarea('actions', is_null($action) ? null : $urls, ['class' => 'form-control', 'rows' => 5, 'placeholder' => '菜单权限，一行一个，以"/"开始']) !!}
-                                        @if($errors -> has('actions'))
-                                            <span class="help-block"><strong>{{ $errors -> first('actions') }}</strong></span>
-                                        @endif
+                                        <div class="add-drop-action-buttons">
+                                            <button class="btn btn-default btn-xs add-action" type="button"><i class="fa fa-plus"></i></button>
+                                            <button class="btn btn-default btn-xs drop-action" type="button"><i class="fa fa-minus"></i></button>
+                                        </div>
                                     </div>
                                 </div>
-                                
+
                                 <!--- Description Field --->
                                 <div class="form-group {{ $errors -> has('description') ? 'has-error' : ''}}">
                                     {!! Form::label('description', 'Description', ['class' => 'col-sm-2 control-label']) !!}
@@ -108,17 +151,18 @@
                         <div class="box-footer">
                             <div class="col-sm-8">
                                 <a href="{{ route('adminActions') }}" class="btn btn-sm btn-default">Back</a>
-                                <button class="pull-right btn {{ is_null($action) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
+                                <button class="pull-right btn btn-sm {{ is_null($action) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
                             </div>
                         </div>
                     {!! Form::close() !!}
-
                 </div>
-                <!-- /.box -->
             </div>
         </div>
     </section>
-
+    <div class="hidden actions-list-template">
+        <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+        {!! Form::text('actions[]', null, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
+    </div>
     <script>
         var actionIcons = '{!! $icons !!}';
     </script>
