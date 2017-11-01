@@ -1,3 +1,11 @@
+var resizeIndexHeight = function () {
+    var displayTable = $('.display-table');
+    if (displayTable.length > 0) {
+        var height = $(window).height();
+        displayTable.css('height', height);
+    }
+
+};
 /**
  * 绑定音量按钮点击事件
  * @param gfwBlock
@@ -27,7 +35,6 @@ var videoVolume = function (gfwBlock) {
         volumeBtn.on('click', function () {
             var icon = $(this).find('.fa');
             if (videoMuted) {
-                debugger;
                 icon.removeClass('fa-volume-off');
                 icon.addClass('fa-volume-up');
                 videoMuted = false;
@@ -177,6 +184,7 @@ var changyanCommentLoader = function () {
 };
 
 $(document).ready(function () {
+    resizeIndexHeight();
     changyanCommentLoader();
     indexVideoLoader();
     adjustRightSectionHeight();

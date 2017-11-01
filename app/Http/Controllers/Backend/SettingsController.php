@@ -11,16 +11,24 @@
 namespace App\Http\Controllers\Backend;
 
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
 
 class SettingsController extends BackendController
 {
-    public function __destruct()
+    public function showIndex(Request $request)
     {
         $settings = DB::table('system_settings')
-            -> select('key', 'value')
-            -> where('isDelete', 0)
-            -> get();
+            -> select('id', 'key', 'value', 'description')
+            -> where(function ($query) use ($request) {
+                $query -> where('isDelete', 0);
+                if ($request -> has('words') && $request -> words !== '') {
+                    $query -> where('key', 'like', '%'.$request -> words.'%');
+                    $query -> orWhere('value', 'like', '%'.$request -> words.'%');
+                    $query -> orWhere('description', 'like', '%'.$request -> words.'%');
+                }
+            })
+            -> paginate(self::PER_PAGE_RECORD_COUNT);
+        return view('backend.settings.list', ['settings' => $settings]);
     }
 }

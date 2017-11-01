@@ -49,6 +49,10 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::get('/edit', 'UsersController@showForm') -> name('adminEditUsers');
         Route::post('/store', 'UsersController@store') -> name('adminStoreUsers');
     });
+
+    Route::group(['prefix' => 'settings'], function () {
+        Route::get('/', 'SettingsController@showIndex') -> name('adminSettings');
+    });
 });
 
 

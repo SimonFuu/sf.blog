@@ -42,7 +42,7 @@ class LoginController extends Controller
 
     public function showLogin()
     {
-
+        return view('backend.login');
     }
 
     public function doUserLogin(Request $request)
@@ -114,7 +114,7 @@ class LoginController extends Controller
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        $errors = [$this->username() => 'Wrong username or password.'];
+        $errors = [$this->username() => 'Your account or password is incorrect..'];
 
         if ($request->expectsJson()) {
             return response()->json($errors, 422);

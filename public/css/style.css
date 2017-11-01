@@ -91,6 +91,7 @@ a {
 
 .user-info > span {
     padding: 0 5px 0;
+    font-size: 22px;
 }
 
 .user-info > span > a {
@@ -103,10 +104,7 @@ a {
     text-decoration: none;
 }
 
-.main-welcome {
-    top: 200px;
-    position: relative;
-}
+
 
 .full-height {
     height: 100vh;
@@ -152,21 +150,36 @@ a {
 .m-b-md {
     margin-bottom: 30px;
 }
+@media only screen and (min-width: 768px) {
+    .video-volume {
+        bottom: 100px;
+        width: 100%;
+        position: fixed;
+    }
+    .main-welcome {
+        position: relative;
+    }
+
+    .footer {
+        bottom: 0;
+        width: 100%;
+        position: fixed;
+    }
+}
+.main-welcome {
+    margin-top: 150px;
+}
 
 .video-volume {
-    bottom: 100px;
-    width: 100%;
-    position: fixed;
+    margin-top: 20px;
+}
+
+.footer {
+    margin-top: 0;
 }
 
 footer {
     padding-bottom: 10px;
-}
-
-.footer {
-    bottom: 0;
-    width: 100%;
-    position: fixed;
 }
 
 .footer > footer > a {

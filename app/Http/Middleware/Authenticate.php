@@ -17,7 +17,7 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect(route('login')) -> with('error', 'Time out, please sign in again.');
+            return redirect(route('login')) -> with('error', 'Your session has expired due to inactivity. Please sign in again.');
         }
         if (!isset(session('permissions')[$request -> getPathInfo()])) {
             return redirect(route('notify')) -> with('error', 'Oops, you don\'t have the permission.');
