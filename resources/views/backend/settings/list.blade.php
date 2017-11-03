@@ -6,7 +6,7 @@
                 <div class="box">
                     <div class="box-header">
                         <h3 class="box-title">Settings</h3>
-                        <div class="box-tools"><a href="{{ route('adminAddActions') }}" class="btn btn-sm btn-info"><strong>Add</strong></a></div>
+                        <div class="box-tools"><a href="{{ route('adminAddSetting') }}" class="btn btn-sm btn-info"><strong>Add</strong></a></div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
@@ -28,12 +28,20 @@
                             <tbody>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
+                                <th>Key</th>
                                 <th>Value</th>
                                 <th>Description</th>
                                 <th>Action</th>
                             </tr>
-
+                            @foreach($settings as $setting)
+                                <tr>
+                                    <td>{{ $setting -> id }}</td>
+                                    <td>{{ $setting -> key }}</td>
+                                    <td>{{ $setting -> value }}</td>
+                                    <td>{{ $setting -> description }}</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

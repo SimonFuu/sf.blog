@@ -11,15 +11,22 @@
 |
 */
 
-Route::group(['prefix' => 'sign', 'namespace' => 'Auth'], function () {
-    Route::get('/in', 'LoginController@showLogin') -> name('login');
-    Route::post('/in', 'LoginController@doUserLogin') -> name('doSignIn');
-    Route::get('/out', 'LoginController@logout') -> name('doSignOut');
-});
+Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'frontend'], function () {
+    Route::get('/', 'IndexController@showIndex') -> name('index');
 
-Route::get('notify', function () {
-    return view();
-}) -> name('notify');
+    Route::get('/about', 'IndexController@showAbout') -> name('about');
+    Route::get('/archive/{id}', 'ArchivesController@showArchive') -> name('archive');
+
+    Route::get('/blog', 'CategoryController@showCategoryArchives') -> name('blog');
+
+    Route::get('/category/{id}', 'CategoryController@showCategoryArchives') -> name('category');
+
+    Route::get('/daily', 'IndexController@showAllDaily') -> name('daily');
+
+    Route::get('/filing/{month}', 'FilingController@showFilingArchives') -> name('filing');
+
+    Route::get('/resume', 'IndexController@showResume') -> name('resume');
+});
 
 Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
     Route::get('/index', function () {
@@ -50,26 +57,23 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::post('/store', 'UsersController@store') -> name('adminStoreUsers');
     });
 
+    Route::get('/notify', function () {
+        return view('backend.notify');
+    }) -> name('notify');
+
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', 'SettingsController@showIndex') -> name('adminSettings');
+        Route::get('/add', 'SettingsController@showForm') -> name('adminAddSetting');
+        Route::post('/store', 'SettingsController@store') -> name('adminStoreSettings');
     });
 });
 
+Route::get('/notice', function () {
+    return view('frontend.notice');
+}) -> name('notice');
 
-Route::group(['prefix' => '/', 'namespace' => 'Frontend'], function () {
-    Route::get('/', 'IndexController@showIndex') -> name('index');
-
-    Route::get('/about', 'IndexController@showAbout') -> name('about');
-    Route::get('/archive/{id}', 'ArchivesController@showArchive') -> name('archive');
-
-    Route::get('/blog', 'CategoryController@showCategoryArchives') -> name('blog');
-
-    Route::get('/category/{id}', 'CategoryController@showCategoryArchives') -> name('category');
-
-    Route::get('/daily', 'IndexController@showAllDaily') -> name('daily');
-
-    Route::get('/filing/{month}', 'FilingController@showFilingArchives') -> name('filing');
-
-    Route::get('/resume', 'IndexController@showResume') -> name('resume');
+Route::group(['prefix' => 'sign', 'namespace' => 'Auth'], function () {
+    Route::get('/in', 'LoginController@showLogin') -> name('login');
+    Route::post('/in', 'LoginController@doUserLogin') -> name('doSignIn');
+    Route::get('/out', 'LoginController@logout') -> name('doSignOut');
 });
-

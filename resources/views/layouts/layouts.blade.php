@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-    <title>{{ isset($archive) ? $archive -> title .' - ': ''}}{{ env('APP_NAME') }}</title>
+    <title>{{ isset($archive) && !(isset($archives)) ? $archive -> title .' - ': ''}}{{ Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_NAME'] }}</title>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <meta name="keywords" content="{{ Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_KEYWORDS'] }}">
+    <meta name="description" content="{{ Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_DESCRIPTION'] }}">
     @if(env('APP_ENV') === 'local')
     <link rel="stylesheet" href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/plugins/bootstrap-3.3.7/css/bootstrap.min.css">

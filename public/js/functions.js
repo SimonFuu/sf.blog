@@ -3,8 +3,13 @@ var resizeIndexHeight = function () {
     if (displayTable.length > 0) {
         var height = $(window).height();
         displayTable.css('height', height);
+        $('.player').css('height', height);
     }
-
+    $(window).on('resize', function () {
+        height = $(window).height();
+        displayTable.css('height', height);
+        $('.player').css('height', height);
+    });
 };
 /**
  * 绑定音量按钮点击事件
@@ -146,8 +151,8 @@ var rewordMe = function () {
 
 var changyanCommentLoader = function () {
     if ($('.comments').length > 0) {
-        var appid = 'cytgLfOrY';
-        var conf = 'prod_d7b8d9d33d360b5b19d4716640060224';
+        var appid = CHANGYAN_APP_ID;
+        var conf = CHANGYAN_CONF;
         var width = window.innerWidth || document.documentElement.clientWidth;
         if (width < 960) {
             window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');

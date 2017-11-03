@@ -6,29 +6,27 @@
         <h4>Simon Fu's Blog</h4>
         <i>Stay hungry, stay foolish!</i>
         <div class="menus">
-            @foreach($catalogs as $catalog)
-                <a href="{{ url($catalog -> action) }}">{{ $catalog -> name }}</a>
-                {{--<a href="/about">About me</a>--}}
-                {{--<a href="/daily">日常</a>--}}
+            @foreach(Cache::get('SITE_CATALOGS')['main'] as $catalog)
+                <a href="{{ url($catalog['action']) }}">{{ $catalog['name'] }}</a>
             @endforeach
         </div>
         <hr>
     </div>
 
-    @if(!is_null($categories))
+    @if(isset(Cache::get('SITE_SIDEBARS')['categories']))
         <div class="blog-categories blog-nav">
             <h3>Categories</h3>
-            @foreach($categories as $category)
-                <a href="{{ url('category', $category -> id) }}">{{ $category -> name }}</a>
+            @foreach(Cache::get('SITE_SIDEBARS')['categories'] as $category)
+                <a href="{{ route('category', $category['id']) }}">{{ $category['name'] }}</a>
             @endforeach
         </div>
     @endif
-    @if(!is_null($filings))
+    @if(isset(Cache::get('SITE_SIDEBARS')['filings']))
         <div class="blog-categories blog-nav">
             <div class="blog-filing blog-nav">
                 <h3>Filing</h3>
-                @foreach($filings as $filing)
-                    <a href="{{ url('filing', $filing -> filing) }}">{{ $filing -> filing }}</a>
+                @foreach(Cache::get('SITE_SIDEBARS')['filings'] as $filing)
+                    <a href="{{ route('filing', $filing['filing']) }}">{{ $filing['filing'] }}</a>
                 @endforeach
             </div>
         </div>

@@ -3,27 +3,34 @@
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
+     * Bootstrap application services.
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function boot(Request $request)
     {
+        $this -> cacheSettings();
         if ($request -> method() === 'GET') {
-            $now = date('Y-m-d H:i:s');
             $uri = $request -> getPathInfo();
             $uriArray = explode('/', $uri);
-            if ($uriArray[1] === 'manage') {
+            if ($uriArray[1] === 'manage' || $uriArray[1] === 'notify') {
                 $this -> adminLeftSidebar($uri);
-            } else {
-                $this -> frontendLeftSideBar($now);
+            } elseif($uriArray[1] === 'archive') {
+                $this -> cacheFrontendCatalogs();
+                $this -> frontendLeftSideBar();
                 $this -> cyComment($uri);
+            } elseif($uriArray[1] === '') {
+                $this -> cacheFrontendCatalogs();
+            } else {
+                $this -> cacheFrontendCatalogs();
+                $this -> frontendLeftSideBar();
             }
         }
     }
@@ -39,32 +46,56 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * 首页左侧边栏
-     * @param string $now
+     * 获取网站状态
+     * @return boolean
      */
-    private function frontendLeftSideBar($now = '1990-01-01 00:00:00')
+    private function cacheSettings()
     {
-        view() -> composer('layouts.left', function ($view) use ($now) {
-            $catalogs = DB::table('catalogs')
-                -> select('name', 'action')
-                -> where('isDelete', 0)
-                -> where('isLeftSideMenu', 1)
-                -> orderBy('weight', 'ASC')
-                -> get();
+        if (!Cache::get(env('APP_NAME') . '_SETTINGS')) {
+            $settingsArray = [];
+            $settings = DB::table('system_settings') -> select('key', 'value') -> where('isDelete', 0) -> get();
+            if (count($settings) > 0) {
+                foreach ($settings as $setting) {
+                    $settingsArray[$setting -> key] = $setting -> value;
+                }
+                Cache::forever(env('APP_NAME') . '_SETTINGS', $settingsArray);
+            }
+        }
+    }
+    /**
+     * 首页左侧边栏(不包含Catalogs)
+     */
+    private function frontendLeftSideBar()
+    {
+        if (!Cache::get('SITE_SIDEBARS')) {
+            $sidebars = [];
             $categories = DB::table('categories')
                 -> select('id', 'name')
                 -> where('isDelete', 0)
                 -> orderBy('weight', 'ASC')
                 -> get();
-            $filing = DB::table('archives')
+            if (count($categories) > 0) {
+                foreach ($categories as $category) {
+                    $sidebars['categories'][] = [
+                        'id' => $category -> id,
+                        'name' => $category -> name,
+                    ];
+                }
+            }
+            $filings = DB::table('archives')
                 -> select(DB::raw('distinct filing'))
                 -> where('isDelete', 0)
                 -> orderBy('filing', 'DESC')
                 -> get();
-            $view -> with('catalogs', count($catalogs) > 0 ? $catalogs : null);
-            $view -> with('categories', count($categories) > 0 ? $categories : null);
-            $view -> with('filings', count($filing) > 0 ? $filing : null);
-        });
+            if (count($filings) > 0) {
+                foreach ($filings as $filing) {
+                    $sidebars['filings'][] = [
+                        'filing' => $filing -> filing,
+                    ];
+                }
+            }
+            Cache::forever('SITE_SIDEBARS', $sidebars);
+        }
     }
 
     /**
@@ -74,8 +105,42 @@ class AppServiceProvider extends ServiceProvider
     private function cyComment($uri = '')
     {
         view() -> composer('frontend.archives.common.comment', function ($view) use ($uri) {
-            $view -> with('uri', $uri);
+            $view -> with('archiveUri', bcrypt(str_replace('/archive/', '', $uri)));
         });
+    }
+
+    /**
+     * 目录缓存生成
+     */
+    private function cacheFrontendCatalogs()
+    {
+        if (!isset(Cache::get('SITE_CATALOGS')['index'])) {
+            $indexCatalogs = [];
+            $mainCatalogs = [];
+            $catalogs = DB::table('catalogs')
+                -> select('name', 'action', 'isLeftSideMenu', 'isIndexMenu')
+                -> where('isDelete', 0)
+                -> orderBy('weight', 'ASC')
+                -> get();
+            if (count($catalogs) > 0) {
+                foreach ($catalogs as $catalog) {
+                    if ($catalog -> isLeftSideMenu == 1) {
+                        $mainCatalogs[] = [
+                            'name' => $catalog -> name,
+                            'action' => $catalog -> action
+                        ];
+                    }
+                    if ($catalog -> isIndexMenu == 1) {
+                        $indexCatalogs[] = [
+                            'name' => $catalog -> name,
+                            'action' => $catalog -> action
+                        ];
+                    }
+                }
+            }
+            Cache::forget('SITE_CATALOGS');
+            Cache::forever('SITE_CATALOGS', ['index' => $indexCatalogs, 'main' => $mainCatalogs]);
+        }
     }
 
     /**
