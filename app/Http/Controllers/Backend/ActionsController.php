@@ -22,7 +22,7 @@ class ActionsController extends BackendController
             -> select('id', 'actionName', 'icon', 'description', 'actions', 'weight', 'parentId')
             -> where('isDelete', 0)
             -> orderBy('weight', 'ASC')
-            -> paginate(self::PER_PAGE_RECORD_COUNT);
+            -> paginate(self::BACKEND_PER_PAGE_RECORD_COUNT);
         return view('backend.acl.actions.list', ['actions' => $actions]);
     }
 

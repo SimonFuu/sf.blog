@@ -86,3 +86,11 @@ td > a:hover {
     overflow: auto;
     margin-right: 0;
 }
+
+/**
+    Set catalogs
+ */
+.radio > label {
+    margin-left: 5px;
+    margin-right: 5px;
+}

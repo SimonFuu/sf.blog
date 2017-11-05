@@ -29,6 +29,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'front
 });
 
 Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return redirect(route('adminIndex'));
+    });
+
     Route::get('/index', function () {
         return view('backend.index');
     }) -> name('adminIndex');
@@ -57,6 +61,14 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::post('/store', 'UsersController@store') -> name('adminStoreUsers');
     });
 
+    Route::group(['prefix' => '/catalogs'], function() {
+        Route::get('/', 'CatalogsController@showIndex') -> name('adminCatalogs');
+        Route::get('/add', 'CatalogsController@showForm') -> name('adminAddCatalog');
+        Route::get('/edit', 'CatalogsController@showForm') -> name('adminEditCatalog');
+        Route::get('/delete', 'CatalogsController@delete') -> name('adminDeleteCatalog');
+        Route::post('/store', 'CatalogsController@store') -> name('adminStoreCatalog');
+    });
+
     Route::get('/notify', function () {
         return view('backend.notify');
     }) -> name('notify');
@@ -64,11 +76,15 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', 'SettingsController@showIndex') -> name('adminSettings');
         Route::get('/add', 'SettingsController@showForm') -> name('adminAddSetting');
-        Route::post('/store', 'SettingsController@store') -> name('adminStoreSettings');
+        Route::get('/edit', 'SettingsController@showForm') -> name('adminEditSetting');
+        Route::post('/store', 'SettingsController@store') -> name('adminStoreSetting');
     });
 });
 
 Route::get('/notice', function () {
+    if (isset(Cache::get('SETTINGS')['SITE_STATUS']) && Cache::get('SETTINGS')['SITE_STATUS'] == 1) {
+        return redirect(route('index'));
+    }
     return view('frontend.notice');
 }) -> name('notice');
 

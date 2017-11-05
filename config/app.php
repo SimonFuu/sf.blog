@@ -181,6 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Collective\Html\HtmlServiceProvider::class,
+        JellyBool\Flysystem\Upyun\UpyunServiceProvider::class,
     ],
 
     /*

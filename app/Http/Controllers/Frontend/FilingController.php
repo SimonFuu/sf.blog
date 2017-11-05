@@ -25,7 +25,7 @@ class FilingController extends BlogController
             -> where('archives.filing', $month)
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')
-            -> paginate(self::PER_PAGE_RECORD_COUNT);
+            -> paginate(self::FRONTEND_PER_PAGE_RECORD_COUNT);
         $count = count($archives);
         if ($count > 0) {
             $header = sprintf('$filing = \'%s\';', $month);

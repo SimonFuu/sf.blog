@@ -30,6 +30,8 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
+    protected $protectUri = [];
+
     /**
      * Create a new controller instance.
      *
@@ -37,6 +39,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        $this -> protectUri = [
+            env('APP_BACKEND_PREFIX') => true,
+            env('APP_BACKEND_PREFIX') . '/notify' => true,
+            env('APP_BACKEND_PREFIX') . '/profile' => true,
+            env('APP_BACKEND_PREFIX') . '/profile/edit' => true,
+            env('APP_BACKEND_PREFIX') . '/profile/store' => true,
+        ];
         $this->middleware('guest')->except('logout');
     }
 
@@ -86,7 +95,7 @@ class LoginController extends Controller
                         -> orderBy('system_actions.weight', 'ASC')
                         -> get();
                 }
-                $permissions = [];
+                $permissions = $this -> protectUri;
                 foreach ($actions as $action) {
                     $permission = json_decode($action -> actions, true);
                     foreach ($permission as $value) {

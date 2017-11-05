@@ -27,7 +27,11 @@
                             </a>
                             <ul class="treeview-menu">
                                 @foreach($menu['children'] as $child)
-                                    <li class="{{ $uri == env('APP_BACKEND_PREFIX') . $child['url'] ? 'active' : '' }}">
+                                    @php
+                                        $relativeUri = str_replace(env('APP_BACKEND_PREFIX'), '', $uri);
+                                        $urls = json_decode($child['actions'], true);
+                                    @endphp
+                                    <li class="{{ $uri == $child['url'] || in_array($relativeUri, $urls) ? 'active' : '' }}">
                                         <a href="{{ env('APP_BACKEND_PREFIX') . $child['url']}}"><i class="fa {{ $child['icon'] }}"></i>
                                             <span>{{ $child['actionName'] }}</span>
                                         </a>
@@ -36,7 +40,11 @@
                             </ul>
                         </li>
                     @else
-                        <li class="{{ $uri == env('APP_BACKEND_PREFIX') . $menu['url'] ? 'active' : '' }}">
+                        @php
+                            $relativeUri = str_replace(env('APP_BACKEND_PREFIX'), '', $uri);
+                            $urls = json_decode($menu['actions'], true);
+                        @endphp
+                        <li class="{{ ($relativeUri == $menu['url']) || in_array($relativeUri, $urls) ? 'active' : '' }}">
                             <a href="{{ env('APP_BACKEND_PREFIX') . $menu['url']}}"><i class="fa {{ $menu['icon'] }}"></i>
                                 <span>{{ $menu['actionName'] }}</span>
                             </a>

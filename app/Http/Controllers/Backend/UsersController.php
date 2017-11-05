@@ -24,7 +24,7 @@ class UsersController extends BackendController
                 $query -> where('isDelete', 0);
 
             })
-            -> paginate(self::PER_PAGE_RECORD_COUNT);
+            -> paginate(self::BACKEND_PER_PAGE_RECORD_COUNT);
         return view('backend.acl.users.list', ['users' => $users]);
     }
 

@@ -1,10 +1,10 @@
 <section class="blog-left-section text-right">
     <div class="avatar">
-        <a href="/"><img src="{{ config('app.storage_host') }}/storage/images/avatar.jpeg" width="80" alt="avatar"></a>
+        <a href="{{ route('index') }}"><img src="{{ config('app.storage_host') }}/storage/images/avatar.jpeg" width="80" alt="avatar"></a>
     </div>
     <div class="blog-introduce blog-nav">
-        <h4>Simon Fu's Blog</h4>
-        <i>Stay hungry, stay foolish!</i>
+        <h4>{{ Cache::get('SETTINGS')['SITE_NAME'] }}</h4>
+        <i>{{ Cache::get('SETTINGS')['SITE_SLOGAN'] }}</i>
         <div class="menus">
             @foreach(Cache::get('SITE_CATALOGS')['main'] as $catalog)
                 <a href="{{ url($catalog['action']) }}">{{ $catalog['name'] }}</a>

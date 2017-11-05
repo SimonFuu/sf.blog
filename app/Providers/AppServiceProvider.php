@@ -12,7 +12,6 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap application services.
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function boot(Request $request)
     {
@@ -47,18 +46,17 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * 获取网站状态
-     * @return boolean
      */
     private function cacheSettings()
     {
-        if (!Cache::get(env('APP_NAME') . '_SETTINGS')) {
+        if (!Cache::get('SETTINGS')) {
             $settingsArray = [];
             $settings = DB::table('system_settings') -> select('key', 'value') -> where('isDelete', 0) -> get();
             if (count($settings) > 0) {
                 foreach ($settings as $setting) {
                     $settingsArray[$setting -> key] = $setting -> value;
                 }
-                Cache::forever(env('APP_NAME') . '_SETTINGS', $settingsArray);
+                Cache::forever('SETTINGS', $settingsArray);
             }
         }
     }
@@ -114,7 +112,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function cacheFrontendCatalogs()
     {
-        if (!isset(Cache::get('SITE_CATALOGS')['index'])) {
+        if (!isset(Cache::get('SITE_CATALOGS')['index']) || !isset(Cache::get('SITE_CATALOGS')['main'])) {
             $indexCatalogs = [];
             $mainCatalogs = [];
             $catalogs = DB::table('catalogs')
@@ -149,8 +147,8 @@ class AppServiceProvider extends ServiceProvider
      */
     private function adminLeftSidebar($uri = '')
     {
-        $uriArr = explode('/', $uri);
-        $uri = count($uriArr) > 4 ? '/' . $uriArr[1] . '/' . $uriArr[2] . '/' . $uriArr[3] : $uri;
+//        $uriArr = explode('/', $uri);
+//        $uri = count($uriArr) > 4 ? '/' . $uriArr[1] . '/' . $uriArr[2] . '/' . $uriArr[3] : $uri;
         view() -> composer('layouts.admin.left', function ($view) use ($uri) {
             $view -> with('uri', $uri);
         });

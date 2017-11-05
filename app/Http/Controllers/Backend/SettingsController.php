@@ -29,13 +29,23 @@ class SettingsController extends BackendController
                     $query -> orWhere('description', 'like', '%'.$request -> words.'%');
                 }
             })
-            -> paginate(self::PER_PAGE_RECORD_COUNT);
+            -> paginate(self::BACKEND_PER_PAGE_RECORD_COUNT);
          return view('backend.settings.list', ['settings' => $settings]);
     }
 
     public function showForm(Request $request)
     {
         $setting = null;
+        if ($request -> has('id')) {
+            $setting = DB::table('system_settings')
+                -> select('id', 'key', 'value', 'description')
+                -> where('isDelete', 0)
+                -> where('id', $request -> id)
+                -> first();
+            if (!$setting) {
+                return redirect(route('adminSettings')) -> with('error', 'The setting is not found');
+            }
+        }
         return view('backend.settings.form', ['setting' => $setting]);
     }
 
@@ -63,7 +73,6 @@ class SettingsController extends BackendController
                 DB::table('system_settings')
                     -> where('id', $request -> id)
                     -> update([
-                        'key' => $request -> key,
                         'value' => $request -> value,
                         'description' => $request -> description
                     ]);
@@ -86,14 +95,14 @@ class SettingsController extends BackendController
 
     public function cacheSettings()
     {
-        Cache::forget(env('APP_NAME') . '_SETTINGS');
+        Cache::forget('SETTINGS');
         $settingsArray = [];
         $settings = DB::table('system_settings') -> select('key', 'value') -> where('isDelete', 0) -> get();
         if (count($settings) > 0) {
             foreach ($settings as $setting) {
                 $settingsArray[$setting -> key] = $setting -> value;
             }
-            Cache::forever(env('APP_NAME') . '_SETTINGS', $settingsArray);
+            Cache::forever('SETTINGS', $settingsArray);
         }
     }
 }

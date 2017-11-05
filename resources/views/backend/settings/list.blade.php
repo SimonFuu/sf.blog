@@ -39,7 +39,9 @@
                                     <td>{{ $setting -> key }}</td>
                                     <td>{{ $setting -> value }}</td>
                                     <td>{{ $setting -> description }}</td>
-                                    <td></td>
+                                    <td>
+                                        <a href="{{ route('adminEditSetting', ['id' => $setting -> id]) }}"><i class="fa fa-edit"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -21,7 +21,7 @@ class RolesController extends BackendController
         $roles = DB::table('system_roles')
             -> select('id', 'roleName', 'description')
             -> where('isDelete', 0)
-            -> paginate(self::PER_PAGE_RECORD_COUNT);
+            -> paginate(self::BACKEND_PER_PAGE_RECORD_COUNT);
         return view('backend.acl.roles.list', ['roles' => $roles]);
     }
 

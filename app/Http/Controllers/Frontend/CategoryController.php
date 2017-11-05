@@ -43,7 +43,7 @@ class CategoryController extends BlogController
             })
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')
-            -> paginate(self::PER_PAGE_RECORD_COUNT);
+            -> paginate(self::FRONTEND_PER_PAGE_RECORD_COUNT);
         return view('frontend.archives.list', ['archives' => $archives, 'header' => $header]);
     }
 }

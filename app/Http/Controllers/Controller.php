@@ -14,7 +14,8 @@ class Controller extends BaseController
     /**
      * 分页，单页显示数量
      */
-    const PER_PAGE_RECORD_COUNT = 5;
+    const FRONTEND_PER_PAGE_RECORD_COUNT = 5;
+    const BACKEND_PER_PAGE_RECORD_COUNT = 15;
 
     private $now = null;
 

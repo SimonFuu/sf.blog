@@ -184,11 +184,6 @@ var roleActionsCheckboxRelate = function () {
     });
 };
 
-var clearInput = function ($element) {
-    alert(11);
-    $($element).val('');
-};
-
 var addActionsPrefix = function () {
     var url = '';
     var menuUrl = $('.menu-url');
@@ -228,9 +223,82 @@ var addActionsPrefix = function () {
         }
     });
 };
+
+var uploadFile = function () {
+    var progressBar = $('.progress-bar.progress-bar-striped');
+    var fileNameContainer = $('#file-name-container');
+
+    $('.fileinput-button').on('click', function () {
+        progressBar.removeClass('progress-bar-success');
+        progressBar.removeClass('progress-bar-danger');
+        progressBar.css('width', '0%');
+        progressBar.attr('aria-valuenow', 0);
+        progressBar.html('');
+    });
+
+    $('#file').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $('.fileinput-button').removeClass('disabled');
+            $('.fileinput-button>#file').prop('disabled', false);
+            if (data.result.result) {
+                progressBar.removeClass('progress-bar-success');
+                progressBar.addClass('progress-bar-success');
+                fileNameContainer.html('');
+                $.each(data.result.files, function (index, file) {
+                    progressBar.css('width', '100%');
+                    progressBar.attr('aria-valuenow', 100);
+                    progressBar.html('success');
+                    $('input[name="customizationFile"]').val(file.relativePath);
+                    var html = '<div class="self-alert alert alert-success alert-mini" style="margin-top: 10px;">';
+                    html += '<button type="button" class="close btn btn-sm" onclick="removeCustomizationFileByClick();" data-dismiss="alert" aria-hidden="true"></button>';
+                    html += '<a href="' + file.url + '" class="customization-file-a-tag" target="_blank"><strong>Click to check the customization file: ' + file.name + '</strong></a></div>';
+                    fileNameContainer.html('');
+                    fileNameContainer.append(html);
+                    $('.remove-customization-file').removeClass('hide')
+                });
+            } else {
+                progressBar.removeClass('progress-bar-danger');
+                progressBar.addClass('progress-bar-danger');
+                fileNameContainer.html('');
+                progressBar.css('width', '100%');
+                progressBar.attr('aria-valuenow', 100);
+                progressBar.html('failed');
+                var error = '<div class="self-alert alert alert-danger alert-mini" style="margin-top: 10px;">';
+                error += '<button type="button" class="close btn btn-sm" data-dismiss="alert" aria-hidden="true"></button>';
+                error += '<small>' + data.result.message + '</small></div>';
+                fileNameContainer.html(error);
+            }
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('.fileinput-button').addClass('disabled');
+            $('.fileinput-button>#file').prop('disabled', true);
+            progress = progress === 100 ? 99 : progress;
+            progressBar.css('width', progress + '%');
+            progressBar.attr('aria-valuenow', progress);
+            progressBar.html(progress + '%');
+        },
+        fail: function () {
+            $('.fileinput-button').removeClass('disabled');
+            $('.fileinput-button>#file').prop('disabled', false);
+            progressBar.removeClass('progress-bar-danger');
+            progressBar.addClass('progress-bar-danger');
+            fileNameContainer.html('');
+            progressBar.css('width', '100%');
+            progressBar.attr('aria-valuenow', 100);
+            progressBar.html('Oops,there is something wrong,pls try again later!');
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+};
+
+
 $(document).ready(function () {
     leftSideBarActive();
     setActionIcons();
     roleActionsCheckboxRelate();
     addActionsPrefix();
+    uploadFile();
 });

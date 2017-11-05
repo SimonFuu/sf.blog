@@ -16,7 +16,7 @@ class SiteStatusCheck
      */
     public function handle($request, Closure $next)
     {
-        if (Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_STATUS'] == '1') {
+        if (Cache::get('SETTINGS')['SITE_STATUS'] == '0') {
             return redirect(route('notice'));
         }
         return $next($request);

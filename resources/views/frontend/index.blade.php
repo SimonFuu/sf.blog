@@ -31,18 +31,18 @@
                 @endif
             </div>
             <div class="links contact-me">
-                @if(isset(Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_GITHUB']))
-                    <a href="{{ Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_GITHUB'] }}" target="_blank">
+                @if(isset(Cache::get('SETTINGS')['SITE_GITHUB']))
+                    <a href="{{ Cache::get('SETTINGS')['SITE_GITHUB'] }}" target="_blank">
                         <i class="fa fa-github" aria-hidden="true"></i> GITHUB
                     </a>
                 @endif
-                @if(isset(Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_WEIBO']))
-                    <a href="{{ Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_WEIBO'] }}" target="_blank">
+                @if(isset(Cache::get('SETTINGS')['SITE_WEIBO']))
+                    <a href="{{ Cache::get('SETTINGS')['SITE_WEIBO'] }}" target="_blank">
                         <i class="fa fa-weibo" aria-hidden="true"></i> WEIBO
                     </a>
                 @endif
-                @if(isset(Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_EMAIL']))
-                    <a href="mailto:{{ Cache::get(env('APP_NAME') . '_SETTINGS')['SITE_EMAIL'] }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> E-mail</a>
+                @if(isset(Cache::get('SETTINGS')['SITE_EMAIL']))
+                    <a href="mailto:{{ Cache::get('SETTINGS')['SITE_EMAIL'] }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> E-mail</a>
                 @endif
             </div>
         </div>
