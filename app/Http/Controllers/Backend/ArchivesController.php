@@ -40,10 +40,10 @@ class ArchivesController extends BackendController
                 $query -> where('archives.isDelete', 0);
                 $query -> where('catalogs.isDelete', 0);
                 $query -> where('categories.isDelete', 0);
-                if ($request -> has('word') && $request -> word !== '') {
-                    $query -> where('archives.title', 'like', '%' .$request -> word. '%');
-                    $query -> orWhere('archives.sid', $request -> word);
-                    $this -> search['word'] = $request -> word;
+                if ($request -> has('words') && $request -> words !== '') {
+                    $query -> where('archives.title', 'like', '%' . $request -> words . '%');
+                    $query -> orWhere('archives.sid', $request -> words);
+                    $this -> search['word'] = $request -> words;
                 }
                 if ($request -> has('catalog') && $request -> catalog > 0) {
                     $query -> where('archives.catalogId', $request -> catalog);
