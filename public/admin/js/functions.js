@@ -294,6 +294,38 @@ var uploadFile = function () {
 
 };
 
+var dateRangePicker = function () {
+    var dateRangePickerContainer = $('.date-range-picker');
+    if (dateRangePickerContainer.length > 0) {
+        var startDate_ = moment().format('MM/DD/YYYY');
+        var endDate_ = startDate_;
+        if (typeof dateRange !== 'undefined' && dateRange !== '') {
+            var date_ = dateRange.split(' - ');
+            startDate_ = date_[0];
+            endDate_ = date_[1];
+        }
+        dateRangePickerContainer.daterangepicker({
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            "startDate": startDate_,
+            "endDate": endDate_,
+            "format": 'MM/DD/YYYY',
+            "alwaysShowCalendars": true,
+            "autoUpdateInput": false
+        }, function(start, end) {
+            dateRangePickerContainer.val(start.format('MM/DD/YYYY') + ' - ' + end.format('MM/DD/YYYY'));
+        });
+        if (typeof dateRange !== 'undefined' && dateRange !== '') {
+            dateRangePickerContainer.val(dateRange);
+        }
+    }
+};
 
 $(document).ready(function () {
     leftSideBarActive();
@@ -301,4 +333,5 @@ $(document).ready(function () {
     roleActionsCheckboxRelate();
     addActionsPrefix();
     uploadFile();
+    dateRangePicker();
 });

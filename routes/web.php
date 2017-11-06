@@ -61,6 +61,14 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::post('/store', 'UsersController@store') -> name('adminStoreUsers');
     });
 
+    Route::group(['prefix' => '/archives'], function() {
+        Route::get('/', 'ArchivesController@showIndex') -> name('adminArchives');
+        Route::get('/add', 'ArchivesController@showForm') -> name('adminAddArchive');
+        Route::get('/edit', 'ArchivesController@showForm') -> name('adminEditArchive');
+        Route::get('/delete', 'ArchivesController@delete') -> name('adminDeleteArchive');
+        Route::post('/store', 'ArchivesController@store') -> name('adminStoreArchive');
+    });
+
     Route::group(['prefix' => '/catalogs'], function() {
         Route::get('/', 'CatalogsController@showIndex') -> name('adminCatalogs');
         Route::get('/add', 'CatalogsController@showForm') -> name('adminAddCatalog');

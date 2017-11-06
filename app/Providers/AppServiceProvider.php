@@ -147,8 +147,6 @@ class AppServiceProvider extends ServiceProvider
      */
     private function adminLeftSidebar($uri = '')
     {
-//        $uriArr = explode('/', $uri);
-//        $uri = count($uriArr) > 4 ? '/' . $uriArr[1] . '/' . $uriArr[2] . '/' . $uriArr[3] : $uri;
         view() -> composer('layouts.admin.left', function ($view) use ($uri) {
             $view -> with('uri', $uri);
         });

@@ -94,3 +94,10 @@ td > a:hover {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+/**
+    Archives list
+ */
+.date-range-picker {
+    min-width: 200px;
+}
