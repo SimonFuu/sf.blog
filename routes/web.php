@@ -87,6 +87,11 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::get('/edit', 'SettingsController@showForm') -> name('adminEditSetting');
         Route::post('/store', 'SettingsController@store') -> name('adminStoreSetting');
     });
+
+    Route::group(['prefix' => 'upload'], function () {
+        Route::post('/new', 'UploaderController@store') -> name('adminUploadFile');
+        Route::post('/delete', 'UploaderController@delete') -> name('adminDeleteUploadFile');
+    });
 });
 
 Route::get('/notice', function () {

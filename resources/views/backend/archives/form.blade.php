@@ -12,102 +12,82 @@
                 {!! Form::open(['url' => route('adminStoreArchive'), 'method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form']) !!}
                 <!-- class include {'form-horizontal'|'form-inline'} -->
                     <div class="box-body table-responsive no-padding">
-                        <div class="col-xs-8">
-                            <!--- Name Field --->
-                            <div class="form-group {{ $errors -> has('name') ? 'has-error' : ''}}">
-                                {!! Form::label('name', 'Name', ['class' => 'col-sm-2 control-label']) !!}
-                                <div class="col-sm-8">
-                                    {!! Form::text('name', is_null($archive) ? null : $archive -> name, ['class' => 'form-control']) !!}
-                                    @if($errors -> has('name'))
-                                        <span class="help-block"><strong>{{ $errors -> first('name') }}</strong></span>
+                        <div class="col-md-8">
+                            <!--- Title Field --->
+                            <div class="form-group {{ $errors -> has('title') ? 'has-error' : ''}}">
+                                {!! Form::label('title', 'Title', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-10">
+                                    {!! Form::text('name', is_null($archive) ? null : $archive -> title, ['class' => 'form-control']) !!}
+                                    @if($errors -> has('title'))
+                                        <span class="help-block"><strong>{{ $errors -> first('title') }}</strong></span>
                                     @endif
                                 </div>
                             </div>
 
-                            <!--- Action Field --->
-                            <div class="form-group {{ $errors -> has('action') ? 'has-error' : ''}}">
-                                {!! Form::label('action', 'Action', ['class' => 'col-sm-2 control-label']) !!}
-                                <div class="col-sm-8">
-                                    {!! Form::text('action', is_null($archive) ? null : $archive -> action, ['class' => 'form-control']) !!}
-                                    @if($errors -> has('action'))
-                                        <span class="help-block"><strong>{{ $errors -> first('action') }}</strong></span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <!--- Weight Field --->
-                            <div class="form-group {{ $errors -> has('weight') ? 'has-error' : ''}}">
-                                {!! Form::label('weight', 'Weight', ['class' => 'col-sm-2 control-label']) !!}
-                                <div class="col-sm-8">
-                                    {!! Form::number('weight', is_null($archive) ? null : $archive -> weight, ['class' => 'form-control']) !!}
-                                    @if($errors -> has('weight'))
-                                        <span class="help-block"><strong>{{ $errors -> first('weight') }}</strong></span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <!--- isBlogMenu Field --->
-                            <div class="form-group {{ $errors -> has('isLeftSideMenu') ? 'has-error' : ''}}">
-                                {!! Form::label('isLeftSideMenu', 'Blog Menu', ['class' => 'col-sm-2 control-label']) !!}
-                                <div class="col-sm-8">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="isLeftSideMenu" id="isLeftSideMenu" value="1" {{ is_null($archive) ? 'checked' : $archive -> isLeftSideMenu == 1 ? 'checked' : '' }}>
-                                            TRUE
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="isLeftSideMenu" id="isLeftSideMenu" value="0" {{ is_null($archive) ? '' : $archive -> isLeftSideMenu == 0 ? 'checked' : '' }}>
-                                            FALSE
-                                        </label>
+                            <div class="form-group">
+                                {!! Form::label('thumb', 'Thumb', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-10">
+                                    <div class="file-loading">
+                                        <input id="" class="file-uploader" name="file" type="file" multiple data-file="#" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">
                                     </div>
-                                    @if($errors -> has('isLeftSideMenu'))
-                                        <span class="help-block"><strong>{{ $errors -> first('isLeftSideMenu') }}</strong></span>
-                                    @endif
                                 </div>
+                                <input type="hidden" name="thumb" value="{{ is_null($archive) ? '' : env('APP_STORAGE_HOST') . $archive -> thumb }}">
                             </div>
 
-                            <!--- isIndexMenu Field --->
-                            <div class="form-group {{ $errors -> has('isIndexMenu') ? 'has-error' : ''}}">
-                                {!! Form::label('isIndexMenu', 'Index Menu', ['class' => 'col-sm-2 control-label']) !!}
-                                <div class="col-sm-8">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="isIndexMenu" id="isIndexMenu" value="1" {{ is_null($archive) ? 'checked' : $archive -> isIndexMenu == 1 ? 'checked' : '' }}>
-                                            TRUE
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="isIndexMenu" id="isIndexMenu" value="0" {{ is_null($archive) ? '' : $archive -> isIndexMenu == 0 ? 'checked' : '' }}>
-                                            FALSE
-                                        </label>
+                            <!--- Content Field --->
+                            <div class="form-group">
+                                {!! Form::label('content', 'Content', ['class' => 'control-label col-md-2']) !!}
+                                <div class="col-md-10">
+                                    {!! Form::textarea('content', null, ['class' => 'form-control', 'rows' => 20]) !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!--- Catalog Field --->
+                            <div class="form-group col-md-12">
+                                {!! Form::label('catalog', 'Catalog', ['class' => 'control-label']) !!}
+                                {!! Form::select('catalog', $catalogs, null, ['class' => 'form-control']) !!}
+                            </div>
+                            <!--- Category Field --->
+                            <div class="form-group col-md-12">
+                                {!! Form::label('category', 'Category:', ['class' => 'control-label']) !!}
+                                {!! Form::select('category', $categories, null, ['class' => 'form-control']) !!}
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label for="dateTimePicker">Publish</label>
+                                <div class="input-group date">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
                                     </div>
-                                    @if($errors -> has('isIndexMenu'))
-                                        <span class="help-block"><strong>{{ $errors -> first('isIndexMenu') }}</strong></span>
-                                    @endif
+                                    <input type="text" name="publishAt" value="{{ is_null($archive) ? date('Y-m-d H:i:s') : $archive -> publishAt }}" class="form-control pull-right" id="dateTimePicker">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Stick top</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="isTop" value="0" {{ is_null($archive) ? 'checked' : $archive -> isTop == 0 ? 'checked' : '' }}>
+                                        FALSE
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="isTop" value="1" {{ is_null($archive) ? '' : $archive -> isTop == 1 ? 'checked' : '' }}>
+                                        TRUE
+                                    </label>
                                 </div>
                             </div>
-
-                            <!--- Description Field --->
-                            <div class="form-group {{ $errors -> has('description') ? 'has-error' : ''}}">
-                                {!! Form::label('description', 'Description', ['class' => 'col-sm-2 control-label']) !!}
-                                <div class="col-sm-8">
-                                    {!! Form::textarea('description', is_null($archive) ? null : $archive -> description, ['class' => 'form-control', 'rows' => 5]) !!}
-                                    @if($errors -> has('description'))
-                                        <span class="help-block"><strong>{{ $errors -> first('description') }}</strong></span>
-                                    @endif
-                                </div>
-                            </div>
-                            @if(!is_null($archive))
-                                <input type="hidden" name="id" value="{{ $archive -> id }}">
-                            @endif
                         </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <div class="col-sm-8">
+                        <div class="col-xs-8">
                             <a href="{{ route('adminArchives') }}" class="btn btn-sm btn-default">Back</a>
                             <button class="pull-right btn btn-sm {{ is_null($archive) ? 'btn-info' : 'btn-primary' }}" type="submit">Submit</button>
                         </div>
                     </div>
+                    @if(!is_null($archive))
+                        <input type="hidden" name="id" value="{{ $archive -> id }}">
+                    @endif
                     {!! Form::close() !!}
                 </div>
             </div>

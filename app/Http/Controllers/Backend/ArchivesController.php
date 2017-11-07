@@ -20,8 +20,6 @@ class ArchivesController extends BackendController
 
     public function showIndex(Request $request)
     {
-        $catalogs = [-1 => 'Catalog'];
-        $categories = [-1 => 'Category'];
         $archives = DB::table('archives')
             -> select(
                 'archives.id',
@@ -42,7 +40,6 @@ class ArchivesController extends BackendController
                 $query -> where('categories.isDelete', 0);
                 if ($request -> has('words') && $request -> words !== '') {
                     $query -> where('archives.title', 'like', '%' . $request -> words . '%');
-                    $query -> orWhere('archives.sid', $request -> words);
                     $this -> search['word'] = $request -> words;
                 }
                 if ($request -> has('catalog') && $request -> catalog > 0) {
@@ -69,24 +66,9 @@ class ArchivesController extends BackendController
             -> orderBy('archives.isTop', 'DESC')
             -> orderBy('archives.publishAt', 'DESC')
             -> paginate(self::BACKEND_PER_PAGE_RECORD_COUNT);
-            $catalogs_d = DB::table('catalogs')
-                -> select('id', 'name')
-                -> where('isDelete', 0)
-                -> get();
-            if (count($catalogs_d) > 0) {
-                foreach ($catalogs_d as $catalog) {
-                    $catalogs[$catalog -> id] = $catalog -> name;
-                }
-            }
-            $categories_d = DB::table('categories')
-                -> select('id', 'name')
-                -> where('isDelete', 0)
-                -> get();
-            if (count($categories_d) > 0) {
-                foreach ($categories_d as $category) {
-                    $categories[$category -> id] = $category -> name;
-                }
-            }
+        $catalogsAndCategories = $this -> getCatalogsAndCategories();
+        $catalogs = $catalogsAndCategories['catalogs'];
+        $categories = $catalogsAndCategories['categories'];
         return view('backend.archives.list', [
             'archives' => $archives,
             'search' => $this -> search,
@@ -97,7 +79,16 @@ class ArchivesController extends BackendController
 
     public function showForm(Request $request)
     {
+        $archive = null;
+        $catalogsAndCategories = $this -> getCatalogsAndCategories();
+        $catalogs = $catalogsAndCategories['catalogs'];
+        $categories = $catalogsAndCategories['categories'];
 
+        return view('backend.archives.form', [
+            'archive' => $archive,
+            'catalogs' => $catalogs,
+            'categories' => $categories
+        ]);
     }
 
     public function store(Request $request)
@@ -108,5 +99,30 @@ class ArchivesController extends BackendController
     public function delete(Request $request)
     {
 
+    }
+
+    private function getCatalogsAndCategories()
+    {
+        $catalogs = [-1 => 'Catalog'];
+        $categories = [-1 => 'Category'];
+        $catalogs_d = DB::table('catalogs')
+            -> select('id', 'name')
+            -> where('isDelete', 0)
+            -> get();
+        if (count($catalogs_d) > 0) {
+            foreach ($catalogs_d as $catalog) {
+                $catalogs[$catalog -> id] = $catalog -> name;
+            }
+        }
+        $categories_d = DB::table('categories')
+            -> select('id', 'name')
+            -> where('isDelete', 0)
+            -> get();
+        if (count($categories_d) > 0) {
+            foreach ($categories_d as $category) {
+                $categories[$category -> id] = $category -> name;
+            }
+        }
+        return ['catalogs' => $catalogs, 'categories' => $categories];
     }
 }

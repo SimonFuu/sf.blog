@@ -37,7 +37,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right date-range-picker" name="publish" id="publish">
+                                        <input type="text" class="form-control pull-right date-range-picker" readonly="" name="publish" id="publish">
                                     </div>
                                     <!-- /.input group -->
                                 </div>

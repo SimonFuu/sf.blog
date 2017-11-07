@@ -41,6 +41,8 @@ class LoginController extends Controller
     {
         $this -> protectUri = [
             env('APP_BACKEND_PREFIX') => true,
+            env('APP_BACKEND_PREFIX') . '/upload/new' => true,
+            env('APP_BACKEND_PREFIX') . '/upload/delete' => true,
             env('APP_BACKEND_PREFIX') . '/notify' => true,
             env('APP_BACKEND_PREFIX') . '/profile' => true,
             env('APP_BACKEND_PREFIX') . '/profile/edit' => true,

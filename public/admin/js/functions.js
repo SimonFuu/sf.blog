@@ -327,6 +327,24 @@ var dateRangePicker = function () {
     }
 };
 
+var fileUploader = function () {
+    var uploadContainer = $('.file-uploader');
+    if (uploadContainer.length > 0) {
+        uploadContainer.fileinput({
+            maxFileCount: 1,
+            maxFileSize: 1500,
+            uploadUrl: uploadContainer.data('uploader'),
+            showBrowse: false,
+            browseOnZoneClick: true,
+            uploadExtraData: {'_token': $('meta[name="csrf-token"]').attr('content'), 'type': uploadContainer.data('type')},
+            msgErrorClass: 'alert alert-block alert-danger',
+            defaultPreviewContent:
+                (uploadContainer.data('file') !== '#' ? '<img class="file-preview-image" src="' + uploadContainer.data('file') + '" alt="">' : '') + '<h4 class="text-muted">Click to select</h4><h5>(Select file < 1500k)</h5>',
+            allowedFileExtensions: ["jpg", "png", "gif", "jpeg"]
+        });
+    }
+};
+
 $(document).ready(function () {
     leftSideBarActive();
     setActionIcons();
@@ -334,4 +352,5 @@ $(document).ready(function () {
     addActionsPrefix();
     uploadFile();
     dateRangePicker();
+    fileUploader();
 });

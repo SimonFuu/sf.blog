@@ -101,3 +101,19 @@ td > a:hover {
 .date-range-picker {
     min-width: 200px;
 }
+
+/**
+    Archive form
+ */
+.file-preview-image {
+    width: 100%;
+}
+.kv-fileinput-error > ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.kv-fileinput-error > ul > li {
+    list-style: none;
+    text-align: left;
+}
