@@ -333,18 +333,28 @@ var fileUploader = function () {
         uploadContainer.fileinput({
             maxFileCount: 1,
             maxFileSize: 1500,
+            uploadAsync: false,
             uploadUrl: uploadContainer.data('uploader'),
-            showBrowse: false,
-            browseOnZoneClick: true,
             uploadExtraData: {'_token': $('meta[name="csrf-token"]').attr('content'), 'type': uploadContainer.data('type')},
             msgErrorClass: 'alert alert-block alert-danger',
             defaultPreviewContent:
-                (uploadContainer.data('file') !== '#' ? '<img class="file-preview-image" src="' + uploadContainer.data('file') + '" alt="">' : '') + '<h4 class="text-muted">Click to select</h4><h5>(Select file < 1500k)</h5>',
+                (uploadContainer.data('file') !== '#' ? '<img class="file-preview-image" src="' + uploadContainer.data('file') + '" alt="">' : '') + '<h5 class="text-muted">Select file < 1500k</h5>',
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"]
+        }).on('fileuploaded', function(event, data) {
+            $('input[name="file"]').val('/' + data.response.url);
         });
     }
 };
 
+var dateTimePicker = function () {
+    var dateTimePickerContainer = $('.date-time-picker');
+    if (dateTimePickerContainer.length > 0) {
+        dateTimePickerContainer.datetimepicker({
+            defaultDate: dateTimePickerContainer.data('value'),
+            format: 'YYYY-MM-DD HH:mm:ss'
+        });
+    }
+};
 $(document).ready(function () {
     leftSideBarActive();
     setActionIcons();
@@ -353,4 +363,5 @@ $(document).ready(function () {
     uploadFile();
     dateRangePicker();
     fileUploader();
+    dateTimePicker();
 });

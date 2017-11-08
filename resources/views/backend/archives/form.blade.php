@@ -28,10 +28,11 @@
                                 {!! Form::label('thumb', 'Thumb', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-10">
                                     <div class="file-loading">
-                                        <input id="" class="file-uploader" name="file" type="file" multiple data-file="#" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">
+                                        <input id="" class="file-uploader" type="file" name="uploadFile" multiple accept="image/*" data-file="{{ is_null($archive) ? '#' : env('APP_STORAGE_HOST') . $archive -> thumb }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">
+{{--                                        <input class="file-uploader" type="file" multiple accept="image/*" data-file="{{ env('APP_STORAGE_HOST') . '/storage/images/20171108/5Ll7IHeLDKQ4iFvJXOay6xF0cWk6kWs9EnORf2HH.png' }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">--}}
                                     </div>
                                 </div>
-                                <input type="hidden" name="thumb" value="{{ is_null($archive) ? '' : env('APP_STORAGE_HOST') . $archive -> thumb }}">
+                                <input type="hidden" name="file" value="{{ is_null($archive) ? '' : env('APP_STORAGE_HOST') . $archive -> thumb }}">
                             </div>
 
                             <!--- Content Field --->
@@ -55,11 +56,11 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="dateTimePicker">Publish</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" name="publishAt" value="{{ is_null($archive) ? date('Y-m-d H:i:s') : $archive -> publishAt }}" class="form-control pull-right" id="dateTimePicker">
+                                <div class="input-group date date-time-picker" data-value="{{ is_null($archive) ? date('Y-m-d H:i:s') : $archive -> publishAt }}">
+                                    <input type='text' class="form-control" name="publish" id="dateTimePicker" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
                                 </div>
                                 <!-- /.input group -->
                             </div>

@@ -32,15 +32,12 @@ class UploaderController extends BackendController
 
     private function storeThumb(Request $request)
     {
-        $rules = ['file' => 'required'];
+        $rules = ['uploadFile' => 'required|max:1500'];
         $messages = [];
-        try {
-            $this -> validate($request, $rules, $messages);
-        } catch (\Exception $e) {
-            return ($e -> getMessage());
-        }
+//        TODO 重写验证
+        $res = $this -> validate($request, $rules, $messages);
         $relativePath = str_replace(base_path(), '',storage_path('images')) . '/' . date('Ymd');
-        $fileRelativePath = Storage::disk('upyun') -> put($relativePath, $request -> file);
+        $fileRelativePath = Storage::disk('upyun') -> put($relativePath, $request -> uploadFile);
         return [
             'url' => $fileRelativePath,
             'initialPreview' => [
