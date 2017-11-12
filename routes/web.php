@@ -15,11 +15,11 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'front
     Route::get('/', 'IndexController@showIndex') -> name('index');
 
     Route::get('/about', 'IndexController@showAbout') -> name('about');
-    Route::get('/archive/{id}', 'ArchivesController@showArchive') -> name('archive');
+    Route::get('/archive/{sid}', 'ArchivesController@showArchive') -> name('archive');
 
     Route::get('/blog', 'CategoryController@showCategoryArchives') -> name('blog');
 
-    Route::get('/category/{id}', 'CategoryController@showCategoryArchives') -> name('category');
+    Route::get('/category/{name}', 'CategoryController@showCategoryArchives') -> name('category');
 
     Route::get('/daily', 'IndexController@showAllDaily') -> name('daily');
 

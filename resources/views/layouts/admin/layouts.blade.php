@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/admin/plugins/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="/admin/plugins/bootstrap-fileinput-4.4.5/css/fileinput.min.css">
     <link rel="stylesheet" href="/admin/plugins/bootstrap-datetimepicker-4.17.47/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/admin/plugins/simplemde/simplemde.min.css">
+    <link rel="stylesheet" href="/admin/plugins/webuploader-0.1.5/webuploader.css">
     <link rel="stylesheet" href="/admin/css/style.css?v={{ time() }}">
     @else
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -26,6 +28,7 @@
     <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.5/css/fileinput.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/plugins/webuploader-0.1.5/webuploader.css">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/css/style.css?v={{ env('APP_STATIC_FILE_VERSION') }}">
     @endif
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -52,6 +55,10 @@
 <script type="text/javascript" src="/admin/plugins/bootstrap-fileinput-4.4.5/js/fileinput.js"></script>
 <script type="text/javascript" src="/admin/plugins/bootstrap-fileinput-4.4.5/themes/fa/theme.min.js"></script>
 <script type="text/javascript" src="/admin/plugins/bootstrap-datetimepicker-4.17.47/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/admin/plugins/simplemde/simplemde.min.js"></script>
+<script type="text/javascript" src="/admin/plugins/webuploader-0.1.5/webuploader.js"></script>
+<script type="text/javascript" src="/admin/plugins/InlineAttachment-2.0.3/inline-attachment.js"></script>
+<script type="text/javascript" src="/admin/plugins/InlineAttachment-2.0.3/codemirror.inline-attachment.js"></script>
 <script type="text/javascript" src="/admin/js/functions.js?v={{ time() }}"></script>
 @else
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -64,7 +71,10 @@
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.5/themes/fa/theme.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="{{ config('app.cdn') }}/jsadmin/functions.js?v={{ env('APP_STATIC_FILE_VERSION') }}"></script>
+<script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/InlineAttachment-2.0.3/inline-attachment.js"></script>
+<script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/InlineAttachment-2.0.3/codemirror.inline-attachment.js"></script>
+<script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/webuploader-0.1.5/webuploader.js"></script>
+<script type="text/javascript" src="{{ config('app.cdn') }}/admin/js/functions.js?v={{ env('APP_STATIC_FILE_VERSION') }}"></script>
 @endif
 </body>
 </html>

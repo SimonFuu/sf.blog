@@ -108,6 +108,7 @@ td > a:hover {
 .file-preview-image {
     width: 100%;
 }
+
 .kv-fileinput-error > ul {
     list-style: none;
     padding-left: 10px;
@@ -116,4 +117,12 @@ td > a:hover {
 .kv-fileinput-error > ul > li {
     list-style: none;
     text-align: left;
+}
+
+.editor-toolbar.fullscreen,.CodeMirror-fullscreen,.editor-preview-side.editor-preview-active-side {
+    z-index: 65535;
+}
+
+.editor-preview > p > img, .editor-preview-side.editor-preview-active-side > p > img {
+    width: 100%;
 }

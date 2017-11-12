@@ -19,10 +19,22 @@ class UploaderController extends BackendController
 {
     public function store(Request $request)
     {
+        $rules = ['uploadFile' => 'required|max:1500|image'];
+        $messages = [
+            'required' => 'Please select your image file.',
+            'max' => 'The file size must be less than :max kb',
+            'image' => 'The file you selected is invalid. Only image file is acceptable.'
+        ];
+        $res = $this -> ajaxValidate($request, $rules, $messages);
+        if ($res) {
+            return ['error' => $res];
+        }
         $res = '';
         if ($request -> has('type')) {
             if ($request -> type === 'thumb') {
                 $res = $this -> storeThumb($request);
+            } elseif ($request -> type === 'image') {
+                $res = $this -> storeImage($request);
             }
         } else {
             $res = ['error' => 'Params are invalid'];
@@ -32,10 +44,6 @@ class UploaderController extends BackendController
 
     private function storeThumb(Request $request)
     {
-        $rules = ['uploadFile' => 'required|max:1500'];
-        $messages = [];
-//        TODO 重写验证
-        $res = $this -> validate($request, $rules, $messages);
         $relativePath = str_replace(base_path(), '',storage_path('images')) . '/' . date('Ymd');
         $fileRelativePath = Storage::disk('upyun') -> put($relativePath, $request -> uploadFile);
         return [
@@ -55,9 +63,11 @@ class UploaderController extends BackendController
         ];
     }
 
-    private function storeImage()
+    private function storeImage(Request $request)
     {
-        
+        $relativePath = str_replace(base_path(), '',storage_path('images')) . '/' . date('Ymd');
+        $fileRelativePath = Storage::disk('upyun') -> put($relativePath, $request -> uploadFile);
+        return ['url' => env('APP_STORAGE_HOST') . '/' . $fileRelativePath];
     }
 
     public function delete(Request $request)

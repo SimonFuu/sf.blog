@@ -338,10 +338,10 @@ var fileUploader = function () {
             uploadExtraData: {'_token': $('meta[name="csrf-token"]').attr('content'), 'type': uploadContainer.data('type')},
             msgErrorClass: 'alert alert-block alert-danger',
             defaultPreviewContent:
-                (uploadContainer.data('file') !== '#' ? '<img class="file-preview-image" src="' + uploadContainer.data('file') + '" alt="">' : '') + '<h5 class="text-muted">Select file < 1500k</h5>',
+                (uploadContainer.data('file') !== '' ? '<img class="file-preview-image" src="' + uploadContainer.data('file') + '" alt="">' : '') + '<h5 class="text-muted">Select file < 1500k</h5>',
             allowedFileExtensions: ["jpg", "png", "gif", "jpeg"]
         }).on('fileuploaded', function(event, data) {
-            $('input[name="file"]').val('/' + data.response.url);
+            $('input[name="thumb"]').val('/' + data.response.url);
         });
     }
 };
@@ -355,6 +355,50 @@ var dateTimePicker = function () {
         });
     }
 };
+
+var editorGenerator = function () {
+    var editor = $('#editor');
+    if (editor.length > 0) {
+        var simplemde = new SimpleMDE();
+        simplemde.value($('textarea[name="archive"]'));
+        inlineAttachment.editors.codemirror4.attach(simplemde.codemirror, {
+            uploadUrl: editor.data('upload-url'),
+            jsonFieldName: 'url',
+            uploadFieldName: 'uploadFile',
+            extraParams: {'type': editor.data('type')},
+            extraHeaders: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            onFileUploadResponse: function(xhr) {
+                var text = '',
+                    result = JSON.parse(xhr.responseText),
+                    filename = result[this.settings.jsonFieldName];
+                if (result && filename) {
+                    var newValue;
+                    if (typeof this.settings.urlText === 'function') {
+                        newValue = this.settings.urlText.call(this, filename, result);
+                    } else {
+                        newValue = this.settings.urlText.replace(this.filenameTag, filename);
+                    }
+                    text = this.editor.getValue().replace(this.lastValue, newValue);
+                    this.editor.setValue(text);
+                    this.settings.onFileUploaded.call(this, filename);
+                } else {
+                    if (typeof (result.error) !== 'undefined') {
+                        alert(result.error);
+                        text = this.editor.getValue().replace(this.lastValue, '');
+                        this.editor.setValue(text);
+                    }
+                }
+                return false;
+            }
+        });
+        // $('.editor-toolbar > .fa-picture-o').on('click', function (e) {
+        //     debugger;
+        //     e.preventDefault();
+        //     $(this).closest('input[type=file]').trigger('click');
+        // })
+    }
+};
+
 $(document).ready(function () {
     leftSideBarActive();
     setActionIcons();
@@ -364,4 +408,5 @@ $(document).ready(function () {
     dateRangePicker();
     fileUploader();
     dateTimePicker();
+    editorGenerator();
 });

@@ -31,6 +31,9 @@ class CatalogsController extends BackendController
     {
         $catalog = null;
         if ($request -> has('id')) {
+            if ($request -> id <= 3) {
+                return redirect(route('adminCatalogs')) -> with('error', 'Could not edit the default catalogs.');
+            }
             $c = DB::table('catalogs')
                 -> select('*') -> where('id', $request -> id) -> first();
             if ($c) {
@@ -78,6 +81,9 @@ class CatalogsController extends BackendController
         $this -> validate($request, $rules, $messages);
         try {
             if ($request -> has('id')) {
+                if ($request -> id <= 3) {
+                    return redirect(route('adminCatalogs')) -> with('error', 'Could not edit the default catalogs.');
+                }
                 DB::table('catalogs') -> where('id', $request -> id) -> update([
                     'name' => $request -> name,
                     'action' => $request -> action,

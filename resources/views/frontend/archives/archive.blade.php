@@ -7,14 +7,21 @@
         </div>
 
         <div class="blog-archive-detail-body">
-            {!! $archive -> body !!}
+            <div class="markdown-body">
+                @if($archive -> thumb)
+                    <div class="blog-archive-thumb">
+                        <img src="{{ env('APP_STORAGE_HOST') . $archive -> thumb }}" alt="" width="100%">
+                    </div>
+                @endif
+                {!! $archive -> body !!}
+            </div>
         </div>
 
         <div class="blog-archive-detail-addons blog-archive-detail-others">
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-lg-6 text-left">
                     @if(!is_null($archive -> prepArchive))
-                        <a href="{{ url('archive', $archive -> prepArchive -> id) }}">
+                        <a href="{{ url('archive', $archive -> prepArchive -> sid) }}">
                             <i class="fa fa-angle-double-left" aria-hidden="true"></i>
 
                             {{ $archive -> prepArchive -> title }}
@@ -25,7 +32,7 @@
                 </div>
                 <div class="col-md-6 col-sm-6 col-lg-6 text-right">
                     @if(!is_null($archive -> nextArchive))
-                        <a href="{{ url('archive',$archive -> nextArchive -> id) }}">
+                        <a href="{{ url('archive',$archive -> nextArchive -> sid) }}">
                             {{ $archive -> nextArchive -> title }}
                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                         </a>

@@ -17,7 +17,7 @@
         <div class="blog-categories blog-nav">
             <h3>Categories</h3>
             @foreach(Cache::get('SITE_SIDEBARS')['categories'] as $category)
-                <a href="{{ route('category', $category['id']) }}">{{ $category['name'] }}</a>
+                <a href="{{ route('category', $category['name']) }}">{{ $category['name'] }}</a>
             @endforeach
         </div>
     @endif

@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Backend;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ArchivesController extends BackendController
@@ -84,6 +85,8 @@ class ArchivesController extends BackendController
         $catalogs = $catalogsAndCategories['catalogs'];
         $categories = $catalogsAndCategories['categories'];
 
+        $archive = DB::table('archives') -> select('*') -> where('id', $request -> id) -> first();
+
         return view('backend.archives.form', [
             'archive' => $archive,
             'catalogs' => $catalogs,
@@ -93,7 +96,58 @@ class ArchivesController extends BackendController
 
     public function store(Request $request)
     {
+        $rules = [
+            'title' => 'required|max:255|unique:archives,title,' .
+                ($request -> has('id') ? $request -> id : 'NULL') . ',id,isDelete,0',
+            'thumb' => 'sometimes',
+            'archive' => 'required',
+            'catalog' => 'required|exists:catalogs,id,isDelete,0',
+            'category' => (
+                ($request -> has('catalog') && $request -> catalog == 1) ?
+                    'required|exists:categories,id,isDelete,0' : 'sometimes'
+            ),
+            'publishAt' => 'required|date',
+            'isTop' => 'required|boolean'
+        ];
+        $messages = [
+            'title.required' => 'Please enter the title.',
+            'title.max' => 'The title must be less than :max characters.',
+            'title.unique' => 'The title is exist, please try again.',
+            'archive.required' => 'Please enter the content.',
+            'catalog.required' => 'Please select the catalog.',
+            'catalog.exists' => 'The catalog is invalid.',
+            'publishAt.required' => 'Please select the publish time.',
+            'publishAt.date' => 'The publish time is invalid.',
+            'isTop.required' => 'Please select is top archive.',
+            'isTop.boolean' => 'The is top select is invalid.',
+        ];
+        $this -> validate($request, $rules, $messages);
+        $data = [
+            'title' => $request -> title,
+            'body' => $request -> archive,
+            'catalogId' => $request -> catalog,
+            'categoryId' => $request -> category,
+            'isTop' => $request -> isTop,
+            'publishAt' => $request -> publishAt,
+            'sid' => uniqid(),
+            'filing' => substr($request -> publishAt, 0, 7),
+        ];
+        if ($request -> has('thumb') && $request -> thumb) {
+            $data['thumb'] = $request -> thumb;
+        }
 
+        try {
+            if ($request -> has('id')) {
+                unset($data['sid']);
+                DB::table('archives') -> where('id', $request -> id) -> update($data);
+            } else {
+                DB::table('archives') -> insert($data);
+            }
+            Cache::forget('SITE_SIDEBARS');
+            return redirect(route('adminArchives')) -> with('success', 'Archive store successfully!');
+        } catch (\Exception $e) {
+            return redirect(route('adminArchives')) -> with('error', 'Failed to store archive: ' . $e -> getMessage());
+        }
     }
 
     public function delete(Request $request)

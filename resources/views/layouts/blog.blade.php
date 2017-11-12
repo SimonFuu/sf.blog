@@ -1,5 +1,12 @@
 @extends('layouts.layouts')
 @section('body')
+<div class="text-right">
+    @if(Auth::check())
+        <span>{{ Auth::user() -> name }}</span>
+        <span><a href="{{ route('adminIndex') }}" target="_blank">Dashboard</a></span>
+        <span><a href="{{ route('doSignOut') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a></span>
+    @endif
+</div>
 <div class="blog-main">
     <div class="col-md-3 col-sm-3 col-lg-2">
         @include('layouts.left')

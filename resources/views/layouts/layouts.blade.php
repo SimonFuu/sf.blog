@@ -11,9 +11,11 @@
     @if(env('APP_ENV') === 'local')
     <link rel="stylesheet" href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/plugins/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plugins/github-markdown-css/github-markdown-css.css">
     <link rel="stylesheet" href="/css/style.css?v={{ time() }}">
     @else
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/github-markdown-css/2.8.0/github-markdown.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/css/style.css?v={{ env('APP_STATIC_FILE_VERSION') }}">
     @endif

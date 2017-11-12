@@ -11,19 +11,22 @@
 namespace App\Http\Controllers\Frontend;
 
 
+use HyperDown\Parser;
 use Illuminate\Support\Facades\DB;
 
 class ArchivesController extends BlogController
 {
-    public function showArchive($id = 0)
+    public function showArchive($sid = 0)
     {
         $archive = DB::table('archives')
-            -> select('archives.id', 'archives.title', 'archives.body', 'categories.name', 'archives.publishAt')
+            -> select('archives.id', 'archives.title', 'archives.body', 'archives.thumb', 'categories.name', 'archives.publishAt')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
-            -> where('archives.id', $id)
+            -> where('archives.sid', $sid)
             -> where('archives.isDelete', 0)
             -> where('archives.publishAt', '<=', $this -> now())
             -> first();
+        $parse = new Parser();
+        $archive -> body = $parse -> makeHtml($archive -> body);
         if (is_null($archive)) {
             return abort(404);
         } else {
@@ -36,7 +39,7 @@ class ArchivesController extends BlogController
     private function getNextArchive($date = '1990-01-01')
     {
         return DB::table('archives')
-            -> select('id', 'title')
+            -> select('sid', 'title')
             -> where('isDelete', 0)
             -> where('publishAt', '<', $date)
             -> orderBy('publishAt', 'DESC')
@@ -46,7 +49,7 @@ class ArchivesController extends BlogController
     private function getPreArchive($date = '1990-01-01')
     {
         return DB::table('archives')
-            -> select('id', 'title')
+            -> select('sid', 'title')
             -> where('isDelete', 0)
             -> where('publishAt', '>', $date)
             -> orderBy('publishAt', 'ASC')
