@@ -77,6 +77,14 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::post('/store', 'CatalogsController@store') -> name('adminStoreCatalog');
     });
 
+    Route::group(['prefix' => '/categories'], function() {
+        Route::get('/', 'CategoriesController@showIndex') -> name('adminCategories');
+        Route::get('/add', 'CategoriesController@showForm') -> name('adminAddCategory');
+        Route::get('/edit', 'CategoriesController@showForm') -> name('adminEditCategory');
+        Route::get('/delete', 'CategoriesController@delete') -> name('adminDeleteCategory');
+        Route::post('/store', 'CategoriesController@store') -> name('adminStoreCategory');
+    });
+
     Route::get('/notify', function () {
         return view('backend.notify');
     }) -> name('notify');

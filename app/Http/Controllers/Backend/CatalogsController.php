@@ -105,12 +105,24 @@ class CatalogsController extends BackendController
             Cache::forget('SITE_CATALOGS');
             return redirect(route('adminCatalogs')) -> with('success', 'Catalog store successfully!');
         } catch (\Exception $e) {
-            return redirect(route('adminCatalogs')) -> with('error', 'Failed to store the catalog!');
+            return redirect(route('adminCatalogs')) -> with('error', 'Failed to store the catalog: ' . $e -> getMessage());
         }
     }
 
     public function delete(Request $request)
     {
-
+        if ($request -> has('id') && $request -> id > 3) {
+            try {
+                DB::table('catalogs') -> where('id', $request -> id) -> update(['isDelete' => 1]);
+                DB::table('archives') -> where('catalogId', $request -> id) -> update(['categoryId' => 1]);
+                Cache::forget('SITE_CATALOGS');
+                return redirect(route('adminCatalogs'))
+                    -> with('success', 'Catalog delete successfully, all the archives in this catalog has been move to the "BLOG" catalog!');
+            } catch (\Exception $e) {
+                return redirect(route('adminCatalogs')) -> with('error', 'Failed to delete the catalog: ' . $e -> getMessage());
+            }
+        } else {
+            return redirect(route('adminCatalogs')) -> with('error', 'Failed to delete the default catalogs!');
+        }
     }
 }

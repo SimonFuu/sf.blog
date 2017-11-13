@@ -1,4 +1,6 @@
 @extends('layouts.blog')
 @section('main')
-    About me
+    <div class="markdown-body">
+        {!! $about -> body !!}
+    </div>
 @endsection

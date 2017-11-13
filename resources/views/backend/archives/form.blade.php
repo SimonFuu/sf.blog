@@ -28,7 +28,7 @@
                                 {!! Form::label('thumb', 'Thumb', ['class' => 'control-label col-md-2']) !!}
                                 <div class="col-md-10">
                                     <div class="file-loading">
-                                        <input id="" class="file-uploader" type="file" name="uploadFile" multiple accept="image/*" data-file="{{ is_null($archive) ? old('thumb') : env('APP_STORAGE_HOST') . $archive -> thumb }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">
+                                        <input id="" class="file-uploader" type="file" name="uploadFile" multiple accept="image/*" data-file="{{ (is_null($archive) || !$archive -> thumb) ? old('thumb') : env('APP_STORAGE_HOST') . $archive -> thumb }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">
 {{--                                        <input class="file-uploader" type="file" multiple accept="image/*" data-file="{{ env('APP_STORAGE_HOST') . '/storage/images/20171108/5Ll7IHeLDKQ4iFvJXOay6xF0cWk6kWs9EnORf2HH.png' }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">--}}
                                     </div>
                                     @if($errors -> has('thumb'))
@@ -55,6 +55,7 @@
                             <!--- Catalog Field --->
                             <div class="form-group col-md-12 {{ $errors -> has('catalog') ? 'has-error' : ''}}">
                                 {!! Form::label('catalog', 'Catalog', ['class' => 'control-label']) !!}
+                                <a href="{{ route('adminAddCatalog') }}" class="btn btn-xs btn-info pull-right" >Add</a>
                                 {!! Form::select('catalog', $catalogs, is_null($archive) ? null : $archive -> catalogId, ['class' => 'form-control']) !!}
                                 @if($errors -> has('catalog'))
                                     <span class="help-block"><strong>{{ $errors -> first('catalog') }}</strong></span>
@@ -63,6 +64,7 @@
                             <!--- Category Field --->
                             <div class="form-group col-md-12 {{ $errors -> has('category') ? 'has-error' : ''}}">
                                 {!! Form::label('category', 'Category:', ['class' => 'control-label']) !!}
+                                <a href="{{ route('adminAddCategory') }}" class="btn btn-xs btn-info pull-right" >Add</a>
                                 {!! Form::select('category', $categories, is_null($archive) ? null : $archive -> categoryId, ['class' => 'form-control']) !!}
                                 @if($errors -> has('category'))
                                     <span class="help-block"><strong>{{ $errors -> first('category') }}</strong></span>
@@ -114,4 +116,7 @@
             </div>
         </div>
     </section>
+    <script>
+        var editorUniqueId = '{{ is_null($archive) ? 'editor-default' : 'editor-' . $archive -> id}}'
+    </script>
 @endsection

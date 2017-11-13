@@ -144,6 +144,16 @@ class UsersController extends BackendController
 
     public function delete(Request $request)
     {
-
+        if ($request -> has('id') && $request -> id > 1) {
+            try {
+                DB::table('system_users') -> where('id', $request -> id) -> update(['isDelete' => 1]);
+                return redirect(route('adminUsers')) -> with('success', 'User delete successfully!');
+            } catch (\Exception $e) {
+                return redirect(route('adminUsers'))
+                    -> with('error', 'Failed to delete the default user: ' . $e -> getMessage());
+            }
+        } else {
+            return redirect(route('adminUsers')) -> with('error', 'Failed to delete the default user.');
+        }
     }
 }

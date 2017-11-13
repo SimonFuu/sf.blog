@@ -359,8 +359,19 @@ var dateTimePicker = function () {
 var editorGenerator = function () {
     var editor = $('#editor');
     if (editor.length > 0) {
-        var simplemde = new SimpleMDE();
-        simplemde.value($('textarea[name="archive"]'));
+        var archive = $('textarea[id="archive"]');
+        var simplemde = new SimpleMDE({
+            element: archive[0],
+            spellChecker: false,
+            autosave: {
+                enabled: true,
+                unique_id: editorUniqueId
+            }
+        });
+        if (archive.val().length > 0) {
+            simplemde.value(archive.val());
+        }
+
         inlineAttachment.editors.codemirror4.attach(simplemde.codemirror, {
             uploadUrl: editor.data('upload-url'),
             jsonFieldName: 'url',
@@ -391,6 +402,7 @@ var editorGenerator = function () {
                 return false;
             }
         });
+
         // $('.editor-toolbar > .fa-picture-o').on('click', function (e) {
         //     debugger;
         //     e.preventDefault();

@@ -29,11 +29,5 @@ class BackendController extends Controller
             return current($validateErrors)[0];
         }
         return $res;
-
-//        $this->getValidationFactory()
-//            ->make($request->all(), $rules, $messages, $customAttributes)
-//            ->validate();
-//
-//        return $this->extractInputFromRules($request, $rules);
     }
 }

@@ -103,7 +103,7 @@ class AppServiceProvider extends ServiceProvider
     private function cyComment($uri = '')
     {
         view() -> composer('frontend.archives.common.comment', function ($view) use ($uri) {
-            $view -> with('archiveUri', bcrypt(str_replace('/archive/', '', $uri)));
+            $view -> with('archiveUri', str_replace('/archive/', '', $uri));
         });
     }
 

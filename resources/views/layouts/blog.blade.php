@@ -1,6 +1,6 @@
 @extends('layouts.layouts')
 @section('body')
-<div class="text-right">
+<div class="logined-user-info text-right">
     @if(Auth::check())
         <span>{{ Auth::user() -> name }}</span>
         <span><a href="{{ route('adminIndex') }}" target="_blank">Dashboard</a></span>
@@ -16,6 +16,7 @@
         <section class="blog-right-section">
             @yield('main')
         </section>
+        <hr>
         @include('layouts.footer')
     </div>
 

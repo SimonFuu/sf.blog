@@ -14,6 +14,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ArchivesController extends BackendController
 {
@@ -126,7 +127,7 @@ class ArchivesController extends BackendController
             'title' => $request -> title,
             'body' => $request -> archive,
             'catalogId' => $request -> catalog,
-            'categoryId' => $request -> category,
+            'categoryId' => $request -> catalog > 1 ? 1 : $request -> category,
             'isTop' => $request -> isTop,
             'publishAt' => $request -> publishAt,
             'sid' => uniqid(),
@@ -137,6 +138,9 @@ class ArchivesController extends BackendController
         }
 
         try {
+            if ($request -> isTop) {
+                DB::table('archives') -> where('isTop', 1) -> update(['isTop' => 0]);
+            }
             if ($request -> has('id')) {
                 unset($data['sid']);
                 DB::table('archives') -> where('id', $request -> id) -> update($data);
@@ -144,6 +148,7 @@ class ArchivesController extends BackendController
                 DB::table('archives') -> insert($data);
             }
             Cache::forget('SITE_SIDEBARS');
+            Redis::del('archives');
             return redirect(route('adminArchives')) -> with('success', 'Archive store successfully!');
         } catch (\Exception $e) {
             return redirect(route('adminArchives')) -> with('error', 'Failed to store archive: ' . $e -> getMessage());
@@ -152,7 +157,14 @@ class ArchivesController extends BackendController
 
     public function delete(Request $request)
     {
-
+        try {
+            DB::table('archives') -> where('id', $request -> id) -> update(['isDelete' => 1]);
+            Cache::forget('SITE_SIDEBARS');
+            Redis::del('archives');
+            return redirect(route('adminArchives')) -> with('success', 'Archive delete successfully!');
+        } catch (\Exception $e) {
+            return redirect(route('adminArchives')) -> with('error', 'Failed to delete archive: ' . $e -> getMessage());
+        }
     }
 
     private function getCatalogsAndCategories()
