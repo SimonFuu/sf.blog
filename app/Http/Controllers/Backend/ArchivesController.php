@@ -11,6 +11,7 @@
 namespace App\Http\Controllers\Backend;
 
 
+use HyperDown\Parser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,10 @@ class ArchivesController extends BackendController
                 $query -> where('catalogs.isDelete', 0);
                 $query -> where('categories.isDelete', 0);
                 if ($request -> has('words') && $request -> words !== '') {
-                    $query -> where('archives.title', 'like', '%' . $request -> words . '%');
+                    $query -> where(function ($q) use ($request) {
+                        $q -> where('archives.title', 'like', '%' . $request -> words . '%');
+                        $q -> orWhere('archives.sid', $request -> words);
+                    });
                     $this -> search['word'] = $request -> words;
                 }
                 if ($request -> has('catalog') && $request -> catalog > 0) {
@@ -144,11 +148,12 @@ class ArchivesController extends BackendController
             if ($request -> has('id')) {
                 unset($data['sid']);
                 DB::table('archives') -> where('id', $request -> id) -> update($data);
+                $id = $request -> id;
             } else {
-                DB::table('archives') -> insert($data);
+                $id = DB::table('archives') -> insertGetId($data);
             }
             Cache::forget('SITE_SIDEBARS');
-            Redis::del('archives');
+            $this -> cacheArchive($id, $data['catalogId']);
             return redirect(route('adminArchives')) -> with('success', 'Archive store successfully!');
         } catch (\Exception $e) {
             return redirect(route('adminArchives')) -> with('error', 'Failed to store archive: ' . $e -> getMessage());
@@ -157,10 +162,27 @@ class ArchivesController extends BackendController
 
     public function delete(Request $request)
     {
+        if ($request -> id <= 2) {
+            return redirect(route('adminArchives'))
+                -> with('error', 'Sorry, the "About" and "Resume" couldn\'t be deleted!');
+        }
         try {
-            DB::table('archives') -> where('id', $request -> id) -> update(['isDelete' => 1]);
-            Cache::forget('SITE_SIDEBARS');
-            Redis::del('archives');
+            $archive = DB::table('archives') -> select('sid', 'catalogId')
+                -> where('id', $request -> id) -> where('isDelete', 0) -> first();
+            if ($archive) {
+                DB::table('archives') -> where('id', $request -> id) -> update(['isDelete' => 1]);
+                Cache::forget('SITE_SIDEBARS');
+                if ($archive -> catalogId == 1) {
+                    Redis::hdel('archives', env('APP_ABOUT_CATALOG_CACHE_NAME'));
+                } elseif ($archive -> catalogId == 2) {
+                    Redis::hdel('archives', env('APP_RESUME_CATALOG_CACHE_NAME'));
+                } else {
+                    Redis::hdel('archives', $archive -> sid);
+                }
+            } else {
+                return redirect(route('adminArchives'))
+                    -> with('error', 'Failed to delete archive: the archive has been deleted!');
+            }
             return redirect(route('adminArchives')) -> with('success', 'Archive delete successfully!');
         } catch (\Exception $e) {
             return redirect(route('adminArchives')) -> with('error', 'Failed to delete archive: ' . $e -> getMessage());
@@ -190,5 +212,68 @@ class ArchivesController extends BackendController
             }
         }
         return ['catalogs' => $catalogs, 'categories' => $categories];
+    }
+
+    private function cacheArchive($id = 0, $catalogId = 0)
+    {
+        if ($catalogId == 2 || $catalogId == 3) {
+            $archive = DB::table('archives')
+                -> select('title', 'body')
+                -> where('catalogId', $catalogId)
+                -> where('publishAt', '<=', $this -> now())
+                -> orderBy('publishAt', 'DESC')
+                -> first();
+        } else {
+            $archive = DB::table('archives')
+                -> select(
+                    'archives.id', 'archives.title', 'archives.body', 'archives.thumb', 'archives.sid', 'categories.name',
+                    'archives.publishAt'
+                )
+                -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
+                -> where('archives.id', $id)
+                -> where('archives.isDelete', 0)
+                -> where('archives.publishAt', '<=', $this -> now())
+                -> first();
+        }
+        if (!is_null($archive)) {
+            switch ($id) {
+                case 1:
+                    $field = env('APP_ABOUT_CATALOG_CACHE_NAME');
+                    break;
+                case 2:
+                    $field = env('APP_RESUME_CATALOG_CACHE_NAME');
+                    break;
+                default:
+                    $field = $archive -> sid;
+                    break;
+            }
+            $parse = new Parser();
+            $archive -> body = $parse -> makeHtml($archive -> body);
+            if ($catalogId != 2 && $catalogId != 3) {
+                $archive -> nextArchive = $this -> getNextArchive($archive -> publishAt);
+                $archive -> prepArchive = $this -> getPreArchive($archive -> publishAt);
+            }
+            Redis::hset('archives', $field, json_encode($archive));
+        }
+    }
+
+    private function getNextArchive($date = '1990-01-01')
+    {
+        return DB::table('archives')
+            -> select('sid', 'title')
+            -> where('isDelete', 0)
+            -> where('publishAt', '<', $date)
+            -> orderBy('publishAt', 'DESC')
+            -> first();
+    }
+
+    private function getPreArchive($date = '1990-01-01')
+    {
+        return DB::table('archives')
+            -> select('sid', 'title')
+            -> where('isDelete', 0)
+            -> where('publishAt', '>', $date)
+            -> orderBy('publishAt', 'ASC')
+            -> first();
     }
 }

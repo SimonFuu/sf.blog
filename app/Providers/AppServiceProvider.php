@@ -82,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
             }
             $filings = DB::table('archives')
                 -> select(DB::raw('distinct filing'))
+                -> where('catalogId', 1)
                 -> where('isDelete', 0)
                 -> orderBy('filing', 'DESC')
                 -> get();
