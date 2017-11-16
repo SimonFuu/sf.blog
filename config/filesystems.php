@@ -63,6 +63,14 @@ return [
             'bucket' => env('AWS_BUCKET'),
         ],
 
+        'upyun' => [
+            'driver'        => 'upyun',
+            'bucket'        => env('UPYUN_BUCKET'),
+            'operator'      => env('UPYUN_OPERATOR'), // 操作员的名字
+            'password'      => env('UPYUN_PASSWORD'), // 操作员的密码
+            'domain'        => env('UPYUN_DOMAIN'), // 服务分配的域名
+            'protocol'      => env('UPYUN_PROTOCOL'), // 服务使用的协议，如需使用 http，在此配置 http
+        ],
     ],
 
 ];

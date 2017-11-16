@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -125,6 +125,9 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    'cdn' => env('APP_ENV') === 'local' ? '' : env('APP_CDN_HOST'),
+
+    'storage_host' => env('APP_ENV') === 'local' ? '' : env('APP_STORAGE_HOST'),
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -177,6 +180,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Collective\Html\HtmlServiceProvider::class,
+        JellyBool\Flysystem\Upyun\UpyunServiceProvider::class,
     ],
 
     /*
@@ -225,6 +230,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

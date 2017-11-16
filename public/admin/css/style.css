@@ -1,0 +1,128 @@
+.page-notice {
+    padding-top: 20px;
+}
+
+.content {
+    padding-top: 0;
+}
+
+.content-header {
+    margin: 0 -15px 20px;
+}
+
+td > a {
+    color: #333;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+td > a:hover {
+    color: #333;
+}
+
+.search-header {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}
+
+.modal-body > .form-group {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+/**
+    Set Actions
+ */
+.set-actions-icons-list {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.set-actions-icons-list > thead > tr > td {
+    padding-bottom: 10px;
+    min-width: 38px;
+}
+.set-actions-icons-list > tbody > tr > td {
+    min-width: 38px;
+}
+
+.set-actions-icon-label {
+    width: 100%;
+    font-weight: normal;
+}
+
+.set-action-icon, .set-actions-icon-button {
+    width: 38px;
+    text-align: center;
+    max-width: 38px;
+}
+
+.actions-list {
+    margin-bottom: 10px;
+}
+/**
+    Set roles
+ */
+.child-role-action-label {
+    font-weight: normal;
+    margin-left: 15px;
+}
+.role-actions-list > div {
+    padding-left: 0;
+}
+
+/**
+    Set users
+ */
+.user-roles-list > div {
+    padding-left: 0;
+}
+
+.role-actions-list, .user-roles-list {
+    max-height: 375px;
+    overflow: auto;
+    margin-right: 0;
+}
+
+/**
+    Set catalogs
+ */
+.radio > label {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/**
+    Archives list
+ */
+.date-range-picker {
+    min-width: 200px;
+}
+
+/**
+    Archive form
+ */
+.file-preview-image {
+    width: 100%;
+}
+
+.kv-fileinput-error > ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.kv-fileinput-error > ul > li {
+    list-style: none;
+    text-align: left;
+}
+
+.editor-toolbar.fullscreen,.CodeMirror-fullscreen,.editor-preview-side.editor-preview-active-side {
+    z-index: 65535;
+}
+
+.editor-preview > p > img, .editor-preview-side.editor-preview-active-side > p > img {
+    width: 100%;
+}

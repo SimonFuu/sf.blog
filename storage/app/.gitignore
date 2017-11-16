@@ -1,3 +1,11 @@
-*
-!public/
+/public/videos/*
+/public/images/*
+/public/others/*
 !.gitignore
+!/public/videos/Jack-Broadbent.mp4
+!/public/images/avatar.jpeg
+!/public/images/upyun.png
+!/public/images/alipay.png
+!/public/images/wechat-pay.png
+!/public/images/qr-alipay.png
+!/public/images/qr-wechat.png
