@@ -2,10 +2,10 @@
 /public/images/*
 /public/others/*
 !.gitignore
-!/public/videos/Jack-Broadbent.mp4
-!/public/images/avatar.jpeg
-!/public/images/upyun.png
-!/public/images/alipay.png
-!/public/images/wechat-pay.png
-!/public/images/qr-alipay.png
-!/public/images/qr-wechat.png
+!/public/videos/common/Jack-Broadbent.mp4
+!/public/images/common/avatar.jpeg
+!/public/images/common/upyun.png
+!/public/images/common/alipay.png
+!/public/images/common/wechat-pay.png
+!/public/images/common/qr-alipay.png
+!/public/images/common/qr-wechat.png

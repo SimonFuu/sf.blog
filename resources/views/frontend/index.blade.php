@@ -3,7 +3,7 @@
     <div class="overlay dark-2"></div>
     <div class="player" id="player">
         <video id="video-container" preload="auto" loop>
-            <source src="{{ config('app.storage_host') }}/storage/videos/Jack-Broadbent.mp4" type="video/mp4">
+            <source src="{{ config('app.storage_host') }}/storage/videos/common/Jack-Broadbent.mp4" type="video/mp4">
             Your browser does not support the <code>video</code> element.
         </video>
     </div>

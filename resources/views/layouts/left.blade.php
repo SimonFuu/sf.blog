@@ -1,6 +1,6 @@
 <section class="blog-left-section text-right">
     <div class="avatar">
-        <a href="{{ route('index') }}"><img src="{{ config('app.storage_host') }}/storage/images/avatar.jpeg" width="80" alt="avatar"></a>
+        <a href="{{ route('index') }}"><img src="{{ config('app.storage_host') }}/storage/images/common/avatar.jpeg" width="80" alt="avatar"></a>
     </div>
     <div class="blog-introduce blog-nav">
         <h4>{{ Cache::get('SETTINGS')['SITE_NAME'] }}</h4>

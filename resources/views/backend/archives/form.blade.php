@@ -29,7 +29,7 @@
                                 <div class="col-md-10">
                                     <div class="file-loading">
                                         <input id="" class="file-uploader" type="file" name="uploadFile" multiple accept="image/*" data-file="{{ (is_null($archive) || !$archive -> thumb) ? old('thumb') : env('APP_STORAGE_HOST') . $archive -> thumb }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">
-{{--                                        <input class="file-uploader" type="file" multiple accept="image/*" data-file="{{ env('APP_STORAGE_HOST') . '/storage/images/20171108/5Ll7IHeLDKQ4iFvJXOay6xF0cWk6kWs9EnORf2HH.png' }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">--}}
+{{--                                        <input class="file-uploader" type="file" multiple accept="image/*" data-file="{{ env('APP_STORAGE_HOST') . '/storage/images/common/20171108/5Ll7IHeLDKQ4iFvJXOay6xF0cWk6kWs9EnORf2HH.png' }}" data-uploader="{{ route('adminUploadFile') }}" data-type="thumb">--}}
                                     </div>
                                     @if($errors -> has('thumb'))
                                         <span class="help-block"><strong>{{ $errors -> first('thumb') }}</strong></span>
