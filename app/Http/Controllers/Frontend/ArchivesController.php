@@ -51,6 +51,7 @@ class ArchivesController extends BlogController
         return DB::table('archives')
             -> select('sid', 'title')
             -> where('isDelete', 0)
+            -> where('catalogId', 1)
             -> where('publishAt', '<', $date)
             -> orderBy('publishAt', 'DESC')
             -> first();
@@ -61,6 +62,7 @@ class ArchivesController extends BlogController
         return DB::table('archives')
             -> select('sid', 'title')
             -> where('isDelete', 0)
+            -> where('catalogId', 1)
             -> where('publishAt', '>', $date)
             -> orderBy('publishAt', 'ASC')
             -> first();

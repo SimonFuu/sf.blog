@@ -26,8 +26,6 @@
 
                             {{ $archive -> prepArchive -> title }}
                         </a>
-                    @else
-                        Null
                     @endif
                 </div>
                 <div class="col-md-6 col-sm-6 col-lg-6 text-right">
@@ -36,8 +34,6 @@
                             {{ $archive -> nextArchive -> title }}
                             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
                         </a>
-                    @else
-                        Null
                     @endif
                 </div>
             </div>
