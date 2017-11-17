@@ -28,6 +28,7 @@
     <link href="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/daterangepicker.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-fileinput/4.4.5/css/fileinput.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/plugins/webuploader-0.1.5/webuploader.css">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/css/style.css?v={{ env('APP_STATIC_FILE_VERSION') }}">
     @endif
@@ -71,6 +72,7 @@
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.5/js/fileinput.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-fileinput/4.4.5/themes/fa/theme.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"></script>
 <script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/InlineAttachment-2.0.3/inline-attachment.js"></script>
 <script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/InlineAttachment-2.0.3/codemirror.inline-attachment.js"></script>
 <script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/webuploader-0.1.5/webuploader.js"></script>
