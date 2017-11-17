@@ -61,7 +61,7 @@
                             @foreach($archives as $archive)
                                 <tr class="{{ $archive -> isTop ? 'bg-teal color-palette' : ''}}">
                                     <td>{{ $archive -> id }}</td>
-                                    <td><a href="{{ route('archive', ['sid' => $archive -> sid]) }}" target="_blank"></a>{{ $archive -> title }}</td>
+                                    <td><a href="{{ route('archive', ['sid' => $archive -> sid]) }}" target="_blank">{{ $archive -> title }}</a></td>
                                     <td>{{ $archive -> catalog }}</td>
                                     <td>{{ $archive -> category }}</td>
                                     <td>{{ $archive -> read }}</td>
