@@ -177,7 +177,7 @@ var changyanCommentLoader = function () {
                 }
                 c.appendChild(b)
             };
-            loadJs("http://changyan.sohu.com/upload/changyan.js",function(){
+            loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
                 window.changyan.api.config({appid:appid,conf:conf})
             });
         }

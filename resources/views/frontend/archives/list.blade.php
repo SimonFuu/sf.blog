@@ -26,7 +26,7 @@
                             <img src="{{ env('APP_STORAGE_HOST') . $archive -> thumb }}" alt="" width="100%">
                         </div>
                     @endif
-                    <span>{{ substr(strip_tags($archive -> body), 0, 200) }}</span>
+                    <span>{{ $archive -> body }}</span>
                 </div>
                 <div class="blog-archive-read-more">
                     <a href="{{ url('archive', $archive -> sid) }}">Read more</a>

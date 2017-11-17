@@ -51,7 +51,12 @@ class CategoryController extends BlogController
             -> paginate(self::FRONTEND_PER_PAGE_RECORD_COUNT);
         $parser = new Parser();
         foreach ($archives as $archive) {
-            $archive -> body = $parser -> makeHtml($archive -> body);
+            $archive -> body = strip_tags($parser -> makeHtml($archive -> body));
+            if (mb_strlen($archive -> body) > 200) {
+                $archive -> body = mb_substr($archive -> body, 0, 200) . '...';
+            } else {
+                $archive -> body;
+            }
         }
         return view('frontend.archives.list', ['archives' => $archives, 'header' => $header]);
     }
