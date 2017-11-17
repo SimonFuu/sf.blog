@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -15,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Request $request)
     {
+        if (!is_dir(base_path('public/storage')) && env('APP_ENV') == 'local') {
+            Artisan::call('storage:link');
+        }
         $this -> cacheSettings();
         if ($request -> method() === 'GET') {
             $uri = $request -> getPathInfo();
@@ -32,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
                 $this -> frontendLeftSideBar();
             }
         }
+
     }
 
     /**
