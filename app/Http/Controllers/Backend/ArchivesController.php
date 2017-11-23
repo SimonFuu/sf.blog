@@ -28,7 +28,8 @@ class ArchivesController extends BackendController
                 'archives.id',
                 'archives.title',
                 'archives.publishAt',
-                'archives.read',
+                'archives.pv',
+                'archives.uv',
                 'archives.sid',
                 'archives.isTop',
                 DB::raw('0 as comment'),
@@ -218,7 +219,7 @@ class ArchivesController extends BackendController
     {
         if ($catalogId == 2 || $catalogId == 3) {
             $archive = DB::table('archives')
-                -> select('title', 'body')
+                -> select('sid', 'title', 'body')
                 -> where('catalogId', $catalogId)
                 -> where('isDelete', 0)
                 -> where('publishAt', '<=', $this -> now())

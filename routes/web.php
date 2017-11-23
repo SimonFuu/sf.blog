@@ -16,6 +16,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'front
 
     Route::get('/about', 'IndexController@showAbout') -> name('about');
     Route::get('/archive/{sid}', 'ArchivesController@showArchive') -> name('archive');
+    Route::post('/archive/statistics', 'ArchivesController@statistic') -> name('archiveStatistic');
 
     Route::get('/blog', 'CategoryController@showCategoryArchives') -> name('blog');
 

@@ -53,7 +53,8 @@
                                 <th>Title</th>
                                 <th>Catalog</th>
                                 <th>Category</th>
-                                <th>Read</th>
+                                <th>PV(Page view)</th>
+                                <th>UV(Unique View)</th>
                                 <th>Sid</th>
                                 <th>Publish</th>
                                 <th>Action</th>
@@ -64,7 +65,8 @@
                                     <td><a href="{{ route('archive', ['sid' => $archive -> sid]) }}" target="_blank">{{ $archive -> title }}</a></td>
                                     <td>{{ $archive -> catalog }}</td>
                                     <td>{{ $archive -> category }}</td>
-                                    <td>{{ $archive -> read }}</td>
+                                    <td>{{ $archive -> pv }}</td>
+                                    <td>{{ $archive -> uv }}</td>
                                     <td>{{ $archive -> sid }}</td>
                                     <td>{{ $archive -> publishAt }}</td>
                                     <td>

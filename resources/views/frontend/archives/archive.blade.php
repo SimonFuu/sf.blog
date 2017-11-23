@@ -46,4 +46,8 @@
         </div>
         @include('frontend.archives.common.comment')
     </section>
+
+    <script>
+        var sid = '{{ $archive -> sid }}'
+    </script>
 @endsection

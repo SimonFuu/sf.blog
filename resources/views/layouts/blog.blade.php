@@ -20,7 +20,7 @@
         @include('layouts.footer')
     </div>
 
-    <div class="col-lg-2 archive-detail-right">123
+    <div class="col-lg-2 archive-detail-right">
         @include('layouts.right')
     </div>
 </div>
@@ -53,4 +53,7 @@
         </div>
     </div>
 </div>
+<script>
+    var archiveStatistic = '{{ route('archiveStatistic') }}'
+</script>
 @endsection

@@ -6,6 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @php
         $body = false;
         if (isset($archive) && !(isset($archives))) {
@@ -66,10 +67,12 @@
 @if(env('APP_ENV') === 'local')
 <script src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script src="/plugins/jquery.youtube.background.js"></script>
+<script src="/plugins/fingerprintjs2-1.5.0/fingerprint2.min.js"></script>
 <script src="/js/functions.js?v={{ time() }}"></script>
 @else
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="{{ config('app.cdn') }}/plugins/jquery.youtube.background.js"></script>
+<script src="https://cdn.bootcss.com/fingerprintjs2/1.5.0/fingerprint2.min.js"></script>
 <script src="{{ config('app.cdn') }}/js/functions.js?v={{ env('APP_STATIC_FILE_VERSION') }}"></script>
 @endif
 </body>

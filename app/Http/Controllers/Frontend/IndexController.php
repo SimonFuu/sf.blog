@@ -27,7 +27,7 @@ class IndexController extends FrontendController
         $about = Redis::hget('archives', env('APP_ABOUT_CATALOG_CACHE_NAME'));
         if (!$about) {
             $about = DB::table('archives')
-                -> select('title', 'body')
+                -> select('sid', 'title', 'body')
                 -> where('catalogId', 2)
                 -> where('publishAt', '<=', $this -> now())
                 -> orderBy('publishAt', 'DESC')
@@ -55,7 +55,7 @@ class IndexController extends FrontendController
         $resume = Redis::hget('archives', env('APP_RESUME_CATALOG_CACHE_NAME'));
         if (!$resume) {
             $resume = DB::table('archives')
-                -> select('title', 'body')
+                -> select('sid', 'title', 'body')
                 -> where('catalogId', 3)
                 -> where('publishAt', '<=', $this -> now())
                 -> orderBy('publishAt', 'DESC')

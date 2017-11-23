@@ -203,11 +203,32 @@ var baiduZhanzhang = function () {
     })();
 };
 
+var archiveStatistic = function () {
+    var archiveBody = $('.markdown-body');
+    if (archiveBody.length > 0 && typeof sid !== 'undefined') {
+        new Fingerprint2().get(function(client){
+            setTimeout(function () {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'POST',
+                    url: archiveStatistic,
+                    data: {'sid': sid, 'client': client}
+                });
+            }, 2000);
+        });
+
+    }
+
+
+};
 $(document).ready(function () {
+    archiveStatistic();
     resizeIndexHeight();
     changyanCommentLoader();
     indexVideoLoader();
     adjustRightSectionHeight();
     rewordMe();
-    // baiduZhanzhang();
+    baiduZhanzhang();
 });
