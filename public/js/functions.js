@@ -213,7 +213,7 @@ var archiveStatistic = function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: 'POST',
-                    url: archiveStatistic,
+                    url: archiveStatisticUrl,
                     data: {'sid': sid, 'client': client}
                 });
             }, 2000);

@@ -54,6 +54,6 @@
     </div>
 </div>
 <script>
-    var archiveStatistic = '{{ route('archiveStatistic') }}'
+    var archiveStatisticUrl = '{{ route('archiveStatisticUrl') }}'
 </script>
 @endsection
