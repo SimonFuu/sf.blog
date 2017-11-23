@@ -131,7 +131,7 @@ class ArchivesController extends BackendController
             'title' => $request -> title,
             'body' => $request -> archive,
             'catalogId' => $request -> catalog,
-            'categoryId' => $request -> catalog > 1 ? 1 : $request -> category,
+            'categoryId' => $request -> category < 1 ? 1 : $request -> category,
             'isTop' => $request -> isTop,
             'publishAt' => $request -> publishAt,
             'sid' => uniqid(),
@@ -220,6 +220,7 @@ class ArchivesController extends BackendController
             $archive = DB::table('archives')
                 -> select('title', 'body')
                 -> where('catalogId', $catalogId)
+                -> where('isDelete', 0)
                 -> where('publishAt', '<=', $this -> now())
                 -> orderBy('publishAt', 'DESC')
                 -> first();
@@ -236,11 +237,11 @@ class ArchivesController extends BackendController
                 -> first();
         }
         if (!is_null($archive)) {
-            switch ($id) {
-                case 1:
+            switch ($catalogId) {
+                case 2:
                     $field = env('APP_ABOUT_CATALOG_CACHE_NAME');
                     break;
-                case 2:
+                case 3:
                     $field = env('APP_RESUME_CATALOG_CACHE_NAME');
                     break;
                 default:

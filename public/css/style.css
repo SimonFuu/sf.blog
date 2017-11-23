@@ -369,6 +369,11 @@ footer {
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .archive-detail-right {
+        display: none;
+    }
+}
 .markdown-body > .blog-archive-thumb {
     margin-bottom: 30px;
 }

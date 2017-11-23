@@ -36,11 +36,18 @@ class ArchivesController extends BlogController
             if (is_null($archive)) {
                 return abort(404);
             } else {
+                // TODO 添加获取最新的 Resume / About me功能（验证当前的这个是不是最新的 Resume / About me）
                 $parse = new Parser();
                 $archive -> body = $parse -> makeHtml($archive -> body);
                 $archive -> nextArchive = $this -> getNextArchive($archive -> publishAt);
                 $archive -> prepArchive = $this -> getPreArchive($archive -> publishAt);
-                Redis::hset('archives', $sid, json_encode($archive));
+                if ($archive -> catalogId == 2) {
+                    Redis::hset('archives', env('APP_ABOUT_CATALOG_CACHE_NAME'), json_encode($archive));
+                } elseif($archive -> catalogId == 3) {
+                    Redis::hset('archives', env('APP_RESUME_CATALOG_CACHE_NAME'), json_encode($archive));
+                } else {
+                    Redis::hset('archives', $sid, json_encode($archive));
+                }
             }
         }
         return view('frontend.archives.archive', ['archive' => $archive]);

@@ -12,7 +12,7 @@
         @include('layouts.left')
     </div>
 
-    <div class="col-md-6 col-sm-6 col-lg-8">
+    <div class="col-md-9 col-sm-9 col-lg-8">
         <section class="blog-right-section">
             @yield('main')
         </section>
@@ -20,7 +20,7 @@
         @include('layouts.footer')
     </div>
 
-    <div class="col-md-3 col-sm-3 col-lg-2">
+    <div class="col-lg-2 archive-detail-right">123
         @include('layouts.right')
     </div>
 </div>

@@ -92,13 +92,16 @@ class CategoriesController extends BackendController
     public function delete(Request $request)
     {
         if ($request -> has('id') && $request -> id != 1) {
+            DB::beginTransaction();
             try {
                 DB::table('categories') -> where('id', $request -> id) -> update(['isDelete' => 1]);
                 DB::table('archives') -> where('categoryId', $request -> id) -> update(['categoryId' => 1]);
                 Cache::forget('SITE_SIDEBARS');
+                DB::commit();
                 return redirect(route('adminCategories'))
                     -> with('success', 'Category delete successfully, all the archives in this category has been move to the "Daily" category!');
             } catch (\Exception $e) {
+                DB::rollBack();
                 return redirect(route('adminCategories')) -> with('error', 'Failed to delete the category: ' . $e -> getMessage());
             }
         } else {
