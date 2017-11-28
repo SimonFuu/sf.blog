@@ -4,6 +4,6 @@
         {!! $resume -> body !!}
     </div>
     <script>
-        var sid = '{{ $about -> sid }}'
+        var sid = '{{ $resume -> sid }}'
     </script>
 @endsection
