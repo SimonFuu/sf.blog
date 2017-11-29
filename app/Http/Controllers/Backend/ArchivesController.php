@@ -238,6 +238,7 @@ class ArchivesController extends BackendController
                 -> first();
         }
         if (!is_null($archive)) {
+            Redis::del('archives');
             switch ($catalogId) {
                 case 2:
                     $field = env('APP_ABOUT_CATALOG_CACHE_NAME');
