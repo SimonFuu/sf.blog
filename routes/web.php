@@ -27,6 +27,10 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'front
     Route::get('/filing/{month}', 'FilingController@showFilingArchives') -> name('filing');
 
     Route::get('/resume', 'IndexController@showResume') -> name('resume');
+
+    Route::group(['prefix' => 'tail'], function () {
+        Route::get('/towns', 'TailController@showTowns') -> name('tailTowns');
+    });
 });
 
 Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
