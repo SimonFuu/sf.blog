@@ -1,10 +1,10 @@
 @extends('layouts.blog')
 @section('main')
-    <table class="table">
+    <table class="table table-hover">
         @foreach($towns as $town)
             <tr>
-                <td><b>{{ $town['name'] }}</b></td>
-                <td></td>
+                <td width="200"><b>{{ $town['name'] }}</b></td>
+                <td width="400"></td>
             </tr>
             @if($town['subs'])
                 @foreach($town['subs'] as $subs)
