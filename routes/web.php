@@ -27,16 +27,16 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'front
     Route::get('/filing/{month}', 'FilingController@showFilingArchives') -> name('filing');
 
     Route::get('/resume', 'IndexController@showResume') -> name('resume');
+
+    Route::group(['prefix' => 'tail'], function () {
+        Route::get('/towns', 'TailController@showTowns') -> name('tailTowns');
+    });
 });
 
 Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
-    Route::get('/', function () {
-        return redirect(route('adminIndex'));
-    });
+    Route::get('/', 'BackendController@redirectIndex');
 
-    Route::get('/index', function () {
-        return view('backend.index');
-    }) -> name('adminIndex');
+    Route::get('/index', 'BackendController@showDashboard') -> name('adminIndex');
 
     Route::group(['prefix' => '/acl/actions'], function () {
         Route::get('/', 'ActionsController@showIndex') -> name('adminActions');
@@ -86,9 +86,7 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
         Route::post('/store', 'CategoriesController@store') -> name('adminStoreCategory');
     });
 
-    Route::get('/notify', function () {
-        return view('backend.notify');
-    }) -> name('notify');
+    Route::get('/notify', 'BackendController@showNotification') -> name('notify');
 
     Route::group(['prefix' => 'settings'], function () {
         Route::get('/', 'SettingsController@showIndex') -> name('adminSettings');
@@ -103,12 +101,7 @@ Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', '
     });
 });
 
-Route::get('/notice', function () {
-    if (isset(Cache::get('SETTINGS')['SITE_STATUS']) && Cache::get('SETTINGS')['SITE_STATUS'] == 1) {
-        return redirect(route('index'));
-    }
-    return view('frontend.notice');
-}) -> name('notice');
+Route::get('/notice', 'Controller@showNotice') -> name('notice');
 
 Route::group(['prefix' => 'sign', 'namespace' => 'Auth'], function () {
     Route::get('/in', 'LoginController@showLogin') -> name('login');

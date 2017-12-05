@@ -16,6 +16,21 @@ use Illuminate\Http\Request;
 
 class BackendController extends Controller
 {
+    public function redirectIndex()
+    {
+        return redirect(route('adminIndex'));
+    }
+
+    public function showDashboard()
+    {
+        return view('backend.index');
+    }
+
+    public function showNotification()
+    {
+        return view('backend.notify');
+    }
+
     public function ajaxValidate(Request $request, array $rules,
                              array $messages = [], array $customAttributes = [])
     {
