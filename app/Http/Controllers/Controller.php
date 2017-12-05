@@ -6,6 +6,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Cache;
 
 class Controller extends BaseController
 {
@@ -56,5 +57,11 @@ class Controller extends BaseController
         return $tree;
     }
 
-
+    public function showNotice()
+    {
+        if (isset(Cache::get('SETTINGS')['SITE_STATUS']) && Cache::get('SETTINGS')['SITE_STATUS'] == 1) {
+            return redirect(route('index'));
+        }
+        return view('frontend.notice');
+    }
 }
