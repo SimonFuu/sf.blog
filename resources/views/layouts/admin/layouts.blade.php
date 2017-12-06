@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @if(env('APP_ENV') === 'local')
+    @if(config('app.env') === 'local')
     <link rel="stylesheet" href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/plugins/bootstrap-3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/admin/plugins/AdminLTE/css/AdminLTE.min.css">
@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="/admin/plugins/bootstrap-datetimepicker-4.17.47/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="/admin/plugins/simplemde/simplemde.min.css">
     <link rel="stylesheet" href="/admin/plugins/webuploader-0.1.5/webuploader.css">
-    <link rel="stylesheet" href="/admin/css/style.css?v={{ time() }}">
     @else
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -30,8 +29,9 @@
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/plugins/webuploader-0.1.5/webuploader.css">
-    <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/css/style.css?v={{ env('APP_STATIC_FILE_VERSION') }}">
     @endif
+    <link rel="stylesheet" href="{{ config('app.cdn') }}/admin/css/style.css?v={{ config('app.static_file_version') }}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -42,7 +42,7 @@
 <body>
 @yield('body')
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-@if(env('APP_ENV') === 'local')
+@if(config('app.env') === 'local')
 <script type="text/javascript" src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/admin/plugins/moment.min.js"></script>
 <script type="text/javascript" src="/admin/plugins/AdminLTE/js/adminlte.min.js"></script>
@@ -60,7 +60,6 @@
 <script type="text/javascript" src="/admin/plugins/webuploader-0.1.5/webuploader.js"></script>
 <script type="text/javascript" src="/admin/plugins/InlineAttachment-2.0.3/inline-attachment.js"></script>
 <script type="text/javascript" src="/admin/plugins/InlineAttachment-2.0.3/codemirror.inline-attachment.js"></script>
-<script type="text/javascript" src="/admin/js/functions.js?v={{ time() }}"></script>
 @else
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.25/moment.min.js"></script>
@@ -76,7 +75,7 @@
 <script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/InlineAttachment-2.0.3/inline-attachment.js"></script>
 <script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/InlineAttachment-2.0.3/codemirror.inline-attachment.js"></script>
 <script type="text/javascript" src="{{ config('app.cdn') }}/admin/plugins/webuploader-0.1.5/webuploader.js"></script>
-<script type="text/javascript" src="{{ config('app.cdn') }}/admin/js/functions.js?v={{ env('APP_STATIC_FILE_VERSION') }}"></script>
 @endif
+<script type="text/javascript" src="{{ config('app.cdn') }}/admin/js/functions.js?v={{ config('app.static_file_version') }}"></script>
 </body>
 </html>

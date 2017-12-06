@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(Request $request)
     {
-        if (!is_dir(base_path('public/storage')) && env('APP_ENV') == 'local') {
+        if (!is_dir(base_path('public/storage')) && config('app.env') == 'local') {
             Artisan::call('storage:link');
         }
         $this -> cacheSettings();

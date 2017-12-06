@@ -40,13 +40,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this -> protectUri = [
-            env('APP_BACKEND_PREFIX') => true,
-            env('APP_BACKEND_PREFIX') . '/upload/new' => true,
-            env('APP_BACKEND_PREFIX') . '/upload/delete' => true,
-            env('APP_BACKEND_PREFIX') . '/notify' => true,
-            env('APP_BACKEND_PREFIX') . '/profile' => true,
-            env('APP_BACKEND_PREFIX') . '/profile/edit' => true,
-            env('APP_BACKEND_PREFIX') . '/profile/store' => true,
+            config('app.backend_prefix') => true,
+            config('app.backend_prefix') . '/upload/new' => true,
+            config('app.backend_prefix') . '/upload/delete' => true,
+            config('app.backend_prefix') . '/notify' => true,
+            config('app.backend_prefix') . '/profile' => true,
+            config('app.backend_prefix') . '/profile/edit' => true,
+            config('app.backend_prefix') . '/profile/store' => true,
         ];
         $this->middleware('guest')->except('logout');
     }
@@ -101,7 +101,7 @@ class LoginController extends Controller
                 foreach ($actions as $action) {
                     $permission = json_decode($action -> actions, true);
                     foreach ($permission as $value) {
-                        $permissions[env('APP_BACKEND_PREFIX') . $value] = 1;
+                        $permissions[config('app.backend_prefix') . $value] = 1;
                     }
                 }
                 $actions = json_decode(json_encode($actions), true);

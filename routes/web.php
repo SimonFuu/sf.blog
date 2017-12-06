@@ -33,7 +33,7 @@ Route::group(['prefix' => '/', 'namespace' => 'Frontend', 'middleware' => 'front
     });
 });
 
-Route::group(['prefix' => env('APP_BACKEND_PREFIX'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => config('app.backend_prefix'), 'namespace' => 'Backend', 'middleware' => 'auth'], function () {
     Route::get('/', 'BackendController@redirectIndex');
 
     Route::get('/index', 'BackendController@showDashboard') -> name('adminIndex');

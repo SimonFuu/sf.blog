@@ -125,9 +125,25 @@ return [
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Self Configuration
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
     'cdn' => env('APP_ENV') === 'local' ? '' : env('APP_CDN_HOST'),
 
     'storage_host' => env('APP_ENV') === 'local' ? '' : env('APP_STORAGE_HOST'),
+
+    'static_file_version' => env('APP_ENV') === 'local' ? time() : env('APP_STATIC_FILE_VERSION'),
+
+    'backend_prefix' => env('APP_BACKEND_PREFIX', '/manage'),
+
+    'about_catalog_name' => env('APP_ABOUT_CATALOG_CACHE_NAME', 'about'),
+
+    'resume_catalog_name' => env('APP_RESUME_CATALOG_CACHE_NAME', 'resume'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

@@ -24,7 +24,7 @@ class IndexController extends FrontendController
 
     public function showAbout()
     {
-        $about = Redis::hget('archives', env('APP_ABOUT_CATALOG_CACHE_NAME'));
+        $about = Redis::hget('archives', config('app.about_catalog_name'));
         if (!$about) {
             $about = DB::table('archives')
                 -> select('sid', 'title', 'body')
@@ -35,7 +35,7 @@ class IndexController extends FrontendController
             $parser = new Parser();
             $about -> body = $parser -> makeHtml($about -> body);
             if ($about) {
-                Redis::hset('archives', env('APP_ABOUT_CATALOG_CACHE_NAME'), json_encode($about));
+                Redis::hset('archives', config('app.about_catalog_name'), json_encode($about));
             } else {
                 return abort(404);
             }
@@ -52,7 +52,7 @@ class IndexController extends FrontendController
 
     public function showResume()
     {
-        $resume = Redis::hget('archives', env('APP_RESUME_CATALOG_CACHE_NAME'));
+        $resume = Redis::hget('archives', config('app.resume_catalog_name'));
         if (!$resume) {
             $resume = DB::table('archives')
                 -> select('sid', 'title', 'body')
@@ -63,7 +63,7 @@ class IndexController extends FrontendController
             $parser = new Parser();
             $resume -> body = $parser -> makeHtml($resume -> body);
             if ($resume) {
-                Redis::hset('archives', env('APP_RESUME_CATALOG_CACHE_NAME'), json_encode($resume));
+                Redis::hset('archives', config('app.resume_catalog_name'), json_encode($resume));
             } else {
                 return abort(404);
             }

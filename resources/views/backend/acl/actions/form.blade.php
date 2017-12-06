@@ -29,7 +29,7 @@
                                     {!! Form::label('url', 'Url', ['class' => 'col-sm-2 control-label']) !!}
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/</span>
+                                            <span class="input-group-addon" id="actionsPrefix">{{ config('app.backend_prefix') }}/</span>
                                             {!! Form::text('url', is_null($action) ? null : $action -> url, ['class' => 'form-control menu-url']) !!}
                                         </div>
                                         @if($errors -> has('url'))
@@ -64,23 +64,6 @@
                                     </div>
                                 </div>
 
-                                {{--<!--- Actions Field --->--}}
-                                {{--<div class="form-group {{ $errors -> has('actions') ? 'has-error' : ''}}">--}}
-                                    {{--{!! Form::label('Actions', 'Permissions', ['class' => 'col-sm-2 control-label']) !!}--}}
-                                    {{--<div class="col-sm-8">--}}
-                                        {{--@if(!is_null($action))--}}
-                                            {{--@php--}}
-                                                {{--$urls = json_decode($action -> actions, true);--}}
-                                                {{--$urls = (implode("\r\n", ($urls ? $urls : [])));--}}
-                                            {{--@endphp--}}
-                                        {{--@endif--}}
-                                        {{--{!! Form::textarea('actions', is_null($action) ? null : $urls, ['class' => 'form-control', 'rows' => 5, 'placeholder' => '菜单权限，一行一个，以"/"开始']) !!}--}}
-                                        {{--@if($errors -> has('actions'))--}}
-                                            {{--<span class="help-block"><strong>{{ $errors -> first('actions') }}</strong></span>--}}
-                                        {{--@endif--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-
                                 <!--- Actions Field --->
                                 <div class="form-group {{ $errors -> has('actions') ? 'has-error' : ''}}">
                                     {!! Form::label('actions', 'Permissions', ['class' => 'col-sm-2 control-label']) !!}
@@ -89,13 +72,13 @@
                                             @if(old('actions'))
                                                 @foreach(old('actions') as $permission)
                                                     <div class="input-group actions-list">
-                                                        <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                        <span class="input-group-addon" id="actionsPrefix">{{ config('app.backend_prefix') }}/<span class="actionsPrefix"></span></span>
                                                         {!! Form::text('actions[]', $permission, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
                                                     </div>
                                                 @endforeach
                                             @else
                                                 <div class="input-group actions-list">
-                                                    <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                    <span class="input-group-addon" id="actionsPrefix">{{ config('app.backend_prefix') }}/<span class="actionsPrefix"></span></span>
                                                     {!! Form::text('actions[]', null, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
                                                 </div>
                                             @endif
@@ -103,13 +86,13 @@
                                             @if($action -> actions)
                                                 @foreach($action -> actions as $item)
                                                     <div class="input-group actions-list">
-                                                        <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                        <span class="input-group-addon" id="actionsPrefix">{{ config('app.backend_prefix') }}/<span class="actionsPrefix"></span></span>
                                                         {!! Form::text('actions[]', $item, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
                                                     </div>
                                                 @endforeach
                                             @else
                                                 <div class="input-group actions-list">
-                                                    <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+                                                    <span class="input-group-addon" id="actionsPrefix">{{ config('app.backend_prefix') }}/<span class="actionsPrefix"></span></span>
                                                     {!! Form::text('actions[]', null, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
                                                 </div>
                                             @endif
@@ -160,7 +143,7 @@
         </div>
     </section>
     <div class="hidden actions-list-template">
-        <span class="input-group-addon" id="actionsPrefix">{{ env('APP_BACKEND_PREFIX') }}/<span class="actionsPrefix"></span></span>
+        <span class="input-group-addon" id="actionsPrefix">{{ config('app.backend_prefix') }}/<span class="actionsPrefix"></span></span>
         {!! Form::text('actions[]', null, ['class' => 'form-control', 'aria-describedby' => 'actionsPrefix']) !!}
     </div>
     <script>

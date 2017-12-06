@@ -49,7 +49,7 @@ class UploaderController extends BackendController
         return [
             'url' => $fileRelativePath,
             'initialPreview' => [
-                ['<img src="' . env('APP_STORAGE_HOST') . '/' . $fileRelativePath . '" class="file-preview-image" alt="" title="">']
+                ['<img src="' . config('app.storage_host') . '/' . $fileRelativePath . '" class="file-preview-image" alt="" title="">']
             ],
             'initialPreviewConfig' => [
                 [
@@ -67,7 +67,7 @@ class UploaderController extends BackendController
     {
         $relativePath = str_replace(base_path(), '',storage_path('images')) . '/' . date('Ymd');
         $fileRelativePath = Storage::disk('upyun') -> put($relativePath, $request -> uploadFile);
-        return ['url' => env('APP_STORAGE_HOST') . '/' . $fileRelativePath];
+        return ['url' => config('app.storage_host') . '/' . $fileRelativePath];
     }
 
     public function delete(Request $request)

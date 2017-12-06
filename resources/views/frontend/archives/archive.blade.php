@@ -10,7 +10,7 @@
             <div class="markdown-body">
                 @if($archive -> thumb)
                     <div class="blog-archive-thumb">
-                        <img src="{{ env('APP_STORAGE_HOST') . $archive -> thumb }}" alt="" width="100%">
+                        <img src="{{ config('app.storage_host') . $archive -> thumb }}" alt="" width="100%">
                     </div>
                 @endif
                 {!! $archive -> body !!}

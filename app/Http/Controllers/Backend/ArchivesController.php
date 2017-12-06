@@ -174,9 +174,9 @@ class ArchivesController extends BackendController
                 DB::table('archives') -> where('id', $request -> id) -> update(['isDelete' => 1]);
                 Cache::forget('SITE_SIDEBARS');
                 if ($archive -> catalogId == 1) {
-                    Redis::hdel('archives', env('APP_ABOUT_CATALOG_CACHE_NAME'));
+                    Redis::hdel('archives', config('app.about_catalog_name'));
                 } elseif ($archive -> catalogId == 2) {
-                    Redis::hdel('archives', env('APP_RESUME_CATALOG_CACHE_NAME'));
+                    Redis::hdel('archives', config('app.resume_catalog_name'));
                 } else {
                     Redis::hdel('archives', $archive -> sid);
                 }
@@ -241,10 +241,10 @@ class ArchivesController extends BackendController
             Redis::del('archives');
             switch ($catalogId) {
                 case 2:
-                    $field = env('APP_ABOUT_CATALOG_CACHE_NAME');
+                    $field = config('app.about_catalog_name');
                     break;
                 case 3:
-                    $field = env('APP_RESUME_CATALOG_CACHE_NAME');
+                    $field = config('app.resume_catalog_name');
                     break;
                 default:
                     $field = $archive -> sid;
