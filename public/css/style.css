@@ -30,6 +30,10 @@ a {
 .numbers {
     font-family: Georgia, "Times New Roman", Times, serif;
 }
+
+.login-user-info {
+    margin-right: 15px;
+}
 /**
     Index Page
  */

@@ -402,13 +402,17 @@ var editorGenerator = function () {
                 return false;
             }
         });
-
-        // $('.editor-toolbar > .fa-picture-o').on('click', function (e) {
-        //     debugger;
-        //     e.preventDefault();
-        //     $(this).closest('input[type=file]').trigger('click');
-        // })
     }
+};
+
+var editProfile = function () {
+    var profileFormBox = $('.profile-form-box');
+    $('.edit-profile').on('click', function () {
+        $('.disabled-item').prop('disabled', false);
+        profileFormBox.removeClass('box-default');
+        profileFormBox.addClass('box-primary');
+        $('.cancel-edit-profile').prop('disabled', false);
+    });
 };
 
 $(document).ready(function () {
@@ -421,4 +425,5 @@ $(document).ready(function () {
     fileUploader();
     dateTimePicker();
     editorGenerator();
+    editProfile();
 });

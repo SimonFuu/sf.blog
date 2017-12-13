@@ -86,6 +86,11 @@ Route::group(['prefix' => config('app.backend_prefix'), 'namespace' => 'Backend'
         Route::post('/store', 'CategoriesController@store') -> name('adminStoreCategory');
     });
 
+    Route::group(['prefix' => '/profile'], function () {
+        Route::get('/', 'ProfileController@showIndex') -> name('profile');
+        Route::post('/store', 'ProfileController@store') -> name('storeProfile');
+    });
+
     Route::get('/notify', 'BackendController@showNotification') -> name('notify');
 
     Route::group(['prefix' => 'settings'], function () {

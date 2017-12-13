@@ -126,12 +126,13 @@
 
                             <p>
                                 {{ Auth::user() -> name }}
-                                <small>Member since Nov. 2012</small>
+                                <small>Member since {{ date('M, Y', strtotime(Auth::user() -> createdAt)) }}</small>
+                                <small>Login times {{ Auth::user() -> loginTimes }}, last login ip: {{ Auth::user() -> lastLoginIp }}</small>
                             </p>
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ route('profile') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('doSignOut') }}" class="btn btn-default btn-flat">Sign out</a>

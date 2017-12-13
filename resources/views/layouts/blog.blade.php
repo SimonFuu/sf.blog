@@ -1,10 +1,13 @@
 @extends('layouts.layouts')
 @section('body')
-<div class="logined-user-info text-right">
+<div class="login-user-info text-right">
     @if(Auth::check())
         <span>{{ Auth::user() -> name }}</span>
         <span><a href="{{ route('adminIndex') }}" target="_blank">Dashboard</a></span>
         <span><a href="{{ route('doSignOut') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a></span>
+    @else
+        <span><a href="javascript:;" data-toggle="modal" data-target="#loginModal">Login <i class="fa fa-sign-in" aria-hidden="true"></i>
+</a></span>
     @endif
 </div>
 <div class="blog-main">

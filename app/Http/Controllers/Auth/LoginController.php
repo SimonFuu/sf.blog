@@ -45,7 +45,6 @@ class LoginController extends Controller
             config('app.backend_prefix') . '/upload/delete' => true,
             config('app.backend_prefix') . '/notify' => true,
             config('app.backend_prefix') . '/profile' => true,
-            config('app.backend_prefix') . '/profile/edit' => true,
             config('app.backend_prefix') . '/profile/store' => true,
         ];
         $this->middleware('guest')->except('logout');
@@ -108,6 +107,7 @@ class LoginController extends Controller
                 $menus = $this -> treeView($actions, 'parentId');
                 session(['adminMenus' => $menus]);
                 session(['permissions' => $permissions]);
+                DB::table('system_users') -> increment('loginTimes', 1, ['lastLoginIp' => $request -> getClientIp()]);
                 return redirect(route('index'));
             } else {
                 Auth::logout();

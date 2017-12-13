@@ -132,7 +132,7 @@ var adjustRightSectionHeight = function () {
         if (blogMain.length > 0) {
             var footer = $('footer');
             footerHeight = footer.length > 0 ? footer.height() + parseInt(footer.css('padding-bottom')) + 41 : 0;
-            $('.blog-right-section').css('min-height', $(window).height() - parseInt($('.logined-user-info').height()) - parseInt(blogMain.css('margin-top')) - footerHeight);
+            $('.blog-right-section').css('min-height', $(window).height() - parseInt($('.login-user-info').height()) - parseInt(blogMain.css('margin-top')) - footerHeight);
         }
     };
     var blogMain = $('.blog-main');

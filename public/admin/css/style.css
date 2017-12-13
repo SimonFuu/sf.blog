@@ -126,3 +126,10 @@ td > a:hover {
 .editor-preview > p > img, .editor-preview-side.editor-preview-active-side > p > img {
     width: 100%;
 }
+
+/**
+    Profile
+ */
+.edit-profile > form {
+    padding: 15px;
+}
