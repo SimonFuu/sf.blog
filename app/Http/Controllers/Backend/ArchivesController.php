@@ -102,6 +102,7 @@ class ArchivesController extends BackendController
 
     public function store(Request $request)
     {
+        // TODO 将url参数自定义化，代替id。
         $rules = [
             'title' => 'required|max:255|unique:archives,title,' .
                 ($request -> has('id') ? $request -> id : 'NULL') . ',id,isDelete,0',
