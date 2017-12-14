@@ -30,7 +30,7 @@
                                 <b>Last update</b> <a class="pull-right">{{ Auth::user() -> updateAt }}</a>
                             </li>
                         </ul>
-                        <button class="btn btn-primary btn-block edit-profile" type="button"><b>Edit</b></button>
+                        <button class="btn btn-primary btn-block edit-profile-btn" type="button"><b>Edit</b></button>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -63,6 +63,7 @@
                                 {!! Form::password('password_confirmation', ['class' => 'form-control disabled-item', 'disabled']) !!}
                             </div>
                             <div class="form-group">
+                                <button class="btn btn-sm btn-default disabled-item cancel-edit-profile-btn" disabled type="button">Cancel</button>
                                 <button class="pull-right btn btn-sm btn-primary disabled-item" disabled type="submit">Submit</button>
                             </div>
                         {!! Form::close() !!}

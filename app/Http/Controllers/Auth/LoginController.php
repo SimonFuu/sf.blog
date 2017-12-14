@@ -108,10 +108,11 @@ class LoginController extends Controller
                 session(['adminMenus' => $menus]);
                 session(['permissions' => $permissions]);
                 DB::table('system_users') -> increment('loginTimes', 1, ['lastLoginIp' => $request -> getClientIp()]);
-                return redirect(route('index'));
+                return redirect(route('adminIndex'));
             } else {
                 Auth::logout();
-                return redirect(route('login')) -> with('error', 'There is something wrong, please contact with the administrator.');
+                return redirect(route('login'))
+                    -> with('error', 'There is something wrong, please contact with the administrator.');
             }
         } else {
             return $this -> sendFailedLoginResponse($request);

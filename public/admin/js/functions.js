@@ -407,11 +407,17 @@ var editorGenerator = function () {
 
 var editProfile = function () {
     var profileFormBox = $('.profile-form-box');
-    $('.edit-profile').on('click', function () {
+    $('.edit-profile-btn').on('click', function () {
+        $(this).prop('disabled', true);
         $('.disabled-item').prop('disabled', false);
         profileFormBox.removeClass('box-default');
         profileFormBox.addClass('box-primary');
-        $('.cancel-edit-profile').prop('disabled', false);
+    });
+    $('.cancel-edit-profile-btn').on('click', function () {
+        $('.edit-profile-btn').prop('disabled', false);
+        $('.disabled-item').prop('disabled', true);
+        profileFormBox.removeClass('box-primary');
+        profileFormBox.addClass('box-default');
     });
 };
 
