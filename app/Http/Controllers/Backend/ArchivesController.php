@@ -11,10 +11,12 @@
 namespace App\Http\Controllers\Backend;
 
 
+use GuzzleHttp\Client;
 use HyperDown\Parser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
 class ArchivesController extends BackendController
@@ -154,6 +156,7 @@ class ArchivesController extends BackendController
                 $id = DB::table('archives') -> insertGetId($data);
             }
             Cache::forget('SITE_SIDEBARS');
+            $this -> baiduPush($id, $data['catalogId']);
             $this -> cacheArchive($id, $data['catalogId']);
             return redirect(route('adminArchives')) -> with('success', 'Archive store successfully!');
         } catch (\Exception $e) {
@@ -280,5 +283,30 @@ class ArchivesController extends BackendController
             -> where('publishAt', '>', $date)
             -> orderBy('publishAt', 'ASC')
             -> first();
+    }
+
+    private function baiduPush($id = 0, $catalogId = 0)
+    {
+        $baiduUrl = 'http://data.zz.baidu.com/urls?site=https://www.fushupeng.com&token='
+            . Cache::get('SETTINGS')['BAIDU_PUSH_TOKEN'];
+        switch ($catalogId) {
+            case 2:
+                $url = config('app.url') . '/about';
+                break;
+            case 3:
+                $url = config('app.url') . '/resume';
+                break;
+            default:
+                $url = config('app.url') . '/archive/' . $id;
+                break;
+        }
+        $client = new Client();
+        $response = $client -> request('POST', $baiduUrl, ['body' => $url]);
+        $res = (string)$response -> getBody();
+        if ($response -> getStatusCode() == 200) {
+            Log::info(sprintf('Baidu push success! The pushed url is %s, Baidu response is %s', $url, $res));
+        } else {
+            Log::warning(sprintf('An error happened while pushing %s to Baidu. The response is %s', $url, $res));
+        }
     }
 }

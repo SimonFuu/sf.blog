@@ -35,6 +35,7 @@ class SettingsController extends BackendController
 
     public function showForm(Request $request)
     {
+        // TODO ADD upload file function
         $setting = null;
         if ($request -> has('id')) {
             $setting = DB::table('system_settings')

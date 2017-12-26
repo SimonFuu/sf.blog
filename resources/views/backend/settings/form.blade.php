@@ -1,5 +1,6 @@
 @extends('backend.dashboard')
 @section('main')
+    {{-- TODO ADD upload file function --}}
     <section class="content">
         <div class="row">
             <div class="col-xs-12">

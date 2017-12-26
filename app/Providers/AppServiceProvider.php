@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * 获取网站状态
+     * 缓存网站配置
      */
     private function cacheSettings()
     {
