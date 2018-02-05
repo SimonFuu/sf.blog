@@ -62,6 +62,27 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+
+<div class="modal fade" id="tail-wechat-qr-code">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">扫描二维码，关注"播客尾巴"</h4>
+            </div>
+            <div class="modal-body">
+                <div class="tail-wechat-qr-code text-center">
+                    <img src="{{ config('app.storage_host') }}/storage/images/tail-wechat.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 @if(config('app.env') === 'local')
 <script src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>

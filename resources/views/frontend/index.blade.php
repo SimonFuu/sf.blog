@@ -21,10 +21,11 @@
             </div>
 
             <div class="links">
-
+                <a href="#" data-toggle="modal" data-target="#tail-wechat-qr-code">播客尾巴</a>
                 @foreach(Cache::get('SITE_CATALOGS')['index'] as $catalog)
                     <a href="{{ url($catalog['action']) }}">{{ $catalog['name'] }}</a>
                 @endforeach
+
                 {{--<a href="/tail">Lovely Tail</a>--}}
                 @if(!Auth::check())
                     <a href="#" data-toggle="modal" data-target="#loginModal">Login</a>
@@ -55,7 +56,6 @@
             @include('layouts.footer')
         </div>
     </div>
-
 
     <div class="gfwBlockCheck hidden"></div>
 @endsection
