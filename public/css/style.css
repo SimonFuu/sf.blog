@@ -382,6 +382,10 @@ footer {
     margin-bottom: 30px;
 }
 
+.blog-archive-thumb > img {
+    max-height: 500px;
+}
+
 .right-section-block {
     margin-bottom: 10px;
 }
