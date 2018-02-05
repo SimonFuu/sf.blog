@@ -220,9 +220,23 @@ var archiveStatistic = function () {
         });
 
     }
-
-
 };
+
+var stickRightSideBars = function () {
+    if ($(document).scrollTop() > 50) {
+        $('.tail-wechat-qr-code').addClass('affixed');
+    } else {
+        $('.tail-wechat-qr-code').removeClass('affixed');
+    }
+    $(document).on('scroll',function () {
+        if ($(this).scrollTop() > 50) {
+            $('.tail-wechat-qr-code').addClass('affixed');
+        } else {
+            $('.tail-wechat-qr-code').removeClass('affixed');
+        }
+    });
+};
+
 $(document).ready(function () {
     archiveStatistic();
     resizeIndexHeight();
@@ -231,4 +245,5 @@ $(document).ready(function () {
     adjustRightSectionHeight();
     rewordMe();
     baiduZhanzhang();
+    stickRightSideBars();
 });

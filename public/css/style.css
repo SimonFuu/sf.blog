@@ -386,6 +386,19 @@ footer {
     max-height: 500px;
 }
 
+/**
+    Right side bar
+ */
 .right-section-block {
     margin-bottom: 10px;
 }
+
+.tail-wechat-qr-code.affixed {
+    top:25px;
+}
+
+.tail-wechat-qr-code > img {
+    max-height: 200px;
+    max-width: 200px;
+}
+
