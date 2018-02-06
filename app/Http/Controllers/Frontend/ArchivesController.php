@@ -27,7 +27,7 @@ class ArchivesController extends BlogController
             $archive = DB::table('archives')
                 -> select(
                     'archives.id', 'archives.title', 'archives.body', 'archives.thumb', 'archives.sid', 'categories.name',
-                    'archives.publishAt'
+                    'archives.publishAt', 'archives.isOriginal'
                 )
                 -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
                 -> where('archives.sid', $sid)
@@ -78,6 +78,7 @@ class ArchivesController extends BlogController
             -> where('isDelete', 0)
             -> where('catalogId', 1)
             -> where('publishAt', '<', $date)
+            -> where('publishAt', '<=', $this -> now())
             -> orderBy('publishAt', 'DESC')
             -> first();
     }
@@ -89,6 +90,7 @@ class ArchivesController extends BlogController
             -> where('isDelete', 0)
             -> where('catalogId', 1)
             -> where('publishAt', '>', $date)
+            -> where('publishAt', '<=', $this -> now())
             -> orderBy('publishAt', 'ASC')
             -> first();
     }

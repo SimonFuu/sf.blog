@@ -373,6 +373,19 @@ footer {
     }
 }
 
+.original-declare {
+    max-width: 980px;
+    margin: 0 auto;
+    border-left: 3px solid #ff1700;
+    padding: 1em 1.5em;
+    background-color: #f9f9f9;
+}
+
+.original-declare > p{
+    font-size: 16px;
+    margin-bottom: 3px;
+}
+
 @media screen and (max-width: 1200px) {
     .archive-detail-right {
         display: none;

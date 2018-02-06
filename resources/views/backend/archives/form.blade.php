@@ -69,19 +69,6 @@
                                     <span class="help-block"><strong>{{ $errors -> first('category') }}</strong></span>
                                 @endif
                             </div>
-                            <div class="form-group col-md-12 {{ $errors -> has('publishAt') ? 'has-error' : ''}}">
-                                <label for="dateTimePicker">Publish</label>
-                                <div class="input-group date date-time-picker" data-value="{{ is_null($archive) ? date('Y-m-d H:i:s') : $archive -> publishAt }}">
-                                    <input type='text' class="form-control" name="publishAt" id="dateTimePicker" />
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-                                <!-- /.input group -->
-                                @if($errors -> has('publishAt'))
-                                    <span class="help-block"><strong>{{ $errors -> first('publishAt') }}</strong></span>
-                                @endif
-                            </div>
                             <div class="form-group col-md-12 {{ $errors -> has('isTop') ? 'has-error' : ''}}">
                                 <label>Stick top</label>
                                 <div class="radio">
@@ -92,6 +79,22 @@
                                     <label>
                                         <input type="radio" name="isTop" value="1" {{ is_null($archive) ? '' : $archive -> isTop == 1 ? 'checked' : '' }}>
                                         TRUE
+                                    </label>
+                                </div>
+                                @if($errors -> has('isTop'))
+                                    <span class="help-block"><strong>{{ $errors -> first('isTop') }}</strong></span>
+                                @endif
+                            </div>
+                            <div class="form-group col-md-12 {{ $errors -> has('isOriginal') ? 'has-error' : ''}}">
+                                <label>Original</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="isOriginal" value="0" {{ is_null($archive) ? 'checked' : $archive -> isOriginal == 1 ? 'checked' : '' }}>
+                                        TRUE
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="isOriginal" value="1" {{ is_null($archive) ? '' : $archive -> isOriginal == 0 ? 'checked' : '' }}>
+                                        FALSE
                                     </label>
                                 </div>
                                 @if($errors -> has('isTop'))

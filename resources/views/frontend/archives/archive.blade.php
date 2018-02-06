@@ -17,6 +17,21 @@
             </div>
         </div>
 
+        <div class="blog-archive-detail-addons blog-archive-detail-reword text-center">
+            <span class="page-reword-button">
+                <strong>赏</strong>
+            </span>
+        </div>
+        @if($archive -> isOriginal)
+            <div class="original-declare">
+                <p>本文作者： <a href="{{ config('app.url') }}">Simon Fu</a></p>
+                <p>本文标题： <a href="{{ config('app.url') . '/archive/' . $archive -> sid }}">{{ $archive -> title }}</a></p>
+                <p>本文链接： <a href="{{ config('app.url') . '/archive/' . $archive -> sid }}">{{ config('app.url') . '/archive/' . $archive -> sid }}</a></p>
+                <p>发布时间：{{ $archive -> publishAt }}</p>
+                <p>版权声明： 本文由 <code>Simon Fu</code> 原创，采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。
+                <p>转载请保留以上声明信息！</p>
+            </div>
+        @endif
         <div class="blog-archive-detail-addons blog-archive-detail-others">
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-lg-6 text-left">
@@ -39,11 +54,6 @@
             </div>
         </div>
 
-        <div class="blog-archive-detail-addons blog-archive-detail-reword text-center">
-            <span class="page-reword-button">
-                <strong>赏</strong>
-            </span>
-        </div>
         @include('frontend.archives.common.comment')
     </section>
 

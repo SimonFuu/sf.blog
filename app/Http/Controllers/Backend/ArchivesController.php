@@ -114,8 +114,8 @@ class ArchivesController extends BackendController
                 ($request -> has('catalog') && $request -> catalog == 1) ?
                     'required|exists:categories,id,isDelete,0' : 'sometimes'
             ),
-            'publishAt' => 'required|date',
-            'isTop' => 'required|boolean'
+            'isTop' => 'required|boolean',
+            'isOriginal' => 'required|boolean'
         ];
         $messages = [
             'title.required' => 'Please enter the title.',
@@ -124,10 +124,10 @@ class ArchivesController extends BackendController
             'archive.required' => 'Please enter the content.',
             'catalog.required' => 'Please select the catalog.',
             'catalog.exists' => 'The catalog is invalid.',
-            'publishAt.required' => 'Please select the publish time.',
-            'publishAt.date' => 'The publish time is invalid.',
             'isTop.required' => 'Please select is top archive.',
-            'isTop.boolean' => 'The is top select is invalid.',
+            'isTop.boolean' => 'The is top selection is invalid.',
+            'isOriginal.required' => 'Please select is original archive.',
+            'isOriginal.boolean' => 'The is original selection is invalid.',
         ];
         $this -> validate($request, $rules, $messages);
         $data = [
@@ -136,7 +136,7 @@ class ArchivesController extends BackendController
             'catalogId' => $request -> catalog,
             'categoryId' => $request -> category < 1 ? 1 : $request -> category,
             'isTop' => $request -> isTop,
-            'publishAt' => $request -> publishAt,
+            'isOriginal' => $request -> isOriginal,
             'sid' => uniqid(),
             'filing' => substr($request -> publishAt, 0, 7),
         ];
@@ -156,7 +156,9 @@ class ArchivesController extends BackendController
                 $id = DB::table('archives') -> insertGetId($data);
             }
             Cache::forget('SITE_SIDEBARS');
-            $this -> baiduPush($id, $data['catalogId']);
+            if (config('app.env') === 'production') {
+                $this -> baiduPush($id, $data['catalogId']);
+            }
             $this -> cacheArchive($id, $data['catalogId']);
             return redirect(route('adminArchives')) -> with('success', 'Archive store successfully!');
         } catch (\Exception $e) {
@@ -232,7 +234,7 @@ class ArchivesController extends BackendController
             $archive = DB::table('archives')
                 -> select(
                     'archives.id', 'archives.title', 'archives.body', 'archives.thumb', 'archives.sid', 'categories.name',
-                    'archives.publishAt'
+                    'archives.publishAt', 'archives.isOriginal'
                 )
                 -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
                 -> where('archives.id', $id)
@@ -270,6 +272,7 @@ class ArchivesController extends BackendController
             -> where('isDelete', 0)
             -> where('catalogId', 1)
             -> where('publishAt', '<', $date)
+            -> where('publishAt', '<=', $this -> now())
             -> orderBy('publishAt', 'DESC')
             -> first();
     }
@@ -281,6 +284,7 @@ class ArchivesController extends BackendController
             -> where('isDelete', 0)
             -> where('catalogId', 1)
             -> where('publishAt', '>', $date)
+            -> where('publishAt', '<=', $this -> now())
             -> orderBy('publishAt', 'ASC')
             -> first();
     }
@@ -297,7 +301,17 @@ class ArchivesController extends BackendController
                 $url = config('app.url') . '/resume';
                 break;
             default:
-                $url = config('app.url') . '/archive/' . $id;
+                $archive = DB::table('archives')
+                    -> select('sid')
+                    -> where('id', $id)
+                    -> where('isDelete', 0)
+                    -> where('publishAt', '<=', $this -> now())
+                    -> first();
+                if (is_null($archive)) {
+                    Log::warning(sprintf('An error happened while pushing to Baidu. Archive not found for ID %s', $id));
+                    return false;
+                }
+                $url = config('app.url') . '/archive/' . $archive -> sid;
                 break;
         }
         $client = new Client();
@@ -308,5 +322,6 @@ class ArchivesController extends BackendController
         } else {
             Log::warning(sprintf('An error happened while pushing %s to Baidu. The response is %s', $url, $res));
         }
+        return true;
     }
 }
