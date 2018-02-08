@@ -25,8 +25,8 @@
     <link href="https://cdn.bootcss.com/github-markdown-css/2.8.0/github-markdown.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     @endif
+    <link rel="stylesheet" href="{{ config('app.cdn') }}/plugins/highlight/styles/monokai-sublime.css">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/css/style.css?v={{ config('app.static_file_version') }}">
-
 </head>
 <body>
 @yield('body')
@@ -86,13 +86,13 @@
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 @if(config('app.env') === 'local')
 <script src="/plugins/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<script src="/plugins/jquery.youtube.background.js"></script>
 <script src="/plugins/fingerprintjs2-1.5.0/fingerprint2.min.js"></script>
 @else
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="{{ config('app.cdn') }}/plugins/jquery.youtube.background.js"></script>
 <script src="https://cdn.bootcss.com/fingerprintjs2/1.5.0/fingerprint2.min.js"></script>
 @endif
+<script src="{{ config('app.cdn') }}/plugins/highlight/highlight.pack.js"></script>
+<script src="{{ config('app.cdn') }}/plugins/jquery.youtube.background.js"></script>
 <script src="{{ config('app.cdn') }}/js/functions.js?v={{ config('app.static_file_version') }}"></script>
 </body>
 </html>

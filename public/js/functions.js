@@ -246,4 +246,6 @@ $(document).ready(function () {
     rewordMe();
     baiduZhanzhang();
     stickRightSideBars();
+    hljs.initHighlightingOnLoad();
+
 });
