@@ -73,12 +73,12 @@
                                 <label>Stick top</label>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="isTop" value="0" {{ is_null($archive) ? 'checked' : $archive -> isTop == 0 ? 'checked' : '' }}>
-                                        FALSE
-                                    </label>
-                                    <label>
                                         <input type="radio" name="isTop" value="1" {{ is_null($archive) ? '' : $archive -> isTop == 1 ? 'checked' : '' }}>
                                         TRUE
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="isTop" value="0" {{ is_null($archive) ? 'checked' : $archive -> isTop == 0 ? 'checked' : '' }}>
+                                        FALSE
                                     </label>
                                 </div>
                                 @if($errors -> has('isTop'))
