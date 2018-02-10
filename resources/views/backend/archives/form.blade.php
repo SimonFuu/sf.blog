@@ -89,11 +89,11 @@
                                 <label>Original</label>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="isOriginal" value="0" {{ is_null($archive) ? 'checked' : $archive -> isOriginal == 1 ? 'checked' : '' }}>
+                                        <input type="radio" name="isOriginal" value="1" {{ is_null($archive) ? 'checked' : $archive -> isOriginal == 1 ? 'checked' : '' }}>
                                         TRUE
                                     </label>
                                     <label>
-                                        <input type="radio" name="isOriginal" value="1" {{ is_null($archive) ? '' : $archive -> isOriginal == 0 ? 'checked' : '' }}>
+                                        <input type="radio" name="isOriginal" value="0" {{ is_null($archive) ? '' : $archive -> isOriginal == 0 ? 'checked' : '' }}>
                                         FALSE
                                     </label>
                                 </div>
