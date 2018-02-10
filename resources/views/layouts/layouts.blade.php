@@ -23,8 +23,8 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     @endif
-    <link rel="stylesheet" href="{{ config('app.cdn') }}/plugins/github-markdown-css/github-markdown-css.css">
-    <link rel="stylesheet" href="{{ config('app.cdn') }}/plugins/highlight/styles/monokai-sublime.css">
+    <link rel="stylesheet" href="{{ config('app.cdn') }}/plugins/github-markdown-css/github-markdown-css.css?v={{ config('app.static_file_version') }}">
+    <link rel="stylesheet" href="{{ config('app.cdn') }}/plugins/highlight/styles/monokai-sublime.css?v={{ config('app.static_file_version') }}">
     <link rel="stylesheet" href="{{ config('app.cdn') }}/css/style.css?v={{ config('app.static_file_version') }}">
 </head>
 <body>
@@ -90,8 +90,8 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/fingerprintjs2/1.5.0/fingerprint2.min.js"></script>
 @endif
-<script src="{{ config('app.cdn') }}/plugins/highlight/highlight.pack.js"></script>
-<script src="{{ config('app.cdn') }}/plugins/jquery.youtube.background.js"></script>
+<script src="{{ config('app.cdn') }}/plugins/highlight/highlight.pack.js?v={{ config('app.static_file_version') }}"></script>
+<script src="{{ config('app.cdn') }}/plugins/jquery.youtube.background.js?v={{ config('app.static_file_version') }}"></script>
 <script src="{{ config('app.cdn') }}/js/functions.js?v={{ config('app.static_file_version') }}"></script>
 </body>
 </html>
