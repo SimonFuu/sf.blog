@@ -27,20 +27,20 @@ class ArchivesController extends BlogController
             $archive = DB::table('archives')
                 -> select(
                     'archives.id', 'archives.title', 'archives.body', 'archives.thumb', 'archives.sid', 'categories.name',
-                    'archives.publishAt', 'archives.isOriginal'
+                    'archives.createdAt', 'archives.isOriginal'
                 )
                 -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
                 -> where('archives.sid', $sid)
                 -> where('archives.isDelete', 0)
-                -> where('archives.publishAt', '<=', $this -> now())
+                -> where('archives.createdAt', '<=', $this -> now())
                 -> first();
             if (is_null($archive)) {
                 return abort(404);
             } else {
                 $parse = new Parser();
                 $archive -> body = $parse -> makeHtml($archive -> body);
-                $archive -> nextArchive = $this -> getNextArchive($archive -> publishAt);
-                $archive -> prepArchive = $this -> getPreArchive($archive -> publishAt);
+                $archive -> nextArchive = $this -> getNextArchive($archive -> createdAt);
+                $archive -> prepArchive = $this -> getPreArchive($archive -> createdAt);
                 Redis::hset('archives', $sid, json_encode($archive));
             }
         }
@@ -77,9 +77,9 @@ class ArchivesController extends BlogController
             -> select('sid', 'title')
             -> where('isDelete', 0)
             -> where('catalogId', 1)
-            -> where('publishAt', '<', $date)
-            -> where('publishAt', '<=', $this -> now())
-            -> orderBy('publishAt', 'DESC')
+            -> where('createdAt', '<', $date)
+            -> where('createdAt', '<=', $this -> now())
+            -> orderBy('createdAt', 'DESC')
             -> first();
     }
 
@@ -89,9 +89,9 @@ class ArchivesController extends BlogController
             -> select('sid', 'title')
             -> where('isDelete', 0)
             -> where('catalogId', 1)
-            -> where('publishAt', '>', $date)
-            -> where('publishAt', '<=', $this -> now())
-            -> orderBy('publishAt', 'ASC')
+            -> where('createdAt', '>', $date)
+            -> where('createdAt', '<=', $this -> now())
+            -> orderBy('createdAt', 'ASC')
             -> first();
     }
 }

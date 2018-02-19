@@ -29,8 +29,8 @@ class IndexController extends FrontendController
             $about = DB::table('archives')
                 -> select('sid', 'title', 'body')
                 -> where('catalogId', 2)
-                -> where('publishAt', '<=', $this -> now())
-                -> orderBy('publishAt', 'DESC')
+                -> where('createdAt', '<=', $this -> now())
+                -> orderBy('createdAt', 'DESC')
                 -> first();
             $parser = new Parser();
             $about -> body = $parser -> makeHtml($about -> body);
@@ -57,8 +57,8 @@ class IndexController extends FrontendController
             $resume = DB::table('archives')
                 -> select('sid', 'title', 'body')
                 -> where('catalogId', 3)
-                -> where('publishAt', '<=', $this -> now())
-                -> orderBy('publishAt', 'DESC')
+                -> where('createdAt', '<=', $this -> now())
+                -> orderBy('createdAt', 'DESC')
                 -> first();
             $parser = new Parser();
             $resume -> body = $parser -> makeHtml($resume -> body);

@@ -19,14 +19,14 @@ class FilingController extends BlogController
     public function showFilingArchives($month = '1990-01')
     {
         $archives = DB::table('archives')
-            -> select('archives.sid', 'archives.title', 'archives.thumb', 'archives.body', 'archives.publishAt', 'categories.name', 'archives.isTop')
+            -> select('archives.sid', 'archives.title', 'archives.thumb', 'archives.body', 'archives.createdAt', 'categories.name', 'archives.isTop')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
             -> where('archives.isDelete', 0)
-            -> where('archives.publishAt', '<=', $this -> now())
+            -> where('archives.createdAt', '<=', $this -> now())
             -> where('archives.catalogId', 1)
             -> where('archives.filing', $month)
             -> orderBy('archives.isTop', 'DESC')
-            -> orderBy('archives.publishAt', 'DESC')
+            -> orderBy('archives.createdAt', 'DESC')
             -> paginate(self::FRONTEND_PER_PAGE_RECORD_COUNT);
         $parser = new Parser();
         foreach ($archives as $archive) {

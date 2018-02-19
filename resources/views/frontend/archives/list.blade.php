@@ -32,7 +32,7 @@
                     <a href="{{ url('archive', $archive -> sid) }}">Read more</a>
                 </div>
                 <div class="blog-archive-category-and-publish text-right">
-                    <i>in {{ $archive -> name }} | <span class="numbers">{{ $archive -> publishAt }}</span></i>
+                    <i>in {{ $archive -> name }} | <span class="numbers">{{ $archive -> createdAt }}</span></i>
                 </div>
             </div>
         @endforeach

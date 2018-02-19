@@ -34,12 +34,12 @@ class CategoryController extends BlogController
             $header = 'echo \'Hello, world!\';';
         }
         $archives = DB::table('archives')
-            -> select('archives.sid', 'archives.title', 'archives.thumb', 'archives.body', 'archives.publishAt', 'categories.name', 'archives.isTop')
+            -> select('archives.sid', 'archives.title', 'archives.thumb', 'archives.body', 'archives.createdAt', 'categories.name', 'archives.isTop')
             -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
             -> where(function ($query) use ($category, $name) {
                 $query -> where('archives.isDelete', 0);
                 $query -> where('archives.catalogId', 1);
-                $query -> where('archives.publishAt', '<=', $this -> now());
+                $query -> where('archives.createdAt', '<=', $this -> now());
                 if (!is_null($category)) {
                     $query -> where('archives.categoryId', $category -> id);
                 } elseif ($name !== '') {
@@ -47,7 +47,7 @@ class CategoryController extends BlogController
                 }
             })
             -> orderBy('archives.isTop', 'DESC')
-            -> orderBy('archives.publishAt', 'DESC')
+            -> orderBy('archives.createdAt', 'DESC')
             -> paginate(self::FRONTEND_PER_PAGE_RECORD_COUNT);
         $parser = new Parser();
         foreach ($archives as $archive) {

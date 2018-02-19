@@ -29,7 +29,7 @@ class ArchivesController extends BackendController
             -> select(
                 'archives.id',
                 'archives.title',
-                'archives.publishAt',
+                'archives.createdAt',
                 'archives.pv',
                 'archives.uv',
                 'archives.sid',
@@ -65,15 +65,15 @@ class ArchivesController extends BackendController
                         $start = strtotime($publish[0]);
                         $end = strtotime($publish[1]);
                         if ($start && $end) {
-                            $query -> where('archives.publishAt', '>=', date('Y-m-d 00:00:00', $start));
-                            $query -> where('archives.publishAt', '<=', date('Y-m-d 23:59:59', $end));
+                            $query -> where('archives.createdAt', '>=', date('Y-m-d 00:00:00', $start));
+                            $query -> where('archives.createdAt', '<=', date('Y-m-d 23:59:59', $end));
                             $this -> search['publish'] = $request -> publish;
                         }
                     }
                 }
             })
             -> orderBy('archives.isTop', 'DESC')
-            -> orderBy('archives.publishAt', 'DESC')
+            -> orderBy('archives.createdAt', 'DESC')
             -> paginate(self::BACKEND_PER_PAGE_RECORD_COUNT);
         $catalogsAndCategories = $this -> getCatalogsAndCategories();
         $catalogs = $catalogsAndCategories['catalogs'];
@@ -138,7 +138,7 @@ class ArchivesController extends BackendController
             'isTop' => $request -> isTop,
             'isOriginal' => $request -> isOriginal,
             'sid' => uniqid(),
-            'filing' => substr($request -> publishAt, 0, 7),
+            'filing' => date('Y-m'),
         ];
         if ($request -> has('thumb') && $request -> thumb) {
             $data['thumb'] = $request -> thumb;
@@ -149,7 +149,7 @@ class ArchivesController extends BackendController
                 DB::table('archives') -> where('isTop', 1) -> update(['isTop' => 0]);
             }
             if ($request -> has('id')) {
-                unset($data['sid']);
+                unset($data['sid'], $data['filing']);
                 DB::table('archives') -> where('id', $request -> id) -> update($data);
                 $id = $request -> id;
             } else {
@@ -227,19 +227,19 @@ class ArchivesController extends BackendController
                 -> select('sid', 'title', 'body')
                 -> where('catalogId', $catalogId)
                 -> where('isDelete', 0)
-                -> where('publishAt', '<=', $this -> now())
-                -> orderBy('publishAt', 'DESC')
+                -> where('createdAt', '<=', $this -> now())
+                -> orderBy('createdAt', 'DESC')
                 -> first();
         } else {
             $archive = DB::table('archives')
                 -> select(
                     'archives.id', 'archives.title', 'archives.body', 'archives.thumb', 'archives.sid', 'categories.name',
-                    'archives.publishAt', 'archives.isOriginal'
+                    'archives.createdAt', 'archives.isOriginal'
                 )
                 -> leftJoin('categories', 'categories.id', '=', 'archives.categoryId')
                 -> where('archives.id', $id)
                 -> where('archives.isDelete', 0)
-                -> where('archives.publishAt', '<=', $this -> now())
+                -> where('archives.createdAt', '<=', $this -> now())
                 -> first();
         }
         if (!is_null($archive)) {
@@ -258,8 +258,8 @@ class ArchivesController extends BackendController
             $parse = new Parser();
             $archive -> body = $parse -> makeHtml($archive -> body);
             if ($catalogId != 2 && $catalogId != 3) {
-                $archive -> nextArchive = $this -> getNextArchive($archive -> publishAt);
-                $archive -> prepArchive = $this -> getPreArchive($archive -> publishAt);
+                $archive -> nextArchive = $this -> getNextArchive($archive -> createdAt);
+                $archive -> prepArchive = $this -> getPreArchive($archive -> createdAt);
             }
             Redis::hset('archives', $field, json_encode($archive));
         }
@@ -271,9 +271,9 @@ class ArchivesController extends BackendController
             -> select('sid', 'title')
             -> where('isDelete', 0)
             -> where('catalogId', 1)
-            -> where('publishAt', '<', $date)
-            -> where('publishAt', '<=', $this -> now())
-            -> orderBy('publishAt', 'DESC')
+            -> where('createdAt', '<', $date)
+            -> where('createdAt', '<=', $this -> now())
+            -> orderBy('createdAt', 'DESC')
             -> first();
     }
 
@@ -283,9 +283,9 @@ class ArchivesController extends BackendController
             -> select('sid', 'title')
             -> where('isDelete', 0)
             -> where('catalogId', 1)
-            -> where('publishAt', '>', $date)
-            -> where('publishAt', '<=', $this -> now())
-            -> orderBy('publishAt', 'ASC')
+            -> where('createdAt', '>', $date)
+            -> where('createdAt', '<=', $this -> now())
+            -> orderBy('createdAt', 'ASC')
             -> first();
     }
 
@@ -305,7 +305,7 @@ class ArchivesController extends BackendController
                     -> select('sid')
                     -> where('id', $id)
                     -> where('isDelete', 0)
-                    -> where('publishAt', '<=', $this -> now())
+                    -> where('createdAt', '<=', $this -> now())
                     -> first();
                 if (is_null($archive)) {
                     Log::warning(sprintf('An error happened while pushing to Baidu. Archive not found for ID %s', $id));

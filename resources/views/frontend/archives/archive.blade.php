@@ -3,7 +3,7 @@
     <section class="blog-body">
         <div class="blog-archive-detail-title">
             <h1>{{ $archive -> title }}</h1>
-            <span class="blog-archive-category-and-publish"><i>in {{ $archive -> name }} | {{ $archive -> publishAt }}</i></span>
+            <span class="blog-archive-category-and-publish"><i>in {{ $archive -> name }} | {{ $archive -> createdAt }}</i></span>
         </div>
 
         <div class="blog-archive-detail-body">
@@ -27,7 +27,7 @@
                 <p>本文作者： <a href="{{ config('app.url') }}">Simon Fu</a></p>
                 <p>本文标题： <a href="{{ config('app.url') . '/archive/' . $archive -> sid }}">{{ $archive -> title }}</a></p>
                 <p>本文链接： <a href="{{ config('app.url') . '/archive/' . $archive -> sid }}">{{ config('app.url') . '/archive/' . $archive -> sid }}</a></p>
-                <p>发布时间：{{ $archive -> publishAt }}</p>
+                <p>发布时间：{{ $archive -> createdAt }}</p>
                 <p>版权声明： 本文由 <code>Simon Fu</code> 原创，采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可。
                 <p>转载请保留以上声明信息！</p>
             </div>

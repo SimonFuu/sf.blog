@@ -68,7 +68,7 @@
                                     <td>{{ $archive -> pv }}</td>
                                     <td>{{ $archive -> uv }}</td>
                                     <td>{{ $archive -> sid }}</td>
-                                    <td>{{ $archive -> publishAt }}</td>
+                                    <td>{{ $archive -> createdAt }}</td>
                                     <td>
                                         <a href="{{ route('adminEditArchive', ['id' => $archive -> id]) }}"><i class="fa fa-edit"></i></a>
                                         <a href="{{ route('adminDeleteArchive', ['id' => $archive -> id]) }}"><i class="fa fa-trash"></i></a>
