@@ -28,11 +28,18 @@
                     @endif
                     <span>{{ $archive -> body }}</span>
                 </div>
-                <div class="blog-archive-read-more">
-                    <a href="{{ url('archive', $archive -> sid) }}">Read more</a>
+                <div class="blog-archives-list-archive-footer row">
+                    <div class="col-sm-6 text-left">
+                        <a class="archive-read-more" href="{{ url('archive', $archive -> sid) }}">Read more &gt;&gt;</a>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <i>in {{ $archive -> name }} | <span class="numbers">{{ $archive -> createdAt }}</span></i>
+                    </div>
                 </div>
-                <div class="blog-archive-category-and-publish text-right">
-                    <i>in {{ $archive -> name }} | <span class="numbers">{{ $archive -> createdAt }}</span></i>
+                <div class="blog-archive-read-more">
+
+                </div>
+                <div class="blog-archive-category-and-publish">
                 </div>
             </div>
         @endforeach

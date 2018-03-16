@@ -2,7 +2,7 @@
 @section('main')
     <section class="blog-body">
         <div class="blog-archive-detail-title">
-            <h1>{{ $archive -> title }}</h1>
+            <h2>{{ $archive -> title }}</h2>
             <span class="blog-archive-category-and-publish"><i>in {{ $archive -> name }} | {{ $archive -> createdAt }}</i></span>
         </div>
 

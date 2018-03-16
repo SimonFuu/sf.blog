@@ -13,7 +13,41 @@ body {
 }
 
 a {
-    color: rgb(72, 161, 86);
+    position: relative;
+    text-decoration: none;
+    color: #555;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:after {
+    content: "";
+    width: 0;
+    height: 2px;
+    background: #555;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transition: all .2s;
+}
+
+.links > a:after {
+    background: #fff;
+}
+
+.original-declare > p > a:after {
+    background: red;
+}
+
+a:hover:after{
+    left: 0;
+    width: 100%;
+}
+
+#video-volume:hover:after, .avatar > a:hover:after, footer> a:hover:after, .upan-cloud:hover:after {
+    width: 0;
 }
 
 .reword-header {
@@ -33,6 +67,10 @@ a {
 
 .login-user-info {
     margin-right: 15px;
+}
+
+.original-declare > p > a {
+    color: red;
 }
 /**
     Index Page
@@ -239,8 +277,8 @@ footer {
 /**
     Blog Left Side
  */
-.blog-nav > a, .menus > a {
-    font-size: 18px;
+.blog-nav > span, .menus > span {
+    font-size: 16px;
     font-weight: bold;
     display: block;
 }
@@ -259,7 +297,7 @@ footer {
     .menus {
         text-align: center;
     }
-    .menus > a {
+    .menus > span {
         display: inline-block;
         margin: 0 10px
     }
@@ -303,23 +341,24 @@ footer {
     padding: 40px 0 40px;
 }
 
-.blog-archive-title > h2 > a {
-    color: #333333;
-}
-
-.blog-archive-title > h2 > a:hover {
-    color: rgb(72, 161, 86);
-}
-
 /**
     Archives List
  */
-.blog-archive-title > .archives-list-title{
-    font-size: 24px;
+.archives-list-title{
+    font-size: 20px;
 }
 
-.blog-archive-content,.blog-archive-read-more,.blog-archive-category-and-publish {
-    font-size: 16px;
+.archives-list-title > a:hover {
+    color: #555;
+}
+
+.blog-archive-content, .blog-archives-list-archive-footer {
+    line-height: 30px;
+    font-size: 14px;
+}
+
+.blog-archives-list-archive-footer, .archive-read-more{
+    color: #b1b7ba;
 }
 
 .blog-archive-content {
@@ -331,9 +370,12 @@ footer {
  */
 
 .blog-body {
-    font-size: 18px;
+    font-size: 14px;
 }
 
+blockquote {
+    font-size: 14px;
+}
 .blog-archive-detail-body {
     padding-top: 20px;
 }
@@ -360,6 +402,8 @@ footer {
 }
 
 .markdown-body {
+    font-size: 14px;
+    line-height: 30px;
     box-sizing: border-box;
     min-width: 200px;
     max-width: 980px;
@@ -371,6 +415,10 @@ footer {
     .markdown-body {
         padding: 15px;
     }
+}
+
+.markdown-body a:after {
+    width: 0;
 }
 
 .original-declare {
